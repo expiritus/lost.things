@@ -110,7 +110,7 @@ $(document).ready(function(){
                     }
                     $(otherThing).append($("<option value='"+value.nameThing+"'>"+value.nameThing+"</option>"));
                 });
-                thing.append($("<option value='0'>Другое</option>"));
+                thing.append($("<option value='0'>Other</option>"));
             }
         });
     });

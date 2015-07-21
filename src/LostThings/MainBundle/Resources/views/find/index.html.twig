@@ -2,14 +2,6 @@
 
 {% block body %}
 
-    {#{{ form_widget(form.country) }}#}
-
-    {#{{ form_widget(form.city) }}#}
-
-    {#<p id="wait_data"><img style="width: 30px" src="{{ asset('images/wait.gif') }}"></p>#}
-
-    {#{{ form_rest(form) }}#}
-
     <form action="{{ url('save_find_thing') }}" method="POST">
         <p>
             <select name="country">

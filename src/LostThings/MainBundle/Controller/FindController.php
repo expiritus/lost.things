@@ -8,18 +8,9 @@ use LostThings\AdminBundle\Entity\City;
 use LostThings\AdminBundle\Entity\Area;
 use LostThings\AdminBundle\Entity\Street;
 use LostThings\AdminBundle\Entity\Thing;
-use LostThings\AdminBundle\Form\FindType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class FindController extends Controller
 {
@@ -34,21 +25,6 @@ class FindController extends Controller
         return $this->render('LostThingsMainBundle:find:index.html.twig', array(
             'countries' => $countries,
         ));
-    }
-
-    private function createFindForm(Find $entity){
-        $form = $this->createForm(new FindType(), $entity, array(
-            'method' => 'POST',
-        ));
-//        $form->remove('city');
-        $form->remove('area');
-        $form->remove('street');
-        $form->remove('username');
-        $form->remove('thing');
-        $form->remove('status');
-        $form->remove('dateFind');
-        $form->add('submit', 'submit', array('label' => 'Send'));
-        return $form;
     }
 
 
@@ -113,7 +89,8 @@ class FindController extends Controller
                         $find_area[$i]->getCityId()
                     ];
                 }
-                if($find_area[0]->getArea() != $area_request or end($city_id_arr) != (int)$city_id){
+                $key_city = array_search($city_id, $city_id_arr);
+                if($find_area[0]->getArea() != $area_request or $city_id_arr[$key_city] != (int)$city_id){
                     $area = new Area();
                     $city = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
                     $city->getId();
@@ -148,7 +125,8 @@ class FindController extends Controller
                         $find_street[$i]->getAreaId()
                     ];
                 }
-                if($find_street[0]->getStreet() != $street_request or end($street_id_arr) != $area_id   ){
+                $key_street = array_search($area_id, $street_id_arr);
+                if($find_street[0]->getStreet() != $street_request or $street_id_arr[$key_street] != (int)$area_id){
                     $street = new Street();
                     $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
                     $area_parent->getId();
@@ -174,6 +152,8 @@ class FindController extends Controller
             $em->flush();
             $thing_id = $thing->getId();
         }
+
+        return $this->redirectToRoute('find');
     }
 
 }
