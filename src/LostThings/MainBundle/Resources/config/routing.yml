@@ -1,0 +1,31 @@
+main:
+    path:     /
+    defaults: { _controller: LostThingsMainBundle:Index:index }
+
+find:
+    path:     /find/
+    defaults: { _controller: LostThingsMainBundle:Find:index }
+
+find_get_city:
+    path: /find/getcity/
+    defaults: { _controller: LostThingsMainBundle:Find:getCity }
+
+find_get_area:
+    path: /find/getarea/
+    defaults: { _controller: LostThingsMainBundle:Find:getArea }
+
+find_get_street:
+    path: /find/getstreet/
+    defaults: { _controller: LostThingsMainBundle:Find:getStreet }
+
+find_get_thing:
+    path: /find/getthing/
+    defaults: { _controller: LostThingsMainBundle:Find:getThing }
+
+save_find_thing:
+    path: /find/save_find_thing/
+    defaults: { _controller: LostThingsMainBundle:Find:saveFindThing}
+
+lost:
+    path:     /lost/
+    defaults: { _controller: LostThingsMainBundle:Lost:index }

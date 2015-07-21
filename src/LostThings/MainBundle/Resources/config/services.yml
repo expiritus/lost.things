@@ -1,0 +1,4 @@
+services:
+#    lost_things_main.example:
+#        class: LostThings\MainBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
