@@ -32,22 +32,28 @@ class Street
     /**
      * @var integer
      *
-     * @ORM\Column(name="area_id", type="integer")
+     * @ORM\Column(name="city_id", type="integer", nullable=true)
      */
-    private $areaId;
+    private $cityId;
+
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Area", inversedBy="streets")
-     * @ORM\JoinColumn(name="area_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="streets")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
-    protected $area;
+    protected $city;
 
 
     /**
      * @ORM\OneToMany(targetEntity="Find", mappedBy="street")
      */
     protected $finds;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lost", mappedBy="street")
+     */
+    protected $losts;
 
 
 
@@ -89,51 +95,6 @@ class Street
     }
 
     /**
-     * Set areaId
-     *
-     * @param integer $areaId
-     * @return Street
-     */
-    public function setAreaId($areaId)
-    {
-        $this->areaId = $areaId;
-
-        return $this;
-    }
-
-    /**
-     * Get areaId
-     *
-     * @return integer 
-     */
-    public function getAreaId()
-    {
-        return $this->areaId;
-    }
-
-    /**
-     * Set area
-     *
-     * @param \LostThings\AdminBundle\Entity\Area $area
-     * @return Street
-     */
-    public function setArea(\LostThings\AdminBundle\Entity\Area $area = null)
-    {
-        $this->area = $area;
-
-        return $this;
-    }
-
-    /**
-     * Get area
-     *
-     * @return \LostThings\AdminBundle\Entity\Area 
-     */
-    public function getArea()
-    {
-        return $this->area;
-    }
-    /**
      * Constructor
      */
     public function __construct()
@@ -172,5 +133,84 @@ class Street
     public function getFinds()
     {
         return $this->finds;
+    }
+
+    /**
+     * Set cityId
+     *
+     * @param integer $cityId
+     * @return Street
+     */
+    public function setCityId($cityId)
+    {
+        $this->cityId = $cityId;
+
+        return $this;
+    }
+
+    /**
+     * Get cityId
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->cityId;
+    }
+
+    /**
+     * Set city
+     *
+     * @param \LostThings\AdminBundle\Entity\City $city
+     * @return Street
+     */
+    public function setCity(\LostThings\AdminBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return \LostThings\AdminBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Add losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     * @return Street
+     */
+    public function addLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts[] = $losts;
+
+        return $this;
+    }
+
+    /**
+     * Remove losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     */
+    public function removeLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts->removeElement($losts);
+    }
+
+    /**
+     * Get losts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLosts()
+    {
+        return $this->losts;
     }
 }

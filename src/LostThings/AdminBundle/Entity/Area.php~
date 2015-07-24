@@ -44,16 +44,17 @@ class Area
     protected $city;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="Street", mappedBy="area")
-     */
-    protected $streets;
-
 
     /**
      * @ORM\OneToMany(targetEntity="Find", mappedBy="area")
      */
     protected $finds;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lost", mappedBy="area")
+     */
+    protected $losts;
 
 
 
@@ -139,46 +140,7 @@ class Area
     {
         return $this->city;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->streets = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
-    /**
-     * Add streets
-     *
-     * @param \LostThings\AdminBundle\Entity\Street $streets
-     * @return Area
-     */
-    public function addStreet(\LostThings\AdminBundle\Entity\Street $streets)
-    {
-        $this->streets[] = $streets;
-
-        return $this;
-    }
-
-    /**
-     * Remove streets
-     *
-     * @param \LostThings\AdminBundle\Entity\Street $streets
-     */
-    public function removeStreet(\LostThings\AdminBundle\Entity\Street $streets)
-    {
-        $this->streets->removeElement($streets);
-    }
-
-    /**
-     * Get streets
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getStreets()
-    {
-        return $this->streets;
-    }
 
     /**
      * Add finds
@@ -211,5 +173,46 @@ class Area
     public function getFinds()
     {
         return $this->finds;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->finds = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    /**
+     * Add losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     * @return Area
+     */
+    public function addLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts[] = $losts;
+
+        return $this;
+    }
+
+    /**
+     * Remove losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     */
+    public function removeLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts->removeElement($losts);
+    }
+
+    /**
+     * Get losts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLosts()
+    {
+        return $this->losts;
     }
 }

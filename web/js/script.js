@@ -4,14 +4,18 @@ $(document).ready(function(){
     var area = $("#areas");
     var streets = $('#streets');
     var otherThing = $("#other_thing");
-    $("input[name='area']").hide();
-    $("input[name='other_thing']").hide();
+    var submitFindForm = $("input[name='submit_find_form']").hide();
     var street = $("input[name='street']").hide();
 
     var thing = $("select[name='thing']").hide();
     var waitImage = $('#wait_data').hide();
     var buttonNextStreet = $('#button_next_street').hide();
     var buttonNextThing = $('#button_next_thing').hide();
+    var description = $("textarea[name='description']").hide();
+
+    $("input[name='area']").hide();
+    $("input[name='other_thing']").hide();
+
 
     function wait(){
         waitImage.show();
@@ -19,6 +23,12 @@ $(document).ready(function(){
 
     //Запрос в базу для открытия поля city
     country.on("change", function(){
+        $("input[name='area']").val('').hide();
+        $("input[name='street']").val('');
+        $("input[name='other_thing']").val('').hide();
+        description.hide();
+        street.hide();
+        thing.hide()
         var country_id = country.val();
         $.ajax({
             url: "/find/getcity/",
@@ -29,7 +39,7 @@ $(document).ready(function(){
             dataType: "json",
             beforeSend: wait(),
             success: function(data){
-                waitImage.empty();
+                waitImage.hide();
                 city.empty();
                 city.show().append($("<option value='0'>Choice city</option>"));
                 $.each(data, function(index, value){
@@ -44,6 +54,8 @@ $(document).ready(function(){
         $("input[name='area']").val('');
         $("input[name='street']").val('');
         $("input[name='other_thing']").val('').hide();
+        buttonNextThing.hide();
+        description.hide();
         street.hide();
         thing.hide();
         var city_id = city.val();
@@ -57,6 +69,7 @@ $(document).ready(function(){
             dataType: "json",
             beforeSend: wait(),
             success: function(data){
+                waitImage.hide();
                 $("input[name='area']").show();
                 buttonNextStreet.show();
                 area.show().empty();
@@ -69,19 +82,19 @@ $(document).ready(function(){
 
     //Запрос в базу для открытия поля street
     buttonNextStreet.on("click", function(){
-        var area_id = area.val();
+        var city_id = city.val();
         $.ajax({
             url: "/find/getstreet/",
             method: "POST",
             data: {
-                area_id: area_id
+                city_id: city_id
             },
             dataType: "json",
             beforeSend: wait(),
             success: function(data){
+                waitImage.hide();
                 street.show().empty();
                 streets.empty();
-                //thing.show().empty();
                 buttonNextStreet.hide();
                 buttonNextThing.show();
                 $.each(data, function(index, value){
@@ -95,6 +108,7 @@ $(document).ready(function(){
     //Запрос в базу для открытия поля thing
     buttonNextThing.on("click", function(){
         $("input[name='other_thing']").hide();
+        description.show();
         buttonNextThing.hide();
         $.ajax({
             url: "/find/getthing/",
@@ -102,8 +116,8 @@ $(document).ready(function(){
             dataType: "json",
             beforeSend: wait(),
             success: function(data){
-                waitImage.empty();
-                thing.show().empty().append($("<option>Choice thing</option>"));
+                waitImage.hide();
+                thing.show().empty().append($("<option value='-1'>Choice thing</option>"));
                 $.each(data, function(index, value){
                     if(value.baseThing == true){
                         $(thing).append($("<option value='"+value.id+"'>"+value.nameThing+"</option>"));
@@ -114,12 +128,17 @@ $(document).ready(function(){
             }
         });
     });
+
     thing.on("change", function(){
+        submitFindForm.show();
         var yesOrNo = thing.val();
         if(yesOrNo == 0){
-            $("input[name='other_thing']").val('').show();
+            $("input[name='other_thing']").val('').show().attr('required', true);
         }else{
-            $("input[name='other_thing']").val('').hide();
+            $("input[name='other_thing']").val('').hide().attr('required', false);
+        }
+        if(yesOrNo == -1){
+            submitFindForm.hide();
         }
     });
 });

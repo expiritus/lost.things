@@ -2,10 +2,8 @@
 
 namespace LostThings\MainBundle\Controller;
 
-use LostThings\AdminBundle\Entity\Find;
-use LostThings\AdminBundle\Entity\Country;
-use LostThings\AdminBundle\Entity\City;
 use LostThings\AdminBundle\Entity\Area;
+use LostThings\AdminBundle\Entity\Find;
 use LostThings\AdminBundle\Entity\Street;
 use LostThings\AdminBundle\Entity\Thing;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 class FindController extends Controller
 {
 
+    // Главная страница
     public function indexAction(Request $request){
         $user = $this->getUser();
         if(!$user){
@@ -29,6 +28,7 @@ class FindController extends Controller
 
 
 
+    // Сюда приходит ajax запрос на выборку города по id
     public function getCityAction(Request $request){
         $id = $request->request->get('country_id');
         $city = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->getCityById($id);
@@ -37,6 +37,8 @@ class FindController extends Controller
         return $response;
     }
 
+
+    // Сюда приходит ajax запрос на выборку района по id
     public function getAreaAction(Request $request){
         $id = $request->request->get('city_id');
         $area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->getAreaById($id);
@@ -47,14 +49,16 @@ class FindController extends Controller
 
 
 
+    // Сюда приходит ajax запрос на выборку улицы по id
     public function getStreetAction(Request $request){
-        $id = $request->request->get('area_id');
-        $area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->getStreetById($id);
+        $city_id = $request->request->get('city_id');
+        $area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->getStreetById($city_id);
         $response = new Response(json_encode($area));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
+    // Сюда приходит ajax запрос на выборку базовых вещей
     public function getThingAction(Request $request){
         $thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Thing')->getBaseThing();
         $response = new Response(json_encode($thing));
@@ -63,14 +67,46 @@ class FindController extends Controller
     }
 
 
+    // Сохранение формы в базу
     public function saveFindThingAction(Request $request)
     {
+        // Записываем в переменные значения из POST
+        $country_id = $request->request->get('country');
         $city_id = $request->request->get('city');
-        $area_request = $request->request->get('area');
-        $street_request = $request->request->get('street');
-        $thing_request = $request->request->get('thing');
-        $other_thing_request = $request->request->get('other_thing');
 
+        // Делае первую букву района заглавной для сохранения в базе
+        $area_request = $request->request->get('area');
+        $first = mb_strtoupper(mb_substr($area_request, 0, 1));
+        $last = mb_substr($area_request, 1);
+        $area_request = $first.$last;
+
+
+        // Делаем первую букву улицы заглавной для сохранения в базе
+        $street_request = $request->request->get('street');
+        $first = mb_strtoupper(mb_substr($street_request, 0, 1));
+        $last = mb_substr($street_request, 1);
+        $street_request = $first.$last;
+
+        $thing_request = $request->request->get('thing');
+        if($thing_request == null){
+            $thing_request = 0;
+        }
+
+        // Делаем первую букву вещи заглавной для сохранение в базе
+        $other_thing_request = $request->request->get('other_thing');
+        $first = mb_strtoupper(mb_substr($other_thing_request, 0, 1));
+        $last = mb_substr($other_thing_request, 1);
+        $other_thing_request = $first.$last;
+
+        $description_request = $request->request->get('description');
+
+
+        /**
+         * Если поле Район не пустое то проверяем есть ли эдентичное название района в базе
+         * Если нет, то сохраняем в базу новое название района
+         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив
+         * Далее проверяем есть ли в массиве id идентичное id из запроса и возвращаем ключ
+         */
         if(!empty($area_request)){
             $find_area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->findBy(array('area' => $area_request));
             if(!$find_area) {
@@ -104,17 +140,29 @@ class FindController extends Controller
                     $area_id = $find_area[0]->getId();
                 }
             }
-
         }
 
+
+        /**
+         * Все тоже самое проделываем и с улицами города
+         *
+         * Если поле Улица не пустое то проверяем есть ли эдентичное название района в базе
+         * Если нет, то сохраняем в базу новое название района
+         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив
+         * Далее проверяем есть ли в массиве id идентичное id из запроса и возвращаем ключ
+         *
+         * За исключением одого, если id района нет то записываем id города
+         */
         if(!empty($street_request)){
             $find_street = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->findBy(array('street' => $street_request));
             if(!$find_street){
                 $street = new Street();
-                $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
-                $area_parent->getId();
+                $city_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
+                $city_parent->getId();
+                $street->setCity($city_parent);
+
                 $street->setStreet($street_request);
-                $street->setArea($area_parent);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($street);
                 $em->flush();
@@ -122,16 +170,19 @@ class FindController extends Controller
             }else{
                 for($i=0; $i<count($find_street); $i++){
                     $street_id_arr = [
-                        $find_street[$i]->getAreaId()
+                        $find_street[$i]->getCityId()
                     ];
                 }
-                $key_street = array_search($area_id, $street_id_arr);
-                if($find_street[0]->getStreet() != $street_request or $street_id_arr[$key_street] != (int)$area_id){
+
+                $key_street = array_search($city_id, $street_id_arr);
+
+                if($find_street[0]->getStreet() != $street_request or $street_id_arr[$key_street] != (int)$city_id){
                     $street = new Street();
-                    $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
-                    $area_parent->getId();
+                    $city_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
+                    $city_parent->getId();
+                    $street->setCity($city_parent);
                     $street->setStreet($street_request);
-                    $street->setArea($area_parent);
+
                     $em = $this->getDoctrine()->getManager();
                     $em->persist($street);
                     $em->flush();
@@ -139,19 +190,97 @@ class FindController extends Controller
                 }else{
                     $street_id = $find_street[0]->getId();
                 }
-
             }
         }
 
+        /**
+         * Если поле "Другое" для вещи не пустое, то записываем его в базу как новая вещь
+         * для автокомплита и присваиваем ему "base_thing = 0"
+         */
         if(!empty($other_thing_request)){
-            $thing = new Thing();
-            $thing->setNameThing($other_thing_request);
-            $thing->setBaseThing(0);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($thing);
-            $em->flush();
-            $thing_id = $thing->getId();
+            $thing_name = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Thing')->findBy(array('nameThing' => $other_thing_request));
+            if(count($thing_name) > 0){
+                if($thing_name[0]->getNameThing() != $other_thing_request){
+                    $thing = new Thing();
+                    $thing->setNameThing($other_thing_request);
+                    $thing->setBaseThing(0);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($thing);
+                    $em->flush();
+                    $thing_id = $thing->getId();
+                }else{
+                    $thing_id = $thing_name[0]->getId();
+                }
+            }else{
+                $thing = new Thing();
+                $thing->setNameThing($other_thing_request);
+                $thing->setBaseThing(0);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($thing);
+                $em->flush();
+                $thing_id = $thing->getId();
+            }
+        }else{
+            $thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Thing')->find($thing_request);
+            if(count($thing) > 0){
+                $thing_id = $thing->getId();
+            }
         }
+
+
+        /**
+         * Сохраняем все в таблицу find
+         */
+        $find = new Find();
+
+        $country = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Country')->find($country_id);
+        $country->getId();
+
+        $city = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
+        if($city){
+            $city->getId();
+        }
+
+
+        if(isset($area_id)){
+            $area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
+            $area->getId();
+        }
+
+        if(isset($street_id)){
+            $street = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->find($street_id);
+            $street->getId();
+        }
+
+        $user = $this->getUser();
+
+        if(isset($thing_id)){
+            $thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Thing')->find($thing_id);
+            $thing->getId();
+        }
+
+        $find->setCountry($country);
+        $find->setCity($city);
+        if(isset($area)){
+            $find->setArea($area);
+        }
+
+        if(isset($street)){
+            $find->setStreet($street);
+        }
+
+        $find->setUsername($user);
+
+        if(isset($thing)){
+            $find->setThing($thing);
+        }
+
+        $find->setStatus(0);
+        $find->setDescription($description_request);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($find);
+        $em->flush();
 
         return $this->redirectToRoute('find');
     }

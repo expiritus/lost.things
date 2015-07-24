@@ -61,7 +61,7 @@ class Find
     /**
      * @var integer
      *
-     * @ORM\Column(name="thing_id", type="integer", nullable=true)
+     * @ORM\Column(name="thing_id", type="integer")
      */
     private $thingId;
 
@@ -87,6 +87,14 @@ class Find
      * @ORM\Column(name="date_find", type="datetime", nullable=true)
      */
     private $dateFind;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
 
 
     /**
@@ -471,5 +479,28 @@ class Find
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Find
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

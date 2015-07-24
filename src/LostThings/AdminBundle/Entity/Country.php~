@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Country
  *
  * @ORM\Table(name="div_country")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LostThings\AdminBundle\Entity\Repository\CountryRepository")
  */
 class Country
 {
@@ -41,6 +41,11 @@ class Country
      */
     protected $finds;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Lost", mappedBy="country")
+     */
+    protected $losts;
+
 
     public function __toString(){
         return $this->country ? $this->country : "";
@@ -49,7 +54,7 @@ class Country
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -72,7 +77,7 @@ class Country
     /**
      * Get country
      *
-     * @return string 
+     * @return string
      */
     public function getCountry()
     {
@@ -112,7 +117,7 @@ class Country
     /**
      * Get cities
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCities()
     {
@@ -145,10 +150,43 @@ class Country
     /**
      * Get finds
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFinds()
     {
         return $this->finds;
+    }
+
+    /**
+     * Add losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     * @return Country
+     */
+    public function addLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts[] = $losts;
+
+        return $this;
+    }
+
+    /**
+     * Remove losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     */
+    public function removeLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts->removeElement($losts);
+    }
+
+    /**
+     * Get losts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLosts()
+    {
+        return $this->losts;
     }
 }

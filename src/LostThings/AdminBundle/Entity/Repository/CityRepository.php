@@ -14,7 +14,7 @@ class CityRepository extends EntityRepository
 {
     public function getCityById($id){
         return $this->getEntityManager()
-            ->createQuery('SELECT c FROM LostThingsAdminBundle:City c WHERE c.countryId = :id')
+            ->createQuery('SELECT c FROM LostThingsAdminBundle:City c WHERE c.countryId = :id ORDER BY c.city')
             ->setParameter('id', $id)
             ->getArrayResult();
     }

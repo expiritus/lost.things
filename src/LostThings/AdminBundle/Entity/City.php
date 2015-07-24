@@ -50,10 +50,22 @@ class City
 
 
     /**
+     * @ORM\OneToMany(targetEntity="Street", mappedBy="city")
+     */
+    protected $streets;
+
+
+    /**
      * @ORM\OneToMany(targetEntity="Find", mappedBy="city")
      */
     protected $finds;
 
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Lost", mappedBy="city")
+     */
+    protected $losts;
 
     public function __toString(){
         return $this->city ? $this->city : "";
@@ -62,7 +74,7 @@ class City
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -85,7 +97,7 @@ class City
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -108,7 +120,7 @@ class City
     /**
      * Get countryId
      *
-     * @return integer 
+     * @return integer
      */
     public function getCountryId()
     {
@@ -131,7 +143,7 @@ class City
     /**
      * Get country
      *
-     * @return \LostThings\AdminBundle\Entity\Country 
+     * @return \LostThings\AdminBundle\Entity\Country
      */
     public function getCountry()
     {
@@ -171,7 +183,7 @@ class City
     /**
      * Get areas
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAreas()
     {
@@ -204,10 +216,76 @@ class City
     /**
      * Get finds
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFinds()
     {
         return $this->finds;
+    }
+
+    /**
+     * Add streets
+     *
+     * @param \LostThings\AdminBundle\Entity\Street $streets
+     * @return City
+     */
+    public function addStreet(\LostThings\AdminBundle\Entity\Street $streets)
+    {
+        $this->streets[] = $streets;
+
+        return $this;
+    }
+
+    /**
+     * Remove streets
+     *
+     * @param \LostThings\AdminBundle\Entity\Street $streets
+     */
+    public function removeStreet(\LostThings\AdminBundle\Entity\Street $streets)
+    {
+        $this->streets->removeElement($streets);
+    }
+
+    /**
+     * Get streets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStreets()
+    {
+        return $this->streets;
+    }
+
+    /**
+     * Add losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     * @return City
+     */
+    public function addLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts[] = $losts;
+
+        return $this;
+    }
+
+    /**
+     * Remove losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     */
+    public function removeLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts->removeElement($losts);
+    }
+
+    /**
+     * Get losts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLosts()
+    {
+        return $this->losts;
     }
 }

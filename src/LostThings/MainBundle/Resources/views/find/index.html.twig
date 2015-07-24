@@ -26,7 +26,7 @@
             <select name="thing"></select>
         </p>
         <p>
-            <input type="text" list="other_thing" name="other_thing" placeholder="Other" />
+            <input type="text" list="other_thing" name="other_thing" placeholder="Other" required="required"/>
             <datalist id="other_thing"></datalist>
         </p>
         <p>
@@ -35,10 +35,12 @@
         <p>
             <input type="button" id="button_next_thing" value="Next">
         </p>
-
         <p id="wait_data"><img style="width: 30px" src="{{ asset('images/wait.gif') }}"></p>
         <p>
-            <input type="submit">
+            <textarea name="description" placeholder="Description:"></textarea>
+        </p>
+        <p>
+            <input type="submit" name="submit_find_form">
         </p>
     </form>
 

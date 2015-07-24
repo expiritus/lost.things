@@ -12,9 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class StreetRepository extends EntityRepository
 {
-    public function getStreetById($id){
+    public function getStreetById($city_id)
+    {
         return $this->getEntityManager()
-            ->createQuery('SELECT s FROM LostThingsAdminBundle:Street s')
+            ->createQuery('SELECT DISTINCT s.street FROM LostThingsAdminBundle:Street s WHERE s.cityId = :cityId')
+            ->setParameter('cityId', $city_id)
             ->getArrayResult();
     }
 }

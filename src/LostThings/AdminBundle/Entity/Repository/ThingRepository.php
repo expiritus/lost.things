@@ -14,7 +14,7 @@ class ThingRepository extends EntityRepository
 {
     public function getBaseThing(){
         return $this->getEntityManager()
-            ->createQuery('SELECT t FROM LostThingsAdminBundle:Thing t')
+            ->createQuery('SELECT t FROM LostThingsAdminBundle:Thing t GROUP BY t.nameThing')
             ->getArrayResult();
     }
 }

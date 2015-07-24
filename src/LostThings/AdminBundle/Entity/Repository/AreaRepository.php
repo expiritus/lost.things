@@ -18,11 +18,4 @@ class AreaRepository extends EntityRepository
             ->setParameter('id', $id)
             ->getArrayResult();
     }
-
-//    public function findByName($name){
-//        return $this->getEntityManager()
-//            ->createQuery('SELECT a FROM LostThingsAdminBundle:Area a WHERE a.area = :name')
-//            ->setParameter('name', $name)
-//            ->getResult();
-//    }
 }

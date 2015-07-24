@@ -41,6 +41,11 @@ class Thing
      */
     protected $finds;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Lost", mappedBy="thing")
+     */
+    protected $losts;
+
 
 
     public function __toString(){
@@ -141,5 +146,38 @@ class Thing
     public function getFinds()
     {
         return $this->finds;
+    }
+
+    /**
+     * Add losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     * @return Thing
+     */
+    public function addLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts[] = $losts;
+
+        return $this;
+    }
+
+    /**
+     * Remove losts
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $losts
+     */
+    public function removeLost(\LostThings\AdminBundle\Entity\Lost $losts)
+    {
+        $this->losts->removeElement($losts);
+    }
+
+    /**
+     * Get losts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLosts()
+    {
+        return $this->losts;
     }
 }
