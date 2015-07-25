@@ -1,0 +1,14 @@
+{% extends 'LostThingsMainBundle::layout.html.twig' %}
+
+{% block body %}
+        {% for lost_thing in lost_things %}
+                {{ lost_thing.country }}
+                {{ lost_thing.city }}
+                {{ lost_thing.area }}
+                {{ lost_thing.street }}
+        {% endfor %}
+
+        {% if lost_things is empty %}
+                <p>По вашему запросу ничего не найден</p>
+        {% endif %}
+{% endblock %}

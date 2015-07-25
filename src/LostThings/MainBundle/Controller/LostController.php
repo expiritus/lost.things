@@ -10,7 +10,6 @@ namespace LostThings\MainBundle\Controller;
 
 
 use LostThings\AdminBundle\Entity\Area;
-use LostThings\AdminBundle\Entity\Find;
 use LostThings\AdminBundle\Entity\Lost;
 use LostThings\AdminBundle\Entity\Street;
 use LostThings\AdminBundle\Entity\Thing;
@@ -110,12 +109,23 @@ class LostController extends Controller{
 
         $description_request = $request->request->get('description');
 
+        $lost_foto = $request->files->get('lost_foto');
+        $dir = $this->get('kernel')->getRootDir().'/../web/files';
+        if(isset($lost_foto)){
+            $original_file_name = $lost_foto->getClientOriginalName();
+            $mime_type = substr($original_file_name, strpos($original_file_name, '.'));
+            $file_name = uniqid().$mime_type;
+            $lost_foto->move($dir, $file_name);
+        }
+
+
 
         /**
          * Если поле Район не пустое то проверяем есть ли эдентичное название района в базе
          * Если нет, то сохраняем в базу новое название района
-         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив
+         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив и возвращаем их в автокомплит через js и html5
          * Далее проверяем есть ли в массиве id идентичное id из запроса и возвращаем ключ
+         * Записываем в таблицу area id города
          */
         if(!empty($area_request)){
             $lost_area = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->findBy(array('area' => $area_request));
@@ -157,11 +167,11 @@ class LostController extends Controller{
          * Все тоже самое проделываем и с улицами города
          *
          * Если поле Улица не пустое то проверяем есть ли эдентичное название района в базе
-         * Если нет, то сохраняем в базу новое название района
-         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив
+         * Если нет, то сохраняем в базу новое название улицы
+         * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив и возвращаем их в автокомплит через js и html5
          * Далее проверяем есть ли в массиве id идентичное id из запроса и возвращаем ключ
          *
-         * За исключением одого, если id района нет то записываем id города
+         * Записываем в таблицу street id города
          */
         if(!empty($street_request)){
             $lost_street = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->findBy(array('street' => $street_request));
@@ -286,6 +296,10 @@ class LostController extends Controller{
 
         $lost->setStatus(0);
         $lost->setDescription($description_request);
+
+        if(isset($file_name)){
+            $lost->setFileName($file_name);
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($lost);

@@ -71,34 +71,47 @@ class FindController extends Controller
     public function saveFindThingAction(Request $request)
     {
         // Записываем в переменные значения из POST
-        $country_id = $request->request->get('country');
-        $city_id = $request->request->get('city');
+        $country_id = (int)$request->request->get('country');
+
+        $city_id = (int)$request->request->get('city');
 
         // Делае первую букву района заглавной для сохранения в базе
-        $area_request = $request->request->get('area');
+        $area_request = htmlspecialchars($request->request->get('area'));
         $first = mb_strtoupper(mb_substr($area_request, 0, 1));
         $last = mb_substr($area_request, 1);
         $area_request = $first.$last;
 
 
         // Делаем первую букву улицы заглавной для сохранения в базе
-        $street_request = $request->request->get('street');
+        $street_request = htmlspecialchars($request->request->get('street'));
         $first = mb_strtoupper(mb_substr($street_request, 0, 1));
         $last = mb_substr($street_request, 1);
         $street_request = $first.$last;
 
-        $thing_request = $request->request->get('thing');
+        $thing_request = (int)$request->request->get('thing');
+
         if($thing_request == null){
             $thing_request = 0;
         }
 
         // Делаем первую букву вещи заглавной для сохранение в базе
-        $other_thing_request = $request->request->get('other_thing');
+        $other_thing_request = htmlspecialchars($request->request->get('other_thing'));
         $first = mb_strtoupper(mb_substr($other_thing_request, 0, 1));
         $last = mb_substr($other_thing_request, 1);
         $other_thing_request = $first.$last;
 
-        $description_request = $request->request->get('description');
+        $description_request = htmlspecialchars($request->request->get('description'));
+
+        $find_foto = $request->files->get('find_foto');
+        $dir = $this->get('kernel')->getRootDir().'/../web/files';
+        if(isset($find_foto)){
+            $original_file_name = $find_foto->getClientOriginalName();
+            $mime_type = substr($original_file_name, strpos($original_file_name, '.'));
+            $file_name = uniqid().$mime_type;
+            $find_foto->move($dir, $file_name);
+        }
+
+
 
 
         /**
@@ -161,7 +174,7 @@ class FindController extends Controller
                 $city_parent->getId();
                 $street->setCity($city_parent);
 
-                $street->setStreet($street_request);
+                $street->setStreet($street_request." ул.");
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($street);
@@ -277,12 +290,17 @@ class FindController extends Controller
 
         $find->setStatus(0);
         $find->setDescription($description_request);
+        if(isset($file_name)){
+            $find->setFileName($file_name);
+
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($find);
         $em->flush();
+        $id = $find->getId();
 
-        return $this->redirectToRoute('find');
+        return $this->redirect('/search/find/'.$id);
     }
 
 }

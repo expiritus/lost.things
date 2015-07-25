@@ -99,6 +99,14 @@ class Lost
     private $dateLost;
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string", nullable=true)
+     */
+    private $fileName;
+
+
 
     /**
      * @var \DateTime
@@ -535,5 +543,28 @@ class Lost
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     * @return Lost
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string 
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
     }
 }

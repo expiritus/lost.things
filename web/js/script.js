@@ -15,6 +15,8 @@ $(document).ready(function(){
 
     $("input[name='area']").hide();
     $("input[name='other_thing']").hide();
+    $("input[name='find_foto']").hide();
+    $("input[name='lost_foto']").hide();
 
 
     function wait(){
@@ -108,7 +110,7 @@ $(document).ready(function(){
     //Запрос в базу для открытия поля thing
     buttonNextThing.on("click", function(){
         $("input[name='other_thing']").hide();
-        description.show();
+        //description.show();
         buttonNextThing.hide();
         $.ajax({
             url: "/find/getthing/",
@@ -133,11 +135,20 @@ $(document).ready(function(){
         submitFindForm.show();
         var yesOrNo = thing.val();
         if(yesOrNo == 0){
+            description.show();
             $("input[name='other_thing']").val('').show().attr('required', true);
+            $("input[name='find_foto']").show();
+            $("input[name='lost_foto']").show();
         }else{
+            description.show();
             $("input[name='other_thing']").val('').hide().attr('required', false);
+            $("input[name='find_foto']").show();
+            $("input[name='lost_foto']").show();
         }
         if(yesOrNo == -1){
+            $("input[name='find_foto']").hide();
+            $("input[name='lost_foto']").hide();
+            description.hide();
             submitFindForm.hide();
         }
     });

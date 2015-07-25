@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="div_lost")
  * @ORM\Entity(repositoryClass="LostThings\AdminBundle\Entity\Repository\LostRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Lost
 {
@@ -98,6 +99,14 @@ class Lost
     private $dateLost;
 
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string")
+     */
+    private $fileName;
+
+
 
     /**
      * @var \DateTime
@@ -148,6 +157,14 @@ class Lost
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $username;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->dateLost = new \DateTime();
+    }
 
 
     /**

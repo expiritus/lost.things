@@ -180,4 +180,5 @@ class Thing
     {
         return $this->losts;
     }
+
 }

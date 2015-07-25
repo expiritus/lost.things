@@ -96,6 +96,13 @@ class Find
      */
     private $description;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string", nullable=true)
+     */
+    private $fileName;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="finds")
@@ -502,5 +509,28 @@ class Find
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     * @return Find
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string 
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
     }
 }

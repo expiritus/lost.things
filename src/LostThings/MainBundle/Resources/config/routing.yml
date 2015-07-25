@@ -34,3 +34,8 @@ lost:
 save_lost_thing:
     path: /find/save_lost_thing/
     defaults: { _controller: LostThingsMainBundle:Lost:saveLostThing}
+
+
+search:
+    path: /search/find/{id}/
+    defaults: { _controller: LostThingsMainBundle:Search:resultsSearchFind }

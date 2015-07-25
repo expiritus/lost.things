@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class LostRepository extends EntityRepository
 {
+    public function findAllLostThings($ids){
+        return $this->getEntityManager()
+            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost l WHERE l.id IN (:ids)')
+            ->setParameters(array('ids' => $ids))
+            ->getResult();
+    }
 }

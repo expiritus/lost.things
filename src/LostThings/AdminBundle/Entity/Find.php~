@@ -96,6 +96,13 @@ class Find
      */
     private $description;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="file_name", type="string")
+     */
+    private $fileName;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="Country", inversedBy="finds")

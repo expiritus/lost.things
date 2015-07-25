@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <form action="{{ url('save_find_thing') }}" method="POST">
+    <form action="{{ url('save_find_thing') }}" method="POST" enctype="multipart/form-data">
         <p>
             <select name="country">
                 <option value="0">Choice country</option>
@@ -35,7 +35,12 @@
         <p>
             <input type="button" id="button_next_thing" value="Next">
         </p>
-        <p id="wait_data"><img style="width: 30px" src="{{ asset('images/wait.gif') }}"></p>
+        <p id="wait_data">
+            <img style="width: 30px" src="{{ asset('images/wait.gif') }}">
+        </p>
+        <p>
+            <input type="file" name="find_foto">
+        </p>
         <p>
             <textarea name="description" placeholder="Description:"></textarea>
         </p>
