@@ -102,7 +102,7 @@ class Lost
     /**
      * @var string
      *
-     * @ORM\Column(name="file_name", type="string")
+     * @ORM\Column(name="file_name", type="string", nullable=true)
      */
     private $fileName;
 
@@ -157,6 +157,7 @@ class Lost
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $username;
+
 
     /**
      * @ORM\PrePersist
@@ -543,5 +544,68 @@ class Lost
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set fileName
+     *
+     * @param string $fileName
+     * @return Lost
+     */
+    public function setFileName($fileName)
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
+
+    /**
+     * Get fileName
+     *
+     * @return string 
+     */
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->personalAreas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add personalAreas
+     *
+     * @param \LostThings\AdminBundle\Entity\PersonalAreas $personalAreas
+     * @return Lost
+     */
+    public function addPersonalArea(\LostThings\AdminBundle\Entity\PersonalAreas $personalAreas)
+    {
+        $this->personalAreas[] = $personalAreas;
+
+        return $this;
+    }
+
+    /**
+     * Remove personalAreas
+     *
+     * @param \LostThings\AdminBundle\Entity\PersonalAreas $personalAreas
+     */
+    public function removePersonalArea(\LostThings\AdminBundle\Entity\PersonalAreas $personalAreas)
+    {
+        $this->personalAreas->removeElement($personalAreas);
+    }
+
+    /**
+     * Get personalAreas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPersonalAreas()
+    {
+        return $this->personalAreas;
     }
 }

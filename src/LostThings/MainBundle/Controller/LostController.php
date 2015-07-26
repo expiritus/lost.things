@@ -22,7 +22,7 @@ class LostController extends Controller{
     public function indexAction(Request $request){
         $user = $this->getUser();
         if(!$user){
-            return $this->redirect('/register');
+            return $this->redirect('/login');
         }
         $countries = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Country')->findAll();
 
@@ -30,11 +30,6 @@ class LostController extends Controller{
             'countries' => $countries,
         ));
     }
-
-
-
-
-
 
 
     // Сюда приходит ajax запрос на выборку города по id
@@ -88,6 +83,12 @@ class LostController extends Controller{
         $first = mb_strtoupper(mb_substr($area_request, 0, 1));
         $last = mb_substr($area_request, 1);
         $area_request = $first.$last;
+        $area_request = trim($area_request);
+        if(mb_strpos($area_request, ' ')){
+            $area_request = mb_substr($area_request, 0, mb_strpos($area_request, ' '));
+        }
+        $postfix = ' район.';
+        $area_request = $area_request.$postfix;
 
 
         // Делаем первую букву улицы заглавной для сохранения в базе
@@ -95,6 +96,23 @@ class LostController extends Controller{
         $first = mb_strtoupper(mb_substr($street_request, 0, 1));
         $last = mb_substr($street_request, 1);
         $street_request = $first.$last;
+        $street_request = trim($street_request);
+        if(mb_strpos($street_request, ' ')){
+            $postfix = mb_substr($street_request, mb_strpos($street_request, ' '));
+            $street_request = mb_substr($street_request, 0, mb_strpos($street_request, ' '));
+            $postfix = trim($postfix);
+            switch(mb_substr($postfix, 0, 1)){
+                case 'у': $right_postfix = ' улица.';
+                    break;
+                case 'п': $right_postfix = ' проспект.';
+                    break;
+                default: $right_postfix = ' улица.';
+            }
+        }else{
+            $right_postfix = ' улица.';
+        }
+
+        $street_request = $street_request.$right_postfix;
 
         $thing_request = $request->request->get('thing');
         if($thing_request == null){
@@ -249,7 +267,7 @@ class LostController extends Controller{
 
 
         /**
-         * Сохраняем все в таблицу find
+         * Сохраняем все в таблицу lost
          */
         $lost = new Lost();
 
@@ -304,8 +322,9 @@ class LostController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $em->persist($lost);
         $em->flush();
+        $id = $lost->getId();
 
-        return $this->redirectToRoute('lost');
+        return $this->redirect('/lost/search/'.$id);
     }
 
 }

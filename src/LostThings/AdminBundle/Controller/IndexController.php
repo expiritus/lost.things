@@ -6,10 +6,10 @@ use LostThings\AdminBundle\Entity\Lost;
 use LostThings\AdminBundle\Form\LostType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class IndexController extends Controller
 {
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('LostThingsAdminBundle:Default:index.html.twig', array('name' => $name));
+        return $this->render('LostThingsAdminBundle:index:index.html.twig');
     }
 }

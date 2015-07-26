@@ -17,7 +17,7 @@ class FindController extends Controller
     public function indexAction(Request $request){
         $user = $this->getUser();
         if(!$user){
-            return $this->redirect('/register');
+            return $this->redirect('/login');
         }
         $countries = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Country')->findAll();
 
@@ -75,18 +75,43 @@ class FindController extends Controller
 
         $city_id = (int)$request->request->get('city');
 
-        // Делае первую букву района заглавной для сохранения в базе
+        // Делае первую букву района заглавной и вставляем правильный постфикс "район." для сохранения в базе
         $area_request = htmlspecialchars($request->request->get('area'));
         $first = mb_strtoupper(mb_substr($area_request, 0, 1));
         $last = mb_substr($area_request, 1);
         $area_request = $first.$last;
+        $area_request = trim($area_request);
+        if(mb_strpos($area_request, ' ')){
+            $area_request = mb_substr($area_request, 0, mb_strpos($area_request, ' '));
+        }
+        $postfix = ' район.';
+        $area_request = $area_request.$postfix;
 
 
-        // Делаем первую букву улицы заглавной для сохранения в базе
+
+        // Делаем первую букву улицы заглавной и вставляем правильный постфикс "улица. или проспект." для сохранения в базе
         $street_request = htmlspecialchars($request->request->get('street'));
         $first = mb_strtoupper(mb_substr($street_request, 0, 1));
         $last = mb_substr($street_request, 1);
         $street_request = $first.$last;
+        $street_request = trim($street_request);
+        if(mb_strpos($street_request, ' ')){
+            $postfix = mb_substr($street_request, mb_strpos($street_request, ' '));
+            $street_request = mb_substr($street_request, 0, mb_strpos($street_request, ' '));
+            $postfix = trim($postfix);
+            switch(mb_substr($postfix, 0, 1)){
+                case 'у': $right_postfix = ' улица.';
+                    break;
+                case 'п': $right_postfix = ' проспект.';
+                    break;
+                default: $right_postfix = ' улица.';
+            }
+        }else{
+            $right_postfix = ' улица.';
+        }
+
+        $street_request = $street_request.$right_postfix;
+
 
         $thing_request = (int)$request->request->get('thing');
 
@@ -174,7 +199,7 @@ class FindController extends Controller
                 $city_parent->getId();
                 $street->setCity($city_parent);
 
-                $street->setStreet($street_request." ул.");
+                $street->setStreet($street_request);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($street);
@@ -274,6 +299,7 @@ class FindController extends Controller
 
         $find->setCountry($country);
         $find->setCity($city);
+
         if(isset($area)){
             $find->setArea($area);
         }
@@ -300,7 +326,6 @@ class FindController extends Controller
         $em->flush();
         $id = $find->getId();
 
-        return $this->redirect('/search/find/'.$id);
+        return $this->redirect('/find/search/'.$id);
     }
-
 }

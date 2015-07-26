@@ -36,6 +36,17 @@ save_lost_thing:
     defaults: { _controller: LostThingsMainBundle:Lost:saveLostThing}
 
 
-search:
-    path: /search/find/{id}/
+search_find:
+    path: /find/search/{id}/
     defaults: { _controller: LostThingsMainBundle:Search:resultsSearchFind }
+
+
+search_lost:
+    path: /lost/search/{id}/
+    defaults: { _controller: LostThingsMainBundle:Search:resultsSearchLost }
+
+
+
+personal_area:
+    path: /personal-area/
+    defaults: { _controller: LostThingsMainBundle:PersonalArea:index }

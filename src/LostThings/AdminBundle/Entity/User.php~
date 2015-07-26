@@ -31,6 +31,7 @@ class User extends BaseUser {
      * @ORM\OneToMany(targetEntity="Find", mappedBy="username")
      */
     protected $finds;
+    
 
 
 
@@ -122,5 +123,38 @@ class User extends BaseUser {
     public function getLosts()
     {
         return $this->losts;
+    }
+
+    /**
+     * Add personalAreas
+     *
+     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
+     * @return User
+     */
+    public function addPersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
+    {
+        $this->personalAreas[] = $personalAreas;
+
+        return $this;
+    }
+
+    /**
+     * Remove personalAreas
+     *
+     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
+     */
+    public function removePersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
+    {
+        $this->personalAreas->removeElement($personalAreas);
+    }
+
+    /**
+     * Get personalAreas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPersonalAreas()
+    {
+        return $this->personalAreas;
     }
 }

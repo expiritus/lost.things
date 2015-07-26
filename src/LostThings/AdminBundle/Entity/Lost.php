@@ -158,6 +158,7 @@ class Lost
      */
     protected $username;
 
+
     /**
      * @ORM\PrePersist
      */

@@ -1,0 +1,214 @@
+<?php
+
+namespace LostThings\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PersonalArea
+ *
+ * @ORM\Table(name="div_personal_area")
+ * @ORM\Entity(repositoryClass="LostThings\AdminBundle\Entity\Repository\PersonalAreaRepository")
+ */
+class PersonalArea
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="user_id", type="integer")
+     */
+    private $userId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="find_id", type="integer", nullable=true)
+     */
+    private $findId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="lost_id", type="integer", nullable=true)
+     */
+    private $lostId;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="personalAreas")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $username;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Find", inversedBy="personalAreas")
+     * @ORM\JoinColumn(name="find_id", referencedColumnName="id")
+     */
+    protected $find;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Lost", inversedBy="personalAreas")
+     * @ORM\JoinColumn(name="lost_id", referencedColumnName="id")
+     */
+    protected $lost;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set findId
+     *
+     * @param integer $findId
+     * @return PersonalArea
+     */
+    public function setFindId($findId)
+    {
+        $this->findId = $findId;
+
+        return $this;
+    }
+
+    /**
+     * Get findId
+     *
+     * @return integer 
+     */
+    public function getFindId()
+    {
+        return $this->findId;
+    }
+
+    /**
+     * Set lostId
+     *
+     * @param integer $lostId
+     * @return PersonalArea
+     */
+    public function setLostId($lostId)
+    {
+        $this->lostId = $lostId;
+
+        return $this;
+    }
+
+    /**
+     * Get lostId
+     *
+     * @return integer 
+     */
+    public function getLostId()
+    {
+        return $this->lostId;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     * @return PersonalArea
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer 
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set username
+     *
+     * @param \LostThings\AdminBundle\Entity\User $username
+     * @return PersonalArea
+     */
+    public function setUsername(\LostThings\AdminBundle\Entity\User $username = null)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return \LostThings\AdminBundle\Entity\User 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set find
+     *
+     * @param \LostThings\AdminBundle\Entity\Find $find
+     * @return PersonalArea
+     */
+    public function setFind(\LostThings\AdminBundle\Entity\Find $find = null)
+    {
+        $this->find = $find;
+
+        return $this;
+    }
+
+    /**
+     * Get find
+     *
+     * @return \LostThings\AdminBundle\Entity\Find 
+     */
+    public function getFind()
+    {
+        return $this->find;
+    }
+
+    /**
+     * Set lost
+     *
+     * @param \LostThings\AdminBundle\Entity\Lost $lost
+     * @return PersonalArea
+     */
+    public function setLost(\LostThings\AdminBundle\Entity\Lost $lost = null)
+    {
+        $this->lost = $lost;
+
+        return $this;
+    }
+
+    /**
+     * Get lost
+     *
+     * @return \LostThings\AdminBundle\Entity\Lost 
+     */
+    public function getLost()
+    {
+        return $this->lost;
+    }
+}

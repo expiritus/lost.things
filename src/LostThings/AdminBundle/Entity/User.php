@@ -31,6 +31,7 @@ class User extends BaseUser {
      * @ORM\OneToMany(targetEntity="Find", mappedBy="username")
      */
     protected $finds;
+    
 
 
 

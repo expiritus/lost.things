@@ -1,0 +1,35 @@
+{% extends 'LostThingsMainBundle::layout.html.twig' %}
+
+
+{% block body %}
+    <a href="{{ path('find') }}">I'm find</a>
+    <a href="{{ url('lost') }}">I'm lost</a>
+    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+    <a href="{{ path('fos_user_security_logout') }}">
+        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+
+    {% if all_user_losts is not empty %}
+        <h1>I'm lost</h1>
+        {% for all_user_lost in all_user_losts %}
+            {{ all_user_lost.thing }}
+            {% if all_user_lost.filename is not empty %}
+                <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
+            {% else %}
+                <img src="{{ asset('images/default.gif') }}">
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if all_user_finds is not empty %}
+        <h1>I'm find</h1>
+        {% for all_user_find in all_user_finds %}
+            {{ all_user_find.thing }}
+            {% if all_user_find.filename is not empty %}
+                <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
+            {% else %}
+                <img src="{{ asset('images/default.gif') }}">
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}
