@@ -8,7 +8,11 @@
         <script src="{{ asset('js/script.js') }}"></script>
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
     </body>
 </html>

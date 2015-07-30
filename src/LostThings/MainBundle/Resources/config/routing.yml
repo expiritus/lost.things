@@ -50,3 +50,20 @@ search_lost:
 personal_area:
     path: /personal-area/
     defaults: { _controller: LostThingsMainBundle:PersonalArea:index }
+
+personal_area_thing_delete_lost:
+    path: /personal-area/delete-lost/{id}
+    defaults: { _controller: LostThingsMainBundle:PersonalArea:deleteLost }
+
+personal_area_thing_delete_find:
+    path: /personal-area/delete-find/{id}
+    defaults: { _controller: LostThingsMainBundle:PersonalArea:deleteFind }
+
+paersonal_area_refresh_lost:
+    path: /personal-area/refresh-lost/{id}
+    defaults: { _controller: LostThingsMainBundle:Search:countLostMatches }
+
+
+paersonal_area_refresh_find:
+    path: /personal-area/refresh-find/{id}
+    defaults: { _controller: LostThingsMainBundle:Search:countFindMatches }

@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SearchController extends Controller
 {
+    private $ids_lost = array();
+    private $ids_find = array();
+
     public function resultsSearchFindAction($id){
         $lost_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findAll();
         $find_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->find($id);
@@ -23,38 +26,56 @@ class SearchController extends Controller
             if
             (
                 (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                and $lost_things[$l]->getAreaId() == $find_things->getAreaId()
-                and $lost_things[$l]->getStreetId() == $find_things->getStreetId()
-                and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                    and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
+                    and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
+                    and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
             or
                 (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                    and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                    and $lost_things[$l]->getCityId() == $find_things->getAreaId()
-                    and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getAreaId()
+                    and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
             or
                 (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                    and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                    and $lost_things[$l]->getCityId() == $find_things->getStreetId()
-                    and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getStreetId()
+                    and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
             or
                 (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                    and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                    and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                    and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
             )
             {
-                $ids[] = $lost_things[$l]->getId();
+                $this->ids_find[] = $lost_things[$l]->getId();
+                $email_to = $lost_things[$l]->getUsername()->getEmail();
+                $name = $lost_things[$l]->getUsername();
+                if(count($ids) > 0){
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('Hello Email')
+                        ->setFrom('antras2007@gmail.com')
+                        ->setTo($email_to)
+                        ->setBody(
+                            $this->renderView(
+                            // app/Resources/views/Emails/registration.html.twig
+                                'Emails/matches.html.twig',
+                                array('name' => $name)
+                            ),
+                            'text/html'
+                        )
+                    ;
+                    $this->get('mailer')->send($message);
+                }
             }
         }
-        $lost_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findAllLostThings($ids);
+        $lost_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findAllLostThings($this->ids_find);
 
         return $this->render('LostThingsMainBundle:search:results.html.twig', array(
             'lost_things' => $lost_things,
@@ -70,48 +91,84 @@ class SearchController extends Controller
             if
             (
                 (
-                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                    and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                    and $find_things[$f]->getAreaId() == $lost_things->getAreaId()
-                    and $find_things[$f]->getStreetId() == $lost_things->getStreetId()
-                    and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getCityId()
+                    and $find_things[$f]->getAreaId()    == $lost_things->getAreaId()
+                    and $find_things[$f]->getStreetId()  == $lost_things->getStreetId()
+                    and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
 
                 or
 
                 (
-                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                    and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                    and $find_things[$f]->getCityId() == $lost_things->getAreaId()
-                    and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getCityId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getAreaId()
+                    and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
 
                 or
 
                 (
-                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                    and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                    and $find_things[$f]->getCityId() == $lost_things->getStreetId()
-                    and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getCityId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getStreetId()
+                    and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
 
                 or
 
                 (
-                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                    and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                    and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    and $find_things[$f]->getCityId()    == $lost_things->getCityId()
+                    and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
             )
             {
-                $ids[] = $find_things[$f]->getId();
+                $this->ids_lost[] = $find_things[$f]->getId();
+                $email_to = $find_things[$f]->getUsername()->getEmail();
+                $name = $find_things[$f]->getUsername();
+                if(count($ids) > 0){
+                    $message = \Swift_Message::newInstance()
+                        ->setSubject('Matches things')
+                        ->setFrom('antras2007@gmail.com')
+                        ->setTo($email_to)
+                        ->setBody(
+                            $this->renderView(
+                                'Emails/matches.html.twig',
+                                array('name' => $name)
+                            ),
+                            'text/html'
+                        )
+                    ;
+                    $this->get('mailer')->send($message);
+                }
             }
         }
-        $find_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findAllFindThings($ids);
+
+        $find_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findAllFindThings($this->ids_lost);
 
         return $this->render('LostThingsMainBundle:search:results.html.twig', array(
             'find_things' => $find_things,
         ));
+    }
+
+
+    public function countLostMatchesAction($id){
+        $this->resultsSearchLostAction($id);
+        $count = count($this->ids_lost);
+        $response = new Response(json_encode($count));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+
+    public function countFindMatchesAction($id){
+        $this->resultsSearchFindAction($id);
+        $count = count($this->ids_find);
+        $response = new Response(json_encode($count));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }

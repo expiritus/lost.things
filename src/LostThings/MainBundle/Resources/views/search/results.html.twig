@@ -1,35 +1,37 @@
 {% extends 'LostThingsMainBundle::layout.html.twig' %}
 
 {% block body %}
-    {% if lost_things is defined %}
-        {% for lost_thing in lost_things %}
-            {% if lost_thing.filename is not empty %}
-                <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
-            {% else %}
-                <img src="{{ asset('images/default.gif') }}">
+    <div id="results_search">
+        {% if lost_things is defined %}
+            {% for lost_thing in lost_things %}
+                {% if lost_thing.filename is not empty %}
+                    <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
+                {% else %}
+                    <img src="{{ asset('images/default.gif') }}">
+                {% endif %}
+                {{ lost_thing.country }}
+                {{ lost_thing.city }}
+                {{ lost_thing.area }}
+                {{ lost_thing.street }}
+            {% endfor %}
+            {% if lost_things is empty %}
+                <p>Вашу вещь еще никто не ищет</p>
             {% endif %}
-            {{ lost_thing.country }}
-            {{ lost_thing.city }}
-            {{ lost_thing.area }}
-            {{ lost_thing.street }}
-        {% endfor %}
-        {% if lost_things is empty %}
-            <p>Вашу вещь еще никто не ищет</p>
-        {% endif %}
-    {% else %}
-        {% for find_thing in find_things %}
-            {% if find_thing.filename is not empty %}
-                <img src="{{ asset('files/') }}{{ find_thing.filename }}">
-            {% else %}
-                <img src="{{ asset('images/default.gif') }}">
+        {% else %}
+            {% for find_thing in find_things %}
+                {% if find_thing.filename is not empty %}
+                    <img src="{{ asset('files/') }}{{ find_thing.filename }}">
+                {% else %}
+                    <img src="{{ asset('images/default.gif') }}">
+                {% endif %}
+                {{ find_thing.country }}
+                {{ find_thing.city }}
+                {{ find_thing.area }}
+                {{ find_thing.street }}
+            {% endfor %}
+            {% if find_things is empty %}
+                <p>Эту вещь еще никто не нашел</p>
             {% endif %}
-            {{ find_thing.country }}
-            {{ find_thing.city }}
-            {{ find_thing.area }}
-            {{ find_thing.street }}
-        {% endfor %}
-        {% if find_things is empty %}
-            <p>Эту вещь еще никто не нашел</p>
         {% endif %}
-    {% endif %}
+    </div>
 {% endblock %}

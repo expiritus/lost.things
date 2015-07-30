@@ -14,10 +14,10 @@ class IndexController extends Controller{
 
     public function indexAction()
     {
-        $securityContext = $this->container->get('security.context');
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')){
-            return $this->redirectToRoute('personal_area');
-        }
+//        $securityContext = $this->container->get('security.context');
+//        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+//            return $this->redirectToRoute('personal_area');
+//        }
         return $this->render('LostThingsMainBundle:index:index.html.twig');
     }
 }

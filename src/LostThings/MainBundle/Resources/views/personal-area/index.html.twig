@@ -2,34 +2,166 @@
 
 
 {% block body %}
-    <a href="{{ path('find') }}">I'm find</a>
-    <a href="{{ url('lost') }}">I'm lost</a>
-    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-    <a href="{{ path('fos_user_security_logout') }}">
-        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-    </a>
-
-    {% if all_user_losts is not empty %}
-        <h1>I'm lost</h1>
-        {% for all_user_lost in all_user_losts %}
-            {{ all_user_lost.thing }}
-            {% if all_user_lost.filename is not empty %}
-                <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
-            {% else %}
-                <img src="{{ asset('images/default.gif') }}">
+    <div id="personal_area">
+        <div class="lost_things">
+            {% if all_user_losts is not empty %}
+                <h1>I'm lost</h1>
+                {% for all_user_lost in all_user_losts %}
+                    <div class="lost-{{ all_user_lost.id }}">
+                        {% if all_user_lost.filename is not empty %}
+                            <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
+                        {% else %}
+                            <img src="{{ asset('images/default.gif') }}">
+                        {% endif %}
+                        <p>
+                            Потеря: {{ all_user_lost.thing }}
+                        </p>
+                        <p>
+                            Страна: {{ all_user_lost.country }}
+                        </p>
+                        <p>
+                            Район: {{ all_user_lost.area }}
+                        </p>
+                        <p>
+                            Адрес: {{ all_user_lost.street }}
+                        </p>
+                        <p>
+                            Описание: {{ all_user_lost.description }}
+                        </p>
+                        <p class="count_matches_lost">
+                            Кол-во совпадений: <span></span>
+                        </p>
+                        <button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Refresh</button>
+                        <button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button>
+                        <input class="refresh_lost" type="hidden" value="{{ all_user_lost.id }}">
+                    </div>
+                {% endfor %}
             {% endif %}
-        {% endfor %}
-    {% endif %}
+        </div>
 
-    {% if all_user_finds is not empty %}
-        <h1>I'm find</h1>
-        {% for all_user_find in all_user_finds %}
-            {{ all_user_find.thing }}
-            {% if all_user_find.filename is not empty %}
-                <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
-            {% else %}
-                <img src="{{ asset('images/default.gif') }}">
+        <div class="find_things">
+            {% if all_user_finds is not empty %}
+                <h1>I'm find</h1>
+                {% for all_user_find in all_user_finds %}
+                    <div class="find-{{ all_user_find.id }}">
+                        {% if all_user_find.filename is not empty %}
+                            <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
+                        {% else %}
+                            <img src="{{ asset('images/default.gif') }}">
+                        {% endif %}
+                        <p>
+                            Находка: {{ all_user_find.thing }}
+                        </p>
+                        <p>
+                            Страна: {{ all_user_find.country }}
+                        </p>
+                        <p>
+                            Район: {{ all_user_find.area }}
+                        </p>
+                        <p>
+                            Адрес: {{ all_user_find.street }}
+                        </p>
+                        <p>
+                            Описание: {{ all_user_find.description }}
+                        </p>
+                        <p class="count_matches_find">
+                            Кол-во совпадений: <span></span>
+                        </p>
+                        <button class="button_link refresh_find" value="{{ all_user_find.id }}">Refresh</button>
+                        <button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button>
+                        <input class="refresh_find" type="hidden" value="{{ all_user_find.id }}">
+                    </div>
+                {% endfor %}
             {% endif %}
-        {% endfor %}
-    {% endif %}
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('.delete_lost').on('click', function(){
+                var lost_id = $(this).attr('value');
+                $.ajax({
+                    url: "/personal-area/delete-lost/"+lost_id,
+                    method: "DELETE",
+                    success: function(data){
+                        if(data){
+                            $('.lost-'+lost_id).html("");
+                        }
+                    }
+                });
+            });
+
+            $('.delete_find').on('click', function(){
+                var find_id = $(this).attr('value');
+                $.ajax({
+                    url: "/personal-area/delete-find/"+find_id,
+                    method: "DELETE",
+                    success: function(data){
+                        if(data){
+                            $('.find-'+find_id).html("");
+                        }
+                    }
+                });
+            });
+
+            var refresh_lost = $('.refresh_lost');
+            var refresh_lost_id = refresh_lost.attr('value');
+            $.ajax({
+                url: "/personal-area/refresh-lost/"+refresh_lost_id,
+                method: "POST",
+                data: {
+                    id: refresh_lost_id
+                },
+                dataType: "json",
+                success: function(data){
+                    $('.count_matches_lost span').empty().append(data)
+                }
+            });
+
+            refresh_lost.on('click', function(){
+                var refresh_lost_id = $(this).attr('value');
+                $.ajax({
+                    url: "/personal-area/refresh-lost/"+refresh_lost_id,
+                    method: "POST",
+                    data: {
+                        id: refresh_lost_id
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        $('.count_matches_lost span').empty().append(data)
+                    }
+                });
+            });
+
+            var refresh_find = $('.refresh_find');
+            var refresh_find_id = refresh_find.attr('value');
+            $.ajax({
+                url: "/personal-area/refresh-find/"+refresh_find_id,
+                method: "POST",
+                data: {
+                    id: refresh_find_id
+                },
+                dataType: "json",
+                success: function(data){
+                    $('.count_matches_find span').empty().append(data)
+                }
+            });
+
+            refresh_find.on('click', function(){
+                var refresh_find_id = $(this).attr('value');
+                $.ajax({
+                    url: "/personal-area/refresh-find/"+refresh_find_id,
+                    method: "POST",
+                    data: {
+                        id: refresh_find_id
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        $('.count_matches_find span').empty().append(data)
+                    }
+                });
+            });
+
+
+        });
+    </script>
 {% endblock %}

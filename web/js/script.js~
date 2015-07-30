@@ -54,7 +54,6 @@ $(document).ready(function(){
 
     //Запрос в базу для открытия поля area
     city.on("change", function(){
-	$("input[name='find_foto']").hide();
         $("input[name='area']").val('');
         $("input[name='street']").val('');
         $("input[name='other_thing']").val('').hide();

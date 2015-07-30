@@ -1,1 +1,21 @@
 {% extends '::base.html.twig' %}
+
+{% block header %}
+    <div id="find_lost_panel">
+        <a href="{{ path('find') }}">I'm find</a>
+        <a href="{{ url('lost') }}">I'm lost</a>
+    </div>
+    <div id="log_in">
+        {% if app.user %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+            |
+            <a href="{{ path('personal_area') }}">Personal Area</a>
+        {% else %}
+            <a href="{{ url('fos_user_security_login') }}">Log in</a>
+        {% endif %}
+    </div>
+    <div class="clear"></div>
+{% endblock %}

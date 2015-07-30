@@ -78,41 +78,57 @@ class LostController extends Controller{
         $country_id = $request->request->get('country');
         $city_id = $request->request->get('city');
 
-        // Делае первую букву района заглавной для сохранения в базе
+        // Приводим к общему формату введенное назавание района или области
         $area_request = $request->request->get('area');
-        $first = mb_strtoupper(mb_substr($area_request, 0, 1));
-        $last = mb_substr($area_request, 1);
-        $area_request = $first.$last;
-        $area_request = trim($area_request);
-        if(mb_strpos($area_request, ' ')){
-            $area_request = mb_substr($area_request, 0, mb_strpos($area_request, ' '));
-        }
-        $postfix = ' район.';
-        $area_request = $area_request.$postfix;
-
-
-        // Делаем первую букву улицы заглавной для сохранения в базе
-        $street_request = $request->request->get('street');
-        $first = mb_strtoupper(mb_substr($street_request, 0, 1));
-        $last = mb_substr($street_request, 1);
-        $street_request = $first.$last;
-        $street_request = trim($street_request);
-        if(mb_strpos($street_request, ' ')){
-            $postfix = mb_substr($street_request, mb_strpos($street_request, ' '));
-            $street_request = mb_substr($street_request, 0, mb_strpos($street_request, ' '));
-            $postfix = trim($postfix);
-            switch(mb_substr($postfix, 0, 1)){
-                case 'у': $right_postfix = ' улица.';
-                    break;
-                case 'п': $right_postfix = ' проспект.';
-                    break;
-                default: $right_postfix = ' улица.';
+        if(!empty($area_request)){
+            $first = mb_strtoupper(mb_substr($area_request, 0, 1));
+            $last = mb_substr($area_request, 1);
+            $last = mb_strtolower($last);
+            $area_request = $first.$last;
+            $area_request = trim($area_request);
+            if(mb_strpos($area_request, ' ')){
+                $postfix = mb_substr($area_request, mb_strpos($area_request, ' '));
+                $area_request = mb_substr($area_request, 0, mb_strpos($area_request, ' '));
+                $postfix = trim($postfix);
+                switch(mb_substr($postfix, 0, 1)){
+                    case 'р': $right_postfix = ' район';
+                        break;
+                    case 'о': $right_postfix = ' область';
+                        break;
+                    default: $right_postfix = ' район';
+                }
+            }else{
+                $right_postfix = ' район';
             }
-        }else{
-            $right_postfix = ' улица.';
+            $area_request = $area_request.$right_postfix;
         }
 
-        $street_request = $street_request.$right_postfix;
+
+        // Приводим к общему формату введенное название улицы
+        $street_request = $request->request->get('street');
+        if(!empty($street_request)){
+            $first = mb_strtoupper(mb_substr($street_request, 0, 1));
+            $last = mb_substr($street_request, 1);
+            $last = mb_strtolower($last);
+            $street_request = $first.$last;
+            $street_request = trim($street_request);
+            if(mb_strpos($street_request, ' ')){
+                $postfix = mb_substr($street_request, mb_strpos($street_request, ' '));
+                $street_request = mb_substr($street_request, 0, mb_strpos($street_request, ' '));
+                $postfix = trim($postfix);
+                switch(mb_substr($postfix, 0, 1)){
+                    case 'у': $right_postfix = ' улица';
+                        break;
+                    case 'п': $right_postfix = ' проспект';
+                        break;
+                    default: $right_postfix = ' улица';
+                }
+            }else{
+                $right_postfix = ' улица';
+            }
+
+            $street_request = $street_request.$right_postfix;
+        }
 
         $thing_request = $request->request->get('thing');
         if($thing_request == null){
