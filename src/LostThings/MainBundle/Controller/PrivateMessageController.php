@@ -38,4 +38,13 @@ class PrivateMessageController extends Controller
         return new RedirectResponse($referer);
     }
 
+
+    public function allCorrespondenceAction(){
+        $user = $this->getUser()->getId();
+        $all_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findGroupBy($user);
+        return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
+            'all_correspondence' => $all_correspondence,
+        ));
+    }
+
 }

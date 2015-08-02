@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+    public function findGroupBy($user){
+        return $this->getEntityManager()
+            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user GROUP BY c.receivedUserId')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
 }

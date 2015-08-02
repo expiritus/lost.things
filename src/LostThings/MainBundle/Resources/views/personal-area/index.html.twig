@@ -28,14 +28,14 @@
                         <p>
                             Описание: {{ all_user_lost.description }}
                         </p>
-                        <p class="count_matches_lost">
+                        <p class="count_matches_lost_{{ all_user_lost.id }}">
                             Кол-во совпадений:  <a href="/personal-area/lost/search/{{ all_user_lost.id }}"> <span></span></a>
                         </p>
                         <button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Refresh</button>
                         <button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button>
-                        <input class="refresh_lost" type="hidden" value="{{ all_user_lost.id }}">
+                        {#<input class="refresh_lost_{{ all_user_lost.id }}" type="hidden" value="{{ all_user_lost.id }}">#}
                     </div>
-
+                    <div class="clear"></div>
                 {% endfor %}
             {% endif %}
             <div class="clear"></div>
@@ -66,12 +66,12 @@
                         <p>
                             Описание: {{ all_user_find.description }}
                         </p>
-                        <p class="count_matches_find">
+                        <p class="count_matches_find_{{ all_user_find.id }}">
                             Кол-во совпадений: <a href="/personal-area/find/search/{{ all_user_find.id }}"><span></span></a>
                         </p>
                         <button class="button_link refresh_find" value="{{ all_user_find.id }}">Refresh</button>
                         <button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button>
-                        <input class="refresh_find" type="hidden" value="{{ all_user_find.id }}">
+                        {#<input class="refresh_find__{{ all_user_find.id }}" type="hidden" value="{{ all_user_find.id }}">#}
                     </div>
                     <div class="clear"></div>
                 {% endfor %}

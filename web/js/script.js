@@ -195,26 +195,12 @@ $(document).ready(function(){
         });
     });
 
+
     var refresh_lost = $('.refresh_lost');
     var refresh_lost_id = refresh_lost.attr('value');
 
-    if(refresh_lost.length > 0){
-        $.ajax({
-            url: "/personal-area/refresh-lost/"+refresh_lost_id,
-            method: "POST",
-            data: {
-                id: refresh_lost_id
-            },
-            dataType: "json",
-            success: function(data){
-                $('.count_matches_lost span').empty().append(data);
-            }
-        });
-    }
-
     refresh_lost.on('click', function(){
         var refresh_lost_id = $(this).attr('value');
-
         $.ajax({
             url: "/personal-area/refresh-lost/"+refresh_lost_id,
             method: "POST",
@@ -223,28 +209,15 @@ $(document).ready(function(){
             },
             dataType: "json",
             success: function(data){
-                $('.wait_data_find_'+refresh_lost_id).hide();
-                $('.count_matches_lost span').empty().append(data)
+                $('.count_matches_lost_'+refresh_lost_id+' span').empty().append(data);
             }
         });
     });
 
+    refresh_lost.click();
+
     var refresh_find = $('.refresh_find');
     var refresh_find_id = refresh_find.attr('value');
-
-    if(refresh_find.length > 0){
-        $.ajax({
-            url: "/personal-area/refresh-find/"+refresh_find_id,
-            method: "POST",
-            data: {
-                id: refresh_find_id
-            },
-            dataType: "json",
-            success: function(data){
-                $('.count_matches_find span').empty().append(data)
-            }
-        });
-    }
 
     refresh_find.on('click', function(){
         var refresh_find_id = $(this).attr('value');
@@ -257,10 +230,12 @@ $(document).ready(function(){
             dataType: "json",
             success: function(data){
                 $('.wait_data_find_'+refresh_find_id).hide();
-                $('.count_matches_find span').empty().append(data)
+                $('.count_matches_find_'+refresh_find_id+' span').empty().append(data);
             }
         });
     });
+
+    refresh_find.click();
     // КОНЕЦ ОБРАБОТКИ ЛИЧНОГО КАБИНЕТА
 
 
