@@ -70,7 +70,8 @@ main #personal_area h1{
     margin: 0 0 20px 0;
 }
 
-main #personal_area img, main #results_search{
+
+main #personal_area img, main #results_search img{
     width: 150px;
     float: left;
     margin: 0 10px 10px 0;
@@ -84,6 +85,11 @@ main #personal_area .button_link, main #personal_area .button_link{
     cursor: pointer;
     color: #000fff;
     padding: 0;
+}
+
+main #personal_area .count_matches_lost span{
+    color: blue;
+    cursor: pointer;
 }
 
 main #personal_area .refresh_lost, main #personal_area .refresh_find{

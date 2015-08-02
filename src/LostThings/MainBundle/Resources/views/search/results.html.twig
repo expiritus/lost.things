@@ -9,10 +9,24 @@
                 {% else %}
                     <img src="{{ asset('images/default.gif') }}">
                 {% endif %}
-                {{ lost_thing.country }}
-                {{ lost_thing.city }}
-                {{ lost_thing.area }}
-                {{ lost_thing.street }}
+                <p>
+                    Потеря: {{ lost_thing.thing }}
+                </p>
+                <p>
+                    Страна: {{ lost_thing.country }}
+                </p>
+                <p>
+                    Район: {{ lost_thing.area }}
+                </p>
+                <p>
+                    Адрес: {{ lost_thing.street }}
+                </p>
+                <p>
+                    Описание: {{ lost_thing.description }}
+                </p>
+                <p>
+                    Потерял: {{ lost_thing.username }}
+                </p>
             {% endfor %}
             {% if lost_things is empty %}
                 <p>Вашу вещь еще никто не ищет</p>
@@ -20,14 +34,28 @@
         {% else %}
             {% for find_thing in find_things %}
                 {% if find_thing.filename is not empty %}
-                    <img src="{{ asset('files/') }}{{ find_thing.filename }}">
-                {% else %}
-                    <img src="{{ asset('images/default.gif') }}">
-                {% endif %}
-                {{ find_thing.country }}
-                {{ find_thing.city }}
-                {{ find_thing.area }}
-                {{ find_thing.street }}
+                        <img src="{{ asset('files/') }}{{ find_thing.filename }}">
+                    {% else %}
+                        <img src="{{ asset('images/default.gif') }}">
+                    {% endif %}
+                    <p>
+                        Находка: {{ find_thing.thing }}
+                    </p>
+                    <p>
+                        Страна: {{ find_thing.country }}
+                    </p>
+                    <p>
+                        Район: {{ find_thing.area }}
+                    </p>
+                    <p>
+                        Адрес: {{ find_thing.street }}
+                    </p>
+                    <p>
+                        Описание: {{ find_thing.description }}
+                    </p>
+                    <p>
+                        Нашел: {{ find_thing.username }}
+                    </p>
             {% endfor %}
             {% if find_things is empty %}
                 <p>Эту вещь еще никто не нашел</p>

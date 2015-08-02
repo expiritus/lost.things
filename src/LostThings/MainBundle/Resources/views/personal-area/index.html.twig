@@ -29,7 +29,7 @@
                             Описание: {{ all_user_lost.description }}
                         </p>
                         <p class="count_matches_lost">
-                            Кол-во совпадений: <span></span>
+                            Кол-во совпадений:  <a href="/personal-area/lost/search/{{ all_user_lost.id }}"> <span></span></a>
                         </p>
                         <button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Refresh</button>
                         <button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button>
@@ -65,7 +65,7 @@
                             Описание: {{ all_user_find.description }}
                         </p>
                         <p class="count_matches_find">
-                            Кол-во совпадений: <span></span>
+                            Кол-во совпадений: <a href="/personal-area/find/search/{{ all_user_find.id }}"><span></span></a>
                         </p>
                         <button class="button_link refresh_find" value="{{ all_user_find.id }}">Refresh</button>
                         <button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button>
@@ -76,92 +76,6 @@
         </div>
     </div>
     <script>
-        $(document).ready(function(){
-            $('.delete_lost').on('click', function(){
-                var lost_id = $(this).attr('value');
-                $.ajax({
-                    url: "/personal-area/delete-lost/"+lost_id,
-                    method: "DELETE",
-                    success: function(data){
-                        if(data){
-                            $('.lost-'+lost_id).html("");
-                        }
-                    }
-                });
-            });
 
-            $('.delete_find').on('click', function(){
-                var find_id = $(this).attr('value');
-                $.ajax({
-                    url: "/personal-area/delete-find/"+find_id,
-                    method: "DELETE",
-                    success: function(data){
-                        if(data){
-                            $('.find-'+find_id).html("");
-                        }
-                    }
-                });
-            });
-
-            var refresh_lost = $('.refresh_lost');
-            var refresh_lost_id = refresh_lost.attr('value');
-            $.ajax({
-                url: "/personal-area/refresh-lost/"+refresh_lost_id,
-                method: "POST",
-                data: {
-                    id: refresh_lost_id
-                },
-                dataType: "json",
-                success: function(data){
-                    $('.count_matches_lost span').empty().append(data)
-                }
-            });
-
-            refresh_lost.on('click', function(){
-                var refresh_lost_id = $(this).attr('value');
-                $.ajax({
-                    url: "/personal-area/refresh-lost/"+refresh_lost_id,
-                    method: "POST",
-                    data: {
-                        id: refresh_lost_id
-                    },
-                    dataType: "json",
-                    success: function(data){
-                        $('.count_matches_lost span').empty().append(data)
-                    }
-                });
-            });
-
-            var refresh_find = $('.refresh_find');
-            var refresh_find_id = refresh_find.attr('value');
-            $.ajax({
-                url: "/personal-area/refresh-find/"+refresh_find_id,
-                method: "POST",
-                data: {
-                    id: refresh_find_id
-                },
-                dataType: "json",
-                success: function(data){
-                    $('.count_matches_find span').empty().append(data)
-                }
-            });
-
-            refresh_find.on('click', function(){
-                var refresh_find_id = $(this).attr('value');
-                $.ajax({
-                    url: "/personal-area/refresh-find/"+refresh_find_id,
-                    method: "POST",
-                    data: {
-                        id: refresh_find_id
-                    },
-                    dataType: "json",
-                    success: function(data){
-                        $('.count_matches_find span').empty().append(data)
-                    }
-                });
-            });
-
-
-        });
     </script>
 {% endblock %}

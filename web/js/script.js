@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+    //ФОРМА ----------------------------------------------
+
     var country = $("select[name='country']");
     var city = $("select[name='city']").hide();
     var area = $("#areas");
@@ -8,7 +11,8 @@ $(document).ready(function(){
     var street = $("input[name='street']").hide();
 
     var thing = $("select[name='thing']").hide();
-    var waitImage = $('#wait_data').hide();
+    var waitImage = $('.wait_data').hide();
+
     var buttonNextStreet = $('#button_next_street').hide();
     var buttonNextThing = $('#button_next_thing').hide();
     var description = $("textarea[name='description']").hide();
@@ -154,4 +158,110 @@ $(document).ready(function(){
             submitFindForm.hide();
         }
     });
+    // КОНЕЦ ОБРАБОТКИ ФОРМЫ ===============================================================================
+
+
+
+
+
+
+
+
+
+    // ЛИЧНЫЙ КАБИНЕТ ----------------------------------------------------------------------------------------
+    $('.delete_lost').on('click', function(){
+        var lost_id = $(this).attr('value');
+        $.ajax({
+            url: "/personal-area/delete-lost/"+lost_id,
+            method: "DELETE",
+            success: function(data){
+                if(data){
+                    $('.lost-'+lost_id).html("");
+                }
+            }
+        });
+    });
+
+    $('.delete_find').on('click', function(){
+        var find_id = $(this).attr('value');
+        $.ajax({
+            url: "/personal-area/delete-find/"+find_id,
+            method: "DELETE",
+            success: function(data){
+                if(data){
+                    $('.find-'+find_id).html("");
+                }
+            }
+        });
+    });
+
+    var refresh_lost = $('.refresh_lost');
+    var refresh_lost_id = refresh_lost.attr('value');
+
+    if(refresh_lost.length > 0){
+        $.ajax({
+            url: "/personal-area/refresh-lost/"+refresh_lost_id,
+            method: "POST",
+            data: {
+                id: refresh_lost_id
+            },
+            dataType: "json",
+            success: function(data){
+                $('.count_matches_lost span').empty().append(data);
+            }
+        });
+    }
+
+    refresh_lost.on('click', function(){
+        var refresh_lost_id = $(this).attr('value');
+
+        $.ajax({
+            url: "/personal-area/refresh-lost/"+refresh_lost_id,
+            method: "POST",
+            data: {
+                id: refresh_lost_id
+            },
+            dataType: "json",
+            success: function(data){
+                $('.wait_data_find_'+refresh_lost_id).hide();
+                $('.count_matches_lost span').empty().append(data)
+            }
+        });
+    });
+
+    var refresh_find = $('.refresh_find');
+    var refresh_find_id = refresh_find.attr('value');
+
+    if(refresh_find.length > 0){
+        $.ajax({
+            url: "/personal-area/refresh-find/"+refresh_find_id,
+            method: "POST",
+            data: {
+                id: refresh_find_id
+            },
+            dataType: "json",
+            success: function(data){
+                $('.count_matches_find span').empty().append(data)
+            }
+        });
+    }
+
+    refresh_find.on('click', function(){
+        var refresh_find_id = $(this).attr('value');
+        $.ajax({
+            url: "/personal-area/refresh-find/"+refresh_find_id,
+            method: "POST",
+            data: {
+                id: refresh_find_id
+            },
+            dataType: "json",
+            success: function(data){
+                $('.wait_data_find_'+refresh_find_id).hide();
+                $('.count_matches_find span').empty().append(data)
+            }
+        });
+    });
+
+
+    // КОНЕЦ ОБРАБОТКИ ЛИЧНОГО КАБИНЕТА
 });

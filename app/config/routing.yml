@@ -6,9 +6,6 @@ lost_things_main:
     resource: "@LostThingsMainBundle/Resources/config/routing.yml"
     prefix:   /
 
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

@@ -51,6 +51,14 @@ personal_area:
     path: /personal-area/
     defaults: { _controller: LostThingsMainBundle:PersonalArea:index }
 
+personal_area_lost_search:
+    path: /personal-area/lost/search/{id}
+    defaults: { _controller: LostThingsMainBundle:Search:personalAreaResultSearchLost }
+
+personal_area_find_search:
+    path: /personal-area/find/search/{id}
+    defaults: { _controller: LostThingsMainBundle:Search:personalAreaResultSearchFind }
+
 personal_area_thing_delete_lost:
     path: /personal-area/delete-lost/{id}
     defaults: { _controller: LostThingsMainBundle:PersonalArea:deleteLost }

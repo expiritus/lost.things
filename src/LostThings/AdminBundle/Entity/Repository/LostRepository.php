@@ -18,4 +18,11 @@ class LostRepository extends EntityRepository
             ->setParameters(array('ids' => $ids))
             ->getResult();
     }
+
+    public function findAllLostThingsArray($ids){
+        return $this->getEntityManager()
+            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost f WHERE l.id IN (:ids)')
+            ->setParameters(array('ids' => $ids))
+            ->getArrayResult();
+    }
 }
