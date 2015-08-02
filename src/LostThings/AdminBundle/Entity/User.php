@@ -40,6 +40,16 @@ class User extends BaseUser {
      */
     protected $losts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="username")
+     */
+    protected $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="receivedUsername")
+     */
+    protected $message;
+
     public function __construct()
     {
         parent::__construct();

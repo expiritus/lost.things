@@ -75,3 +75,8 @@ paersonal_area_refresh_lost:
 paersonal_area_refresh_find:
     path: /personal-area/refresh-find/{id}
     defaults: { _controller: LostThingsMainBundle:Search:countFindMatches }
+
+
+private_message:
+    path: /private-message/
+    defaults: { _controller: LostThingsMainBundle:PrivateMessage:message }

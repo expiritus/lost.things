@@ -1,39 +1,49 @@
-{% extends 'LostThingsMainBundle::layout.html.twig' %}
+{% extends 'LostThingsMainBundle:personal-area:layout.html.twig' %}
 
 {% block body %}
     <div id="results_search">
         {% if lost_things is defined %}
             {% for lost_thing in lost_things %}
-                {% if lost_thing.filename is not empty %}
-                    <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
-                {% else %}
-                    <img src="{{ asset('images/default.gif') }}">
-                {% endif %}
-                <p>
-                    Потеря: {{ lost_thing.thing }}
-                </p>
-                <p>
-                    Страна: {{ lost_thing.country }}
-                </p>
-                <p>
-                    Район: {{ lost_thing.area }}
-                </p>
-                <p>
-                    Адрес: {{ lost_thing.street }}
-                </p>
-                <p>
-                    Описание: {{ lost_thing.description }}
-                </p>
-                <p>
-                    Потерял: {{ lost_thing.username }}
-                </p>
+                <div class="search_box">
+                    {% if lost_thing.filename is not empty %}
+                        <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
+                    {% else %}
+                        <img src="{{ asset('images/default.gif') }}">
+                    {% endif %}
+                    <p>
+                        Потеря: {{ lost_thing.thing }}
+                    </p>
+                    <p>
+                        Страна: {{ lost_thing.country }}
+                    </p>
+                    <p>
+                        Район: {{ lost_thing.area }}
+                    </p>
+                    <p>
+                        Адрес: {{ lost_thing.street }}
+                    </p>
+                    <p>
+                        Описание: {{ lost_thing.description }}
+                    </p>
+                    <p class="send_user_pm">
+                        Потерял: <button class="button_link" value="{{ lost_thing.username }}"> {{ lost_thing.username }}</button>
+                    </p>
+                </div>
             {% endfor %}
+            <div class="dialog" title="">
+                <form action="{{ path('private_message') }}" method="POST">
+                    <textarea class="message" name="message"></textarea>
+                    <input type="hidden" name="whom" value="" class="whom">
+                    <button name="submit_pm" class="submit_pm button">Отправить</button>
+                </form>
+            </div>
             {% if lost_things is empty %}
                 <p>Вашу вещь еще никто не ищет</p>
             {% endif %}
         {% else %}
             {% for find_thing in find_things %}
-                {% if find_thing.filename is not empty %}
+                <div class="search_box">
+                    {% if find_thing.filename is not empty %}
                         <img src="{{ asset('files/') }}{{ find_thing.filename }}">
                     {% else %}
                         <img src="{{ asset('images/default.gif') }}">
@@ -53,10 +63,19 @@
                     <p>
                         Описание: {{ find_thing.description }}
                     </p>
-                    <p>
-                        Нашел: {{ find_thing.username }}
+                    <p class="send_user_pm">
+                        Нашел: <button class="button_link" value="{{ find_thing.username }}">{{ find_thing.username }}</button>
                     </p>
+                    <div class="clear"></div>
+                </div>
             {% endfor %}
+            <div class="dialog" title="">
+                <form action="{{ path('private_message') }}" method="POST">
+                    <textarea class="message" name="message"></textarea>
+                    <input type="hidden" name="whom" value="" class="whom">
+                    <button name="submit_pm" class="submit_pm button">Отправить</button>
+                </form>
+            </div>
             {% if find_things is empty %}
                 <p>Эту вещь еще никто не нашел</p>
             {% endif %}

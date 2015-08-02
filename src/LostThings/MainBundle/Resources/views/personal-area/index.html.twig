@@ -1,4 +1,4 @@
-{% extends 'LostThingsMainBundle::layout.html.twig' %}
+{% extends 'LostThingsMainBundle:personal-area:layout.html.twig' %}
 
 
 {% block body %}
@@ -35,8 +35,10 @@
                         <button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button>
                         <input class="refresh_lost" type="hidden" value="{{ all_user_lost.id }}">
                     </div>
+
                 {% endfor %}
             {% endif %}
+            <div class="clear"></div>
         </div>
 
         <div class="find_things">
@@ -71,6 +73,7 @@
                         <button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button>
                         <input class="refresh_find" type="hidden" value="{{ all_user_find.id }}">
                     </div>
+                    <div class="clear"></div>
                 {% endfor %}
             {% endif %}
         </div>

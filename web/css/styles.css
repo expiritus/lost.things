@@ -40,11 +40,6 @@ table {
 }
 
 
-body img{
-
-}
-
-
 header{
     width: 100%;
     min-width: 1000px;
@@ -77,8 +72,43 @@ main #personal_area img, main #results_search img{
     margin: 0 10px 10px 0;
 }
 
+main .search_box{
+
+}
+
 main #personal_area .button_link, main #personal_area .button_link{
     float: right;
+}
+
+
+main #left_side{
+    float: left;
+    width: 20%;
+}
+
+
+main #right_side{
+    float: right;
+    width: 20%;
+}
+
+main #personal_area{
+    margin: 0 auto;
+    width: 60%;
+    padding: 0 20px 20px 20px;
+}
+
+main #results_search{
+    width: 60%;
+    margin: 0 auto;
+    padding: 0 20px 20px 20px;
+}
+
+main .search_box{
+    height: 200px;
+}
+
+.button_link{
     margin: -20px 0 0 0;
     border: none;
     background-color: #fff;
@@ -96,6 +126,18 @@ main #personal_area .refresh_lost, main #personal_area .refresh_find{
     margin: -50px 0 0 0;
 }
 
+main .send_user_pm span{
+    color: blue;
+    cursor: pointer;
+}
+
+textarea{
+    width: 350px;
+    height: 170px;
+    margin: 0 0 10px 0;
+}
+
+
 :invalid {
     box-shadow: none;
 }
@@ -106,6 +148,11 @@ main #personal_area .refresh_lost, main #personal_area .refresh_find{
 
 :-moz-ui-invalid {
     box-shadow:none;
+}
+
+
+.button{
+    cursor: pointer;
 }
 
 .clear{

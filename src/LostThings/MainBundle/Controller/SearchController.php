@@ -25,10 +25,10 @@ class SearchController extends Controller
             if
             (
                     $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                and $lost_things[$l]->getAreaId() == $find_things->getAreaId()
-                and $lost_things[$l]->getStreetId() == $find_things->getStreetId()
-                and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
+                and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
+                and $lost_things[$l]->getThingId()   == $find_things->getThingId()
             )
             {
                 $this->ids_find[] = $lost_things[$l]->getId();
@@ -123,11 +123,11 @@ class SearchController extends Controller
         for($f=0; $f<count($find_things); $f++) {
             if
             (
-                $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                and $find_things[$f]->getAreaId() == $lost_things->getAreaId()
+                $find_things[$f]->getCountryId()    == $lost_things->getCountryId()
+                and $find_things[$f]->getCityId()   == $lost_things->getCityId()
+                and $find_things[$f]->getAreaId()   == $lost_things->getAreaId()
                 and $find_things[$f]->getStreetId() == $lost_things->getStreetId()
-                and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                and $find_things[$f]->getThingId()  == $lost_things->getThingId()
             )
             {
                 $this->ids_lost[] = $find_things[$f]->getId();
@@ -245,10 +245,10 @@ class SearchController extends Controller
             if
             (
                     $find_things[$f]->getCountryId() == $lost_things->getCountryId()
-                and $find_things[$f]->getCityId() == $lost_things->getCityId()
-                and $find_things[$f]->getAreaId() == $lost_things->getAreaId()
-                and $find_things[$f]->getStreetId() == $lost_things->getStreetId()
-                and $find_things[$f]->getThingId() == $lost_things->getThingId()
+                and $find_things[$f]->getCityId()    == $lost_things->getCityId()
+                and $find_things[$f]->getAreaId()    == $lost_things->getAreaId()
+                and $find_things[$f]->getStreetId()  == $lost_things->getStreetId()
+                and $find_things[$f]->getThingId()   == $lost_things->getThingId()
             )
             {
                 $this->ids_lost[] = $find_things[$f]->getId();
@@ -309,10 +309,10 @@ class SearchController extends Controller
             if
             (
                     $lost_things[$l]->getCountryId() == $find_things->getCountryId()
-                and $lost_things[$l]->getCityId() == $find_things->getCityId()
-                and $lost_things[$l]->getAreaId() == $find_things->getAreaId()
-                and $lost_things[$l]->getStreetId() == $find_things->getStreetId()
-                and $lost_things[$l]->getThingId() == $find_things->getThingId()
+                and $lost_things[$l]->getCityId()    == $find_things->getCityId()
+                and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
+                and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
+                and $lost_things[$l]->getThingId()   == $find_things->getThingId()
             )
             {
                 $this->ids_find[] = $lost_things[$l]->getId();

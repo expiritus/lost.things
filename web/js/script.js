@@ -261,7 +261,33 @@ $(document).ready(function(){
             }
         });
     });
-
-
     // КОНЕЦ ОБРАБОТКИ ЛИЧНОГО КАБИНЕТА
+
+
+    //ПОПАП ДЛЯ ЛИЧНОГО СООБЩЕНИЯ
+    var private_message = $('.send_user_pm .button_link');
+    var dialog = $(".dialog");
+    dialog.dialog({ autoOpen: false });
+    private_message.on('click', function(){
+        var user = $(this).attr('value');
+        $('.whom').attr('value', user);
+        dialog.dialog({
+            title: "Send a message to "+user,
+            resizable: false,
+            modal: true,
+            width: 400,
+            height: 300,
+            show: { effect: "blind", duration: 300},
+            hide: { effect: "slideUp", duration: 300},
+        });
+        dialog.dialog('open');
+        var button = $('.submit_pm').attr('type', 'button');
+        button.on('click', function(){
+            var message = $('.message').val();
+            if(message.length > 0){
+                button.attr('type', 'submit');
+            }
+        });
+    });
+    //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 });
