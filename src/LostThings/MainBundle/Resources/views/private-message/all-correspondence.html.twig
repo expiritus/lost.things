@@ -1,7 +1,7 @@
 <ul>
     {% for all in all_correspondence %}
         <li>
-            {{ all.receivedusername }}
+            <a href="/personal-area/correspondence/{{ all.receivedUserId }}">{{ all.receivedUsername }}</a>
         </li>
     {% endfor %}
 </ul>

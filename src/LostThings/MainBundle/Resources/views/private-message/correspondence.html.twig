@@ -1,0 +1,22 @@
+{% extends 'LostThingsMainBundle:personal-area:layout.html.twig' %}
+
+{% block body %}
+    <div class="correspondence">
+        <div id="all_message">
+            {% for all_message in all_messages %}
+                <p>
+                    {{ all_message.username }}:{{ all_message.message }}
+                </p>
+                <br>
+            {% endfor %}
+        </div>
+        <form action="#" method="POST">
+            <p>
+                <textarea class="send_message_input"></textarea>
+            </p>
+            <p>
+                <input type="submit">
+            </p>
+        </form>
+    </div>
+{% endblock %}

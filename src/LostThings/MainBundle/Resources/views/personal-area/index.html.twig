@@ -2,38 +2,62 @@
 
 
 {% block body %}
+    {% if dont_read_messages is defined %}
+        {% for dont_read_message in dont_read_messages %}
+            <div class="dialog dont_read_messages" title="Message from {{ dont_read_message.username }}">
+                <div class="popup_message">
+                    {{ dont_read_message.message }}
+                </div>
+                <div class="answer">
+                    <form action="{{ path('private_message') }}" method="POST">
+                        <textarea class="message answer_input" name="message"></textarea>
+                        <input type="hidden" name="whom" value="" class="whom">
+                        <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
+                        <button name="submit_pm" class="submit_pm button">Ответить</button>
+                    </form>
+                </div>
+            </div>
+            <input class="from_user" type="hidden" value="{{ dont_read_message.username }}">
+        {% endfor %}
+    {% endif %}
     <div id="personal_area">
         <div class="lost_things">
             {% if all_user_losts is not empty %}
                 <h1>I'm lost</h1>
                 {% for all_user_lost in all_user_losts %}
-                    <div class="lost-{{ all_user_lost.id }}">
-                        {% if all_user_lost.filename is not empty %}
-                            <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
-                        {% else %}
-                            <img src="{{ asset('images/default.gif') }}">
-                        {% endif %}
-                        <p>
-                            Потеря: {{ all_user_lost.thing }}
-                        </p>
-                        <p>
-                            Страна: {{ all_user_lost.country }}
-                        </p>
-                        <p>
-                            Район: {{ all_user_lost.area }}
-                        </p>
-                        <p>
-                            Адрес: {{ all_user_lost.street }}
-                        </p>
-                        <p>
-                            Описание: {{ all_user_lost.description }}
-                        </p>
-                        <p class="count_matches_lost_{{ all_user_lost.id }}">
-                            Кол-во совпадений:  <a href="/personal-area/lost/search/{{ all_user_lost.id }}"> <span></span></a>
-                        </p>
-                        <button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Refresh</button>
-                        <button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button>
-                        {#<input class="refresh_lost_{{ all_user_lost.id }}" type="hidden" value="{{ all_user_lost.id }}">#}
+                    <div class="lost-{{ all_user_lost.id }} lost_block">
+                        <div class="lost_block_info">
+                            {% if all_user_lost.filename is not empty %}
+                                <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
+                            {% else %}
+                                <img src="{{ asset('images/default.gif') }}">
+                            {% endif %}
+                            <p>
+                                Потеря: {{ all_user_lost.thing }}
+                            </p>
+                            <p>
+                                Страна: {{ all_user_lost.country }}
+                            </p>
+                            <p>
+                                Район: {{ all_user_lost.area }}
+                            </p>
+                            <p>
+                                Адрес: {{ all_user_lost.street }}
+                            </p>
+                            <p>
+                                Описание: {{ all_user_lost.description }}
+                            </p>
+                            <p class="count_matches_lost_{{ all_user_lost.id }}">
+                                Кол-во совпадений:  <a href="/personal-area/lost/search/{{ all_user_lost.id }}"> <span></span></a>
+                            </p>
+                        </div>
+                        <div class="control_block">
+                            <ul>
+                                <li><button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Refresh</button></li>
+                                <li><button class="button_link delete_lost" value="{{ all_user_lost.id }}">Delete</button></li>
+                            </ul>
+                            {#<input class="refresh_lost_{{ all_user_lost.id }}" type="hidden" value="{{ all_user_lost.id }}">#}
+                        </div>
                     </div>
                     <div class="clear"></div>
                 {% endfor %}
@@ -45,40 +69,43 @@
             {% if all_user_finds is not empty %}
                 <h1>I'm find</h1>
                 {% for all_user_find in all_user_finds %}
-                    <div class="find-{{ all_user_find.id }}">
-                        {% if all_user_find.filename is not empty %}
-                            <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
-                        {% else %}
-                            <img src="{{ asset('images/default.gif') }}">
-                        {% endif %}
-                        <p>
-                            Находка: {{ all_user_find.thing }}
-                        </p>
-                        <p>
-                            Страна: {{ all_user_find.country }}
-                        </p>
-                        <p>
-                            Район: {{ all_user_find.area }}
-                        </p>
-                        <p>
-                            Адрес: {{ all_user_find.street }}
-                        </p>
-                        <p>
-                            Описание: {{ all_user_find.description }}
-                        </p>
-                        <p class="count_matches_find_{{ all_user_find.id }}">
-                            Кол-во совпадений: <a href="/personal-area/find/search/{{ all_user_find.id }}"><span></span></a>
-                        </p>
-                        <button class="button_link refresh_find" value="{{ all_user_find.id }}">Refresh</button>
-                        <button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button>
-                        {#<input class="refresh_find__{{ all_user_find.id }}" type="hidden" value="{{ all_user_find.id }}">#}
+                    <div class="find-{{ all_user_find.id }} find_block">
+                        <div class="find_block_info">
+                            {% if all_user_find.filename is not empty %}
+                                <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
+                            {% else %}
+                                <img src="{{ asset('images/default.gif') }}">
+                            {% endif %}
+                            <p>
+                                Находка: {{ all_user_find.thing }}
+                            </p>
+                            <p>
+                                Страна: {{ all_user_find.country }}
+                            </p>
+                            <p>
+                                Район: {{ all_user_find.area }}
+                            </p>
+                            <p>
+                                Адрес: {{ all_user_find.street }}
+                            </p>
+                            <p>
+                                Описание: {{ all_user_find.description }}
+                            </p>
+                            <p class="count_matches_find_{{ all_user_find.id }}">
+                                Кол-во совпадений: <a href="/personal-area/find/search/{{ all_user_find.id }}"><span></span></a>
+                            </p>
+                        </div>
+                        <div class="control_block">
+                            <ul>
+                                <li><button class="button_link refresh_find" value="{{ all_user_find.id }}">Refresh</button></li>
+                                <li><button class="button_link delete_find" value="{{ all_user_find.id }}">Delete</button></li>
+                            </ul>
+                            {#<input class="refresh_find__{{ all_user_find.id }}" type="hidden" value="{{ all_user_find.id }}">#}
+                        </div>
                     </div>
                     <div class="clear"></div>
                 {% endfor %}
             {% endif %}
         </div>
     </div>
-    <script>
-
-    </script>
 {% endblock %}

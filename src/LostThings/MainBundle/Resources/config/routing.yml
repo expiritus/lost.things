@@ -80,3 +80,7 @@ paersonal_area_refresh_find:
 private_message:
     path: /private-message/
     defaults: { _controller: LostThingsMainBundle:PrivateMessage:message }
+
+correspondence:
+    path: /personal-area/correspondence/{received_user_id}
+    defaults: { _controller: LostThingsMainBundle:PrivateMessage:correspondence }

@@ -177,6 +177,10 @@ $(document).ready(function(){
             success: function(data){
                 if(data){
                     $('.lost-'+lost_id).html("");
+                    var child_lost = $('.lost_things').children().contents().length;
+                    if(child_lost == 1){
+                        $('.lost_things h1').html("");
+                    }
                 }
             }
         });
@@ -190,6 +194,10 @@ $(document).ready(function(){
             success: function(data){
                 if(data){
                     $('.find-'+find_id).html("");
+                    var child_find = $('.find_things').children().contents().length;
+                    if(child_find == 1){
+                        $('.find_things h1').html("");
+                    }
                 }
             }
         });
@@ -252,8 +260,8 @@ $(document).ready(function(){
             modal: true,
             width: 400,
             height: 300,
-            show: { effect: "blind", duration: 300},
-            hide: { effect: "slideUp", duration: 300},
+            show: { effect: "slideDown", duration: 300},
+            hide: { effect: "slideUp", duration: 300}
         });
         dialog.dialog('open');
         var button = $('.submit_pm').attr('type', 'button');
@@ -264,5 +272,22 @@ $(document).ready(function(){
             }
         });
     });
+
+    var dont_read_messages = $('.dont_read_messages');
+    if(dont_read_messages){
+        var from_user = $('.from_user').attr('value');
+        dont_read_messages.dialog({ autoOpen: false });
+        $('.whom').attr('value', from_user);
+        dont_read_messages.dialog({
+            //title: "Message from "+from_user,
+            resizable: false,
+            modal: true,
+            width: 600,
+            height: 400,
+            show: { effect: "slideDown", duration: 300},
+            hide: { effect: "slideUp", duration: 300}
+        });
+        dont_read_messages.dialog('open');
+    }
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 });
