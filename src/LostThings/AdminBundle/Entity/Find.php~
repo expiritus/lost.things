@@ -533,44 +533,4 @@ class Find
     {
         return $this->fileName;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->personalAreas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add personalAreas
-     *
-     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
-     * @return Find
-     */
-    public function addPersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
-    {
-        $this->personalAreas[] = $personalAreas;
-
-        return $this;
-    }
-
-    /**
-     * Remove personalAreas
-     *
-     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
-     */
-    public function removePersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
-    {
-        $this->personalAreas->removeElement($personalAreas);
-    }
-
-    /**
-     * Get personalAreas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPersonalAreas()
-    {
-        return $this->personalAreas;
-    }
 }

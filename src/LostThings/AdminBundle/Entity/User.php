@@ -50,6 +50,12 @@ class User extends BaseUser {
      */
     protected $message;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="currentUsername")
+     */
+    protected $currentUserMessages;
+
     public function __construct()
     {
         parent::__construct();
@@ -133,5 +139,81 @@ class User extends BaseUser {
     public function getLosts()
     {
         return $this->losts;
+    }
+
+    /**
+     * Add messages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $messages
+     * @return User
+     */
+    public function addMessage(\LostThings\AdminBundle\Entity\Message $messages)
+    {
+        $this->messages[] = $messages;
+
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $messages
+     */
+    public function removeMessage(\LostThings\AdminBundle\Entity\Message $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * Get message
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Add currentUserMessages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $currentUserMessages
+     * @return User
+     */
+    public function addCurrentUserMessage(\LostThings\AdminBundle\Entity\Message $currentUserMessages)
+    {
+        $this->currentUserMessages[] = $currentUserMessages;
+
+        return $this;
+    }
+
+    /**
+     * Remove currentUserMessages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $currentUserMessages
+     */
+    public function removeCurrentUserMessage(\LostThings\AdminBundle\Entity\Message $currentUserMessages)
+    {
+        $this->currentUserMessages->removeElement($currentUserMessages);
+    }
+
+    /**
+     * Get currentUserMessages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCurrentUserMessages()
+    {
+        return $this->currentUserMessages;
     }
 }

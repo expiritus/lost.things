@@ -190,9 +190,9 @@ main .lost_block_info, main .find_block_info{
 }
 
 
-textarea{
-    width: 350px;
-    height: 170px;
+.send_textarea{
+    width: 100%;
+    height: 270px;
     margin: 0 0 10px 0;
 }
 

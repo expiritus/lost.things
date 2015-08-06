@@ -9,13 +9,28 @@
 namespace LostThings\MainBundle\Controller;
 
 
+use LostThings\AdminBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class PersonalAreaController extends Controller
 {
-    public function indexAction(){
+    public function indexAction(Request $request){
+
+        $referer = $request->headers->get('referer');
+        $slash = strrpos($referer, '/');
+        $id = substr($referer, $slash+1);
+        $server_name = $_SERVER['SERVER_NAME'];
+        if($referer == 'http://'.$server_name.'/personal-area/correspondence/'.$id){
+            $status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findBy(array('sendUserId' => $id));
+            $em = $this->getDoctrine()->getManager();
+            for($i=0; $i<count($status_message); $i++){
+                $status_message[$i]->setStatus(1);
+            }
+            $em->flush();
+        }
+
         $user = $this->getUser();
         if ($user) {
             $user_id = $this->getUser()->getId();

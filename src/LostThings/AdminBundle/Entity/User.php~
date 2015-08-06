@@ -40,6 +40,22 @@ class User extends BaseUser {
      */
     protected $losts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="username")
+     */
+    protected $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="receivedUsername")
+     */
+    protected $message;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="currentUsername")
+     */
+    protected $currentUserMessages;
+
     public function __construct()
     {
         parent::__construct();
@@ -126,35 +142,78 @@ class User extends BaseUser {
     }
 
     /**
-     * Add personalAreas
+     * Add messages
      *
-     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
+     * @param \LostThings\AdminBundle\Entity\Message $messages
      * @return User
      */
-    public function addPersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
+    public function addMessage(\LostThings\AdminBundle\Entity\Message $messages)
     {
-        $this->personalAreas[] = $personalAreas;
+        $this->messages[] = $messages;
 
         return $this;
     }
 
     /**
-     * Remove personalAreas
+     * Remove messages
      *
-     * @param \LostThings\AdminBundle\Entity\PersonalArea $personalAreas
+     * @param \LostThings\AdminBundle\Entity\Message $messages
      */
-    public function removePersonalArea(\LostThings\AdminBundle\Entity\PersonalArea $personalAreas)
+    public function removeMessage(\LostThings\AdminBundle\Entity\Message $messages)
     {
-        $this->personalAreas->removeElement($personalAreas);
+        $this->messages->removeElement($messages);
     }
 
     /**
-     * Get personalAreas
+     * Get messages
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPersonalAreas()
+    public function getMessages()
     {
-        return $this->personalAreas;
+        return $this->messages;
+    }
+
+    /**
+     * Get message
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * Add currentUserMessages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $currentUserMessages
+     * @return User
+     */
+    public function addCurrentUserMessage(\LostThings\AdminBundle\Entity\Message $currentUserMessages)
+    {
+        $this->currentUserMessages[] = $currentUserMessages;
+
+        return $this;
+    }
+
+    /**
+     * Remove currentUserMessages
+     *
+     * @param \LostThings\AdminBundle\Entity\Message $currentUserMessages
+     */
+    public function removeCurrentUserMessage(\LostThings\AdminBundle\Entity\Message $currentUserMessages)
+    {
+        $this->currentUserMessages->removeElement($currentUserMessages);
+    }
+
+    /**
+     * Get currentUserMessages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCurrentUserMessages()
+    {
+        return $this->currentUserMessages;
     }
 }

@@ -568,44 +568,4 @@ class Lost
     {
         return $this->fileName;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->personalAreas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add personalAreas
-     *
-     * @param \LostThings\AdminBundle\Entity\PersonalAreas $personalAreas
-     * @return Lost
-     */
-    public function addPersonalArea(\LostThings\AdminBundle\Entity\PersonalAreas $personalAreas)
-    {
-        $this->personalAreas[] = $personalAreas;
-
-        return $this;
-    }
-
-    /**
-     * Remove personalAreas
-     *
-     * @param \LostThings\AdminBundle\Entity\PersonalAreas $personalAreas
-     */
-    public function removePersonalArea(\LostThings\AdminBundle\Entity\PersonalAreas $personalAreas)
-    {
-        $this->personalAreas->removeElement($personalAreas);
-    }
-
-    /**
-     * Get personalAreas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPersonalAreas()
-    {
-        return $this->personalAreas;
-    }
 }

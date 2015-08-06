@@ -258,8 +258,8 @@ $(document).ready(function(){
             title: "Send a message to "+user,
             resizable: false,
             modal: true,
-            width: 400,
-            height: 300,
+            width: 600,
+            height: 400,
             show: { effect: "slideDown", duration: 300},
             hide: { effect: "slideUp", duration: 300}
         });
@@ -289,5 +289,16 @@ $(document).ready(function(){
         });
         dont_read_messages.dialog('open');
     }
+
+    var all_message = $('#all_message');
+    if(all_message.length > 0){
+        var received_user_id = $('#send_correspondence').attr('value');
+        setInterval(function(e){
+            location.reload();
+        },30000);
+    }
+    all_message.scrollTop(100000);
+
+
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 });

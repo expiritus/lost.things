@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="div_message")
  * @ORM\Entity(repositoryClass="LostThings\AdminBundle\Entity\Repository\MessageRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Message
 {
@@ -56,6 +57,13 @@ class Message
      */
     private $status;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="current_user_id", type="integer")
+     */
+    private $currentUser;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
@@ -68,6 +76,13 @@ class Message
      * @ORM\JoinColumn(name="received_user_id", referencedColumnName="id")
      */
     protected $receivedUsername;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="currentUserMessages")
+     * @ORM\JoinColumn(name="current_user_id", referencedColumnName="id")
+     */
+    protected $currentUsername;
 
 
     /**
@@ -162,6 +177,15 @@ class Message
         return $this;
     }
 
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
     /**
      * Get createdAt
      *
@@ -195,28 +219,6 @@ class Message
         return $this->status;
     }
 
-    /**
-     * Set sendUsername
-     *
-     * @param \LostThings\AdminBundle\Entity\User $sendUsername
-     * @return Message
-     */
-    public function setSendUsername(\LostThings\AdminBundle\Entity\User $sendUsername = null)
-    {
-        $this->sendUsername = $sendUsername;
-
-        return $this;
-    }
-
-    /**
-     * Get sendUsername
-     *
-     * @return \LostThings\AdminBundle\Entity\User 
-     */
-    public function getSendUsername()
-    {
-        return $this->sendUsername;
-    }
 
     /**
      * Set receivedUsername
@@ -239,5 +241,74 @@ class Message
     public function getReceivedUsername()
     {
         return $this->receivedUsername;
+    }
+
+    /**
+     * Set username
+     *
+     * @param \LostThings\AdminBundle\Entity\User $username
+     * @return Message
+     */
+    public function setUsername(\LostThings\AdminBundle\Entity\User $username = null)
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return \LostThings\AdminBundle\Entity\User 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set currentUser
+     *
+     * @param integer $currentUser
+     * @return Message
+     */
+    public function setCurrentUser($currentUser)
+    {
+        $this->currentUser = $currentUser;
+
+        return $this;
+    }
+
+    /**
+     * Get currentUser
+     *
+     * @return integer
+     */
+    public function getCurrentUser()
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * Set currentUsername
+     *
+     * @param \LostThings\AdminBundle\Entity\User $currentUsername
+     * @return Message
+     */
+    public function setCurrentUsername(\LostThings\AdminBundle\Entity\User $currentUsername = null)
+    {
+        $this->currentUsername = $currentUsername;
+
+        return $this;
+    }
+
+    /**
+     * Get currentUsername
+     *
+     * @return \LostThings\AdminBundle\Entity\User
+     */
+    public function getCurrentUsername()
+    {
+        return $this->currentUsername;
     }
 }

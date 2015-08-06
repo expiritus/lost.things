@@ -32,7 +32,7 @@
             {% endfor %}
             <div class="dialog" title="">
                 <form action="{{ path('private_message') }}" method="POST">
-                    <textarea class="message" name="message"></textarea>
+                    <textarea class="message send_textarea" name="message"></textarea>
                     <input type="hidden" name="whom" value="" class="whom">
                     <button name="submit_pm" class="submit_pm button">Отправить</button>
                 </form>
@@ -71,7 +71,7 @@
             {% endfor %}
             <div class="dialog" title="">
                 <form action="{{ path('private_message') }}" method="POST">
-                    <textarea class="message" name="message"></textarea>
+                    <textarea class="message send_textarea" name="message"></textarea>
                     <input type="hidden" name="whom" value="" class="whom">
                     <button name="submit_pm" class="submit_pm button">Отправить</button>
                 </form>

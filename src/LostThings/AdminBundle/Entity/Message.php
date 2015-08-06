@@ -57,6 +57,13 @@ class Message
      */
     private $status;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="current_user_id", type="integer")
+     */
+    private $currentUser;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messages")
@@ -69,6 +76,13 @@ class Message
      * @ORM\JoinColumn(name="received_user_id", referencedColumnName="id")
      */
     protected $receivedUsername;
+
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="currentUserMessages")
+     * @ORM\JoinColumn(name="current_user_id", referencedColumnName="id")
+     */
+    protected $currentUsername;
 
 
     /**
@@ -250,5 +264,51 @@ class Message
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * Set currentUser
+     *
+     * @param integer $currentUser
+     * @return Message
+     */
+    public function setCurrentUser($currentUser)
+    {
+        $this->currentUser = $currentUser;
+
+        return $this;
+    }
+
+    /**
+     * Get currentUser
+     *
+     * @return integer
+     */
+    public function getCurrentUser()
+    {
+        return $this->currentUser;
+    }
+
+    /**
+     * Set currentUsername
+     *
+     * @param \LostThings\AdminBundle\Entity\User $currentUsername
+     * @return Message
+     */
+    public function setCurrentUsername(\LostThings\AdminBundle\Entity\User $currentUsername = null)
+    {
+        $this->currentUsername = $currentUsername;
+
+        return $this;
+    }
+
+    /**
+     * Get currentUsername
+     *
+     * @return \LostThings\AdminBundle\Entity\User
+     */
+    public function getCurrentUsername()
+    {
+        return $this->currentUsername;
     }
 }

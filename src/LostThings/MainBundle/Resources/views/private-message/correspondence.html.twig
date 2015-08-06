@@ -10,12 +10,13 @@
                 <br>
             {% endfor %}
         </div>
-        <form action="#" method="POST">
+
+        <form action="/personal-area/correspondence/{{ received_user_id }}" method="POST">
             <p>
-                <textarea class="send_message_input"></textarea>
+                <textarea class="send_message_input message" name="message" required="required"></textarea>
             </p>
             <p>
-                <input type="submit">
+                <button type="submit" id="send_correspondence" value="{{ received_user_id }}">Отправить</button>
             </p>
         </form>
     </div>

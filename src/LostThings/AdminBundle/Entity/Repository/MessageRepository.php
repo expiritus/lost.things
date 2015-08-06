@@ -12,12 +12,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
-    public function findGroupBy($user){
+    public function findSend($user){
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user GROUP BY c.receivedUserId')
             ->setParameter('user', $user)
             ->getResult();
     }
+
+//    public function findReceived($user){
+//        return $this->getEntityManager()
+//            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
+//            ->setParameter('user', $user)
+//            ->getResult();
+//    }
+//
+//    public function findAllSend($ids){
+//        return $this->getEntityManager()
+//            ->createQuery('SELECT l FROM LostThingsAdminBundle:Message l WHERE l.id IN (:ids)')
+//            ->setParameters(array('ids' => $ids))
+//            ->getResult();
+//    }
 
     public function findMessages($received_user_id, $send_user_id){
         return $this->getEntityManager()
@@ -30,6 +44,19 @@ class MessageRepository extends EntityRepository
             ->setParameter('receivedUserId', $received_user_id)
             ->setParameter('sendUserId', $send_user_id)
             ->getResult();
+    }
+
+    public function findMessagesArray($received_user_id, $send_user_id){
+        return $this->getEntityManager()
+            ->createQuery('SELECT r FROM LostThingsAdminBundle:Message r
+                            WHERE r.sendUserId = :sendUserId
+                              AND r.receivedUserId = :receivedUserId
+                                OR r.sendUserId = :receivedUserId
+                                  AND r.receivedUserId = :sendUserId
+                                    ORDER BY r.createdAt')
+            ->setParameter('receivedUserId', $received_user_id)
+            ->setParameter('sendUserId', $send_user_id)
+            ->getArrayResult();
     }
 
     public function dontReadMessage($user_id){
