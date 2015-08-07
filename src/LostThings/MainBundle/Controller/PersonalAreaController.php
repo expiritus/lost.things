@@ -62,8 +62,13 @@ class PersonalAreaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $del_thing = $em->getRepository('LostThingsAdminBundle:Lost')->findOneBy(array('id' => $id));
         if(count($del_thing) > 0){
+            $filename = $del_thing->getFileName();
             $em->remove($del_thing);
             $em->flush();
+            if($filename != null){
+                $file = $this->get('kernel')->getRootDir().'/../web/files/'.$filename;
+                unlink($file);
+            }
             die(true);
         }
         die(false);
@@ -74,8 +79,13 @@ class PersonalAreaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $del_thing = $em->getRepository('LostThingsAdminBundle:Find')->findOneBy(array('id' => $id));
         if(count($del_thing) > 0){
+            $filename = $del_thing->getFileName();
             $em->remove($del_thing);
             $em->flush();
+            if($filename != null){
+                $file = $this->get('kernel')->getRootDir().'/../web/files/'.$filename;
+                unlink($file);
+            }
             die(true);
         }
         die(false);

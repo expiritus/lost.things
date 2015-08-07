@@ -44,8 +44,7 @@ li{
 }
 
 header{
-    width: 100%;
-    min-width: 1000px;
+    width: auto;
     padding: 20px;
 }
 
@@ -72,7 +71,7 @@ main #personal_area h1{
 main #personal_area img, main #results_search img{
     width: 150px;
     float: left;
-    margin: 0 10px 10px 0;
+    margin: 0 10px 0 0;
 }
 
 
@@ -90,7 +89,7 @@ main #right_side{
 }
 
 main #personal_area{
-    margin: 0 0 0 21%;
+    margin: 0 auto;
     width: 60%;
     padding: 0 20px 20px 20px;
 }
@@ -99,13 +98,11 @@ main .correspondence{
     margin: 0 0 0 21%;
 }
 
-main .correspondence #all_message{
+main .correspondence #all_messages{
     width: 70%;
     height: 350px;
     resize: none;
     overflow: auto;
-    border: 1px solid darkgrey;
-    border-radius: 5px;
     margin: 0 0 10px 0;
 }
 
@@ -132,20 +129,6 @@ main .search_box{
     height: 200px;
 }
 
-.button_link{
-    margin: -20px 0 0 0;
-    border: none;
-    background-color: #fff;
-    cursor: pointer;
-    color: #000fff;
-    padding: 0;
-    font-size: 100%;
-}
-
-.button_link:hover{
-    text-decoration: underline;
-}
-
 main #personal_area .count_matches_lost span{
     color: blue;
     cursor: pointer;
@@ -170,9 +153,10 @@ main .control_block li{
     padding: 10px 0 0 0;
 }
 
-main .lost_block{
+main .lost_block, main .find_block{
     float: left;
     width: 100%;
+    margin: 0 0 40px 0;
 }
 
 main .lost_block_info, main .find_block_info{
@@ -212,6 +196,20 @@ main .lost_block_info, main .find_block_info{
 
 .button{
     cursor: pointer;
+}
+
+.button_link{
+    margin: -20px 0 0 0;
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    color: #000fff;
+    padding: 0;
+    font-size: 100%;
+}
+
+.button_link:hover{
+    text-decoration: underline;
 }
 
 .clear{

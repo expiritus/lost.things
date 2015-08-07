@@ -4,7 +4,8 @@
 {% block personallayout %}
     <div id="left_side">
         <h3>История переписок</h3>
-        {{ render(controller('LostThingsMainBundle:PrivateMessage:allCorrespondence')) }}
+        {{ render(controller('LostThingsMainBundle:PrivateMessage:allSendCorrespondence')) }}
+        {{ render(controller('LostThingsMainBundle:PrivateMessage:allReceivedCorrespondence')) }}
     </div>
 
     <div id="right_side">

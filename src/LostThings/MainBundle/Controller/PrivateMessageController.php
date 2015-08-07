@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 class PrivateMessageController extends Controller
 {
 
+    private $received_user_id;
+
     public function messageAction(Request $request){
         $message = htmlspecialchars($request->request->get('message'));
         $message_id = htmlspecialchars($request->request->get('status_message'));
@@ -58,7 +60,7 @@ class PrivateMessageController extends Controller
 
 
 
-    public function allCorrespondenceAction(){
+    public function allSendCorrespondenceAction(){
         $user = $this->getUser()->getId();
         $all_send_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findSend($user);
         return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
@@ -67,13 +69,38 @@ class PrivateMessageController extends Controller
     }
 
 
-    public function correspondenceAction(Request $request, $received_user_id){
+    public function allReceivedCorrespondenceAction(){
+        $user = $this->getUser()->getId();
+        $all_received_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceived($user);
+        return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
+            'all_received_correspondence' => $all_received_correspondence,
+        ));
+    }
+
+
+    public function correspondenceAction($received_user_id){
+        return $this->render('LostThingsMainBundle:private-message:correspondence.html.twig', array(
+            'received_user_id' => $received_user_id,
+        ));
+    }
+
+    public function allMessagesAction(){
+        $uri = $_SERVER['REQUEST_URI'];
+        $slash = strrpos($uri, '/');
+        $received_user_id = substr($uri, $slash+1);
         $send_user_id = $this->getUser();
-
         $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
+        return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
+            'all_messages' => $all_messages,
+        ));
+    }
 
+    public function saveCorrespondenceAction(Request $request){
+        $send_user_id = $this->getUser();
+        $referer = $request->headers->get('referer');
+        $slash = strrpos($referer, '/');
+        $received_user_id = substr($referer, $slash+1);
         if($request->getMethod() == 'POST'){
-
             $message = htmlspecialchars($request->request->get('message'));
             $received_user = $this->getDoctrine()->getRepository('LostThingsAdminBundle:User')->find($received_user_id);
             $received_user->getId();
@@ -86,16 +113,8 @@ class PrivateMessageController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($correspondence);
             $em->flush();
-
             $referer = $request->headers->get('referer');
             return new RedirectResponse($referer);
         }
-        return $this->render('LostThingsMainBundle:private-message:correspondence.html.twig', array(
-            'received_user_id' => $received_user_id,
-            'all_messages' => $all_messages,
-        ));
     }
-
-
-
 }

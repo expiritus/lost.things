@@ -290,15 +290,32 @@ $(document).ready(function(){
         dont_read_messages.dialog('open');
     }
 
-    var all_message = $('#all_message');
-    if(all_message.length > 0){
+    var all_messages = $('#all_messages');
+    if(all_messages.length > 0){
         var received_user_id = $('#send_correspondence').attr('value');
-        setInterval(function(e){
-            location.reload();
-        },30000);
+        setInterval(function(){
+            $.ajax({
+                url: "/personal-area/update-message/"+received_user_id,
+                method: "POST",
+                success: function(data){
+                    $(all_messages).html(data);
+                }
+            });
+        },60000);
     }
-    all_message.scrollTop(100000);
+    all_messages.scrollTop(100000);
 
+    var all_correspondence = $('.all_correspondence');
+    var el = all_correspondence.children();
+    var val = all_correspondence.children().text();
+    var seen = {};
+    $('.all_correspondence li').each(function() {
+        var txt = $(this).text();
+        if (seen[txt])
+            $(this).remove();
+        else
+            seen[txt] = true;
+    });
 
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 });

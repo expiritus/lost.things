@@ -341,6 +341,7 @@ class LostController extends Controller{
         $id = $lost->getId();
 
         return $this->redirect('/lost/search/'.$id);
+        return $this->redirect('/lost/search/'.$id);
     }
 
 }

@@ -19,19 +19,13 @@ class MessageRepository extends EntityRepository
             ->getResult();
     }
 
-//    public function findReceived($user){
-//        return $this->getEntityManager()
-//            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
-//            ->setParameter('user', $user)
-//            ->getResult();
-//    }
-//
-//    public function findAllSend($ids){
-//        return $this->getEntityManager()
-//            ->createQuery('SELECT l FROM LostThingsAdminBundle:Message l WHERE l.id IN (:ids)')
-//            ->setParameters(array('ids' => $ids))
-//            ->getResult();
-//    }
+    public function findReceived($user){
+        return $this->getEntityManager()
+            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
+
 
     public function findMessages($received_user_id, $send_user_id){
         return $this->getEntityManager()
