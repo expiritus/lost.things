@@ -1,1 +1,69 @@
-{% extends 'LostThingsMainBundle::layout.html.twig' %}
+{% extends '::main.html.twig' %}
+
+
+{% block header %}
+    <div id="navigation">
+        <ul>
+            <li><a href="{{ path('main') }}">Главная</a></li>
+            <li><a href="{{ path('about') }}">О нас</a></li>
+            <li><a href="{{ path('contact') }}">Контакты</a></li>
+            <li>{% if app.user %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                    |
+                    <a href="{{ path('personal_area') }}">Личный кабинет</a>
+                {% else %}
+                    <a href="{{ url('fos_user_security_login') }}">Log in</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div id="site_name">
+        <h1>Мир потерянных вещей</h1>
+        <hr>
+        <h3>Сервис для поиска пропавшего</h3>
+        <div id="find_lost_panel">
+            <ul>
+                <li><a href="{{ path('find') }}">Я нашел</a></li>
+                <li> <a href="{{ url('lost') }}">Я потерял</a></li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div id="left">
+            <img src="{{ asset('images/1.jpg') }}">
+            <h3>Вещи</h3>
+            <p>
+                Всякий раз когда теряется вещь, вы хотите ее найти, но не знаете с чего начать и где искать
+            </p>
+        </div>
+        <div id="right">
+            <img src="{{ asset('images/4.jpg') }}">
+            <h3>Все что угодно</h3>
+            <p>
+                Всякий раз когда теряется вещь, вы хотите ее найти, но не знаете с чего начать и где искать
+            </p>
+        </div>
+        <div id="center_left">
+            <img src="{{ asset('images/2.jpg') }}">
+            <h3>Животные</h3>
+            <p>
+                Всякий раз когда теряется вещь, вы хотите ее найти, но не знаете с чего начать и где искать
+            </p>
+        </div>
+        <div id="center_right">
+            <img src="{{ asset('images/3.jpg') }}">
+            <h3>Люди</h3>
+            <p>
+                Всякий раз когда теряется вещь, вы хотите ее найти, но не знаете с чего начать и где искать
+            </p>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+{% endblock %}

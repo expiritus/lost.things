@@ -1,0 +1,34 @@
+{% extends '::main.html.twig' %}
+
+
+{% block header %}
+    <div id="navigation">
+        <ul>
+            <li><a href="{{ path('main') }}">Главная</a></li>
+            <li><a href="{{ path('about') }}">О нас</a></li>
+            <li><a href="{{ path('contact') }}">Контакты</a></li>
+            <li>{% if app.user %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                    |
+                    <a href="{{ path('personal_area') }}">Личный кабинет</a>
+                {% else %}
+                    <a href="{{ url('fos_user_security_login') }}">Log in</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div id="about_title">
+        <h1>О нас</h1>
+        <hr>
+        <h3>Информация о создателях</h3>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+
+    </div>
+{% endblock %}

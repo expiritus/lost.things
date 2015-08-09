@@ -2,6 +2,14 @@ main:
     path:     /
     defaults: { _controller: LostThingsMainBundle:Index:index }
 
+about:
+    path: /about/
+    defaults: { _controller: LostThingsMainBundle:Index:about }
+
+contact:
+    path: /contact/
+    defaults: { _controller: LostThingsMainBundle:Index:contact }
+
 find:
     path:     /find/
     defaults: { _controller: LostThingsMainBundle:Find:index }

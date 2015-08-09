@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('css/styles_on_main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+        <script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.js') }}"></script>
+        <script src="{{ asset('js/script.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            <div id="header_opacity">
+                {% block header %}{% endblock %}
+            </div>
+        </header>
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>

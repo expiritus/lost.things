@@ -1,0 +1,44 @@
+{% extends '::main.html.twig' %}
+
+
+{% block header %}
+    <div id="navigation">
+        <ul>
+            <li><a href="{{ path('main') }}">Главная</a></li>
+            <li><a href="{{ path('about') }}">О нас</a></li>
+            <li><a href="{{ path('contact') }}">Контакты</a></li>
+            <li>{% if app.user %}
+                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                    |
+                    <a href="{{ path('personal_area') }}">Личный кабинет</a>
+                {% else %}
+                    <a href="{{ url('fos_user_security_login') }}">Log in</a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div id="about_title">
+        <h1>Контакты</h1>
+        <hr>
+        <h3>Способ связи с издателями</h3>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div id="contact_form">
+            <h3>
+                Хотите связаться с нами? Заполните форму ниже, чтобы отправить нам сообщение
+            </h3>
+            <form action="#" method="POST">
+                <input type="text" name="contact_name" placeholder="Name">
+                <input type="email" name="contact_email" placeholder="Email Address">
+                <textarea name="contact_message" placeholder="Message"></textarea>
+                <input type="submit" name="send_contact_submit" value="Отправить">
+            </form>
+        </div>
+    </div>
+{% endblock %}
