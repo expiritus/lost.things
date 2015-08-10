@@ -316,6 +316,33 @@ $(document).ready(function(){
         else
             seen[txt] = true;
     });
-
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
+
+
+
+    //ФОРМА ВВОДА ЛОГИНА И ПАРОЛЯ
+    var login_form = $('#login_form');
+    var register_form = $('#register_form');
+    var resetting_form = $('#resetting_form');
+    var reset_password = $('#reset_password');
+    var fos_user_user_show = $('.fos_user_user_show');
+    var contact_form = $('#contact_form');
+    if(login_form.length > 0
+        || register_form.length > 0
+        || resetting_form.length > 0
+        || reset_password.length > 0
+        || fos_user_user_show.length > 0
+        || contact_form.length > 0
+    ){
+        var flag = $('a[href^="#"], a[href^="."]');
+        if($(window).scrollTop != 0) {
+            var scroll_el = flag.attr('href');
+            if (scroll_el.length != 0) {
+                $('html, body').animate({scrollTop: $(scroll_el).offset().top}, 800);
+            }
+            return false; // выключаем стандартное действие
+        }
+    }
+
+    //КОНЕЦ ФОРМЫ ВВОДА ЛОГИНА И ПАРОЛЯ
 });

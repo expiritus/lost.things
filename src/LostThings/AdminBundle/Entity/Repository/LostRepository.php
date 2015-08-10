@@ -14,14 +14,14 @@ class LostRepository extends EntityRepository
 {
     public function findAllLostThings($ids){
         return $this->getEntityManager()
-            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost l WHERE l.id IN (:ids)')
+            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost l WHERE l.id IN (:ids) ORDER BY l.dateLost DESC')
             ->setParameters(array('ids' => $ids))
             ->getResult();
     }
 
     public function findAllLostThingsArray($ids){
         return $this->getEntityManager()
-            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost f WHERE l.id IN (:ids)')
+            ->createQuery('SELECT l FROM LostThingsAdminBundle:Lost f WHERE l.id IN (:ids) ORDER BY l.dateLost DESC')
             ->setParameters(array('ids' => $ids))
             ->getArrayResult();
     }

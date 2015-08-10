@@ -17,6 +17,9 @@
                         Страна: {{ lost_thing.country }}
                     </p>
                     <p>
+                        Город: {{ lost_thing.city }}
+                    </p>
+                    <p>
                         Район: {{ lost_thing.area }}
                     </p>
                     <p>
@@ -26,7 +29,7 @@
                         Описание: {{ lost_thing.description }}
                     </p>
                     <p class="send_user_pm">
-                        Потерял: <button class="button_link" value="{{ lost_thing.username }}"> {{ lost_thing.username }}</button>
+                        Потерял: <button class="button_link" value="{{ lost_thing.username }}"> {{ lost_thing.username }} </button> {{ lost_thing.dateLost|date('d-m-Y H:i:s') }}
                     </p>
                 </div>
             {% endfor %}
@@ -55,6 +58,9 @@
                         Страна: {{ find_thing.country }}
                     </p>
                     <p>
+                        Город: {{ find_thing.city }}
+                    </p>
+                    <p>
                         Район: {{ find_thing.area }}
                     </p>
                     <p>
@@ -64,7 +70,7 @@
                         Описание: {{ find_thing.description }}
                     </p>
                     <p class="send_user_pm">
-                        Нашел: <button class="button_link" value="{{ find_thing.username }}">{{ find_thing.username }}</button>
+                        Нашел: <button class="button_link" value="{{ find_thing.username }}">{{ find_thing.username }}</button> {{ find_thing.datefind|date('d-m-Y H:i:s') }}
                     </p>
                     <div class="clear"></div>
                 </div>

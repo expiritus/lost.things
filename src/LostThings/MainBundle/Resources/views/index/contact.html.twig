@@ -2,6 +2,7 @@
 
 
 {% block header %}
+    <a href=".scroll"></a>
     <div id="navigation">
         <ul>
             <li><a href="{{ path('main') }}">Главная</a></li>
@@ -20,24 +21,26 @@
             </li>
         </ul>
     </div>
-    <div id="about_title">
+    <div class="about_title">
         <h1>Контакты</h1>
         <hr>
-        <h3>Способ связи с издателями</h3>
+        <h3>Способ связи с издателем</h3>
     </div>
 {% endblock %}
 
 {% block body %}
     <div class="content">
+        <a class="scroll"></a>
         <div id="contact_form">
             <h3>
-                Хотите связаться с нами? Заполните форму ниже, чтобы отправить нам сообщение
+                Хотите связаться со мной? Заполните форму ниже, чтобы отправить мне сообщение
             </h3>
             <form action="#" method="POST">
-                <input type="text" name="contact_name" placeholder="Name">
-                <input type="email" name="contact_email" placeholder="Email Address">
-                <textarea name="contact_message" placeholder="Message"></textarea>
+                <input type="text" name="contact_name" placeholder="Имя:">
+                <input type="email" name="contact_email" placeholder="Email:">
+                <textarea name="contact_message" placeholder="Сообщение:"></textarea>
                 <input type="submit" name="send_contact_submit" value="Отправить">
+                <div class="clear"></div>
             </form>
         </div>
     </div>

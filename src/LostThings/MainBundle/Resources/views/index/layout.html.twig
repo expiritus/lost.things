@@ -2,6 +2,7 @@
 
 
 {% block header %}
+    <a class=".scroll"></a>
     <div id="navigation">
         <ul>
             <li><a href="{{ path('main') }}">Главная</a></li>
@@ -20,15 +21,15 @@
             </li>
         </ul>
     </div>
-    <div class="about_title">
-        <h1>О нас</h1>
+    <div id="site_name">
+        <h1>Потерянный мир</h1>
         <hr>
-        <h3>Информация о создателях</h3>
-    </div>
-{% endblock %}
-
-{% block body %}
-    <div class="content">
-
+        <h3>Сервис для поиска пропавшего</h3>
+        <div id="find_lost_panel">
+            <ul>
+                <li><a href="{{ path('find') }}">Я нашел</a></li>
+                <li> <a href="{{ url('lost') }}">Я потерял</a></li>
+            </ul>
+        </div>
     </div>
 {% endblock %}

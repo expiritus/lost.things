@@ -14,7 +14,7 @@ class FindRepository extends EntityRepository
 {
     public function findAllFindThings($ids){
         return $this->getEntityManager()
-            ->createQuery('SELECT f FROM LostThingsAdminBundle:Find f WHERE f.id IN (:ids)')
+            ->createQuery('SELECT f FROM LostThingsAdminBundle:Find f WHERE f.id IN (:ids) ORDER BY f.dateFind DESC')
             ->setParameters(array('ids' => $ids))
             ->getResult();
     }
@@ -22,7 +22,7 @@ class FindRepository extends EntityRepository
 
     public function findAllFindThingsArray($ids){
         return $this->getEntityManager()
-            ->createQuery('SELECT f FROM LostThingsAdminBundle:Find f WHERE f.id IN (:ids)')
+            ->createQuery('SELECT f FROM LostThingsAdminBundle:Find f WHERE f.id IN (:ids) ORDER BY f.dateFind DESC')
             ->setParameters(array('ids' => $ids))
             ->getArrayResult();
     }

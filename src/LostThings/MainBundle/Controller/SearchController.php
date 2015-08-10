@@ -24,7 +24,7 @@ class SearchController extends Controller
         for($l=0; $l<count($lost_things); $l++) {
             if
             (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                 and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                 and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
                 and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
@@ -37,7 +37,20 @@ class SearchController extends Controller
                     $email_to = $lost_things[$l]->getUsername()->getEmail();
                     $name = $lost_things[$l]->getUsername();
                     if(count($this->ids_find) > 0){
-                        $this->sendToMail($email_to, $name);
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Hello Email')
+                            ->setFrom('antras2007@gmail.com')
+                            ->setTo($email_to)
+                            ->setBody(
+                                $this->renderView(
+                                // app/Resources/views/Emails/registration.html.twig
+                                    'Emails/matches.html.twig',
+                                    array('name' => $name)
+                                ),
+                                'text/html'
+                            )
+                        ;
+                        $this->get('mailer')->send($message);
                     }
                 }
             }
@@ -53,21 +66,21 @@ class SearchController extends Controller
         for($l=0; $l<count($lost_things); $l++){
             if(
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getCityId()    == $find_things->getAreaId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
-            or
+                or
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getCityId()    == $find_things->getStreetId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
-            or
+                or
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
@@ -79,7 +92,20 @@ class SearchController extends Controller
                     $email_to = $lost_things[$l]->getUsername()->getEmail();
                     $name = $lost_things[$l]->getUsername();
                     if(count($this->ids_find) > 0){
-                        $this->sendToMail($email_to, $name);
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Hello Email')
+                            ->setFrom('antras2007@gmail.com')
+                            ->setTo($email_to)
+                            ->setBody(
+                                $this->renderView(
+                                // app/Resources/views/Emails/registration.html.twig
+                                    'Emails/matches.html.twig',
+                                    array('name' => $name)
+                                ),
+                                'text/html'
+                            )
+                        ;
+                        $this->get('mailer')->send($message);
                     }
                 }
             }
@@ -110,7 +136,19 @@ class SearchController extends Controller
                     $email_to = $find_things[$f]->getUsername()->getEmail();
                     $name = $find_things[$f]->getUsername();
                     if(count($this->ids_lost) > 0){
-                        $this->sendToMail($email_to, $name);
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Matches things')
+                            ->setFrom('antras2007@gmail.com')
+                            ->setTo($email_to)
+                            ->setBody(
+                                $this->renderView(
+                                    'Emails/matches.html.twig',
+                                    array('name' => $name)
+                                ),
+                                'text/html'
+                            )
+                        ;
+                        $this->get('mailer')->send($message);
                     }
                 }
             }
@@ -126,7 +164,7 @@ class SearchController extends Controller
         for($f=0; $f<count($find_things); $f++){
             if(
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getCityId()    == $lost_things->getAreaId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
@@ -135,7 +173,7 @@ class SearchController extends Controller
                 or
 
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getCityId()    == $lost_things->getStreetId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
@@ -144,7 +182,7 @@ class SearchController extends Controller
                 or
 
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
@@ -156,7 +194,19 @@ class SearchController extends Controller
                     $email_to = $find_things[$f]->getUsername()->getEmail();
                     $name = $find_things[$f]->getUsername();
                     if(count($this->ids_lost) > 0){
-                        $this->sendToMail($email_to, $name);
+                        $message = \Swift_Message::newInstance()
+                            ->setSubject('Matches things')
+                            ->setFrom('antras2007@gmail.com')
+                            ->setTo($email_to)
+                            ->setBody(
+                                $this->renderView(
+                                    'Emails/matches.html.twig',
+                                    array('name' => $name)
+                                ),
+                                'text/html'
+                            )
+                        ;
+                        $this->get('mailer')->send($message);
                     }
                 }
             }
@@ -187,22 +237,6 @@ class SearchController extends Controller
         return $response;
     }
 
-    private function sendToMail($email_to, $name){
-        $message = \Swift_Message::newInstance()
-            ->setSubject('Matches things')
-            ->setFrom('antras2007@gmail.com')
-            ->setTo($email_to)
-            ->setBody(
-                $this->renderView(
-                    'Emails/matches.html.twig',
-                    array('name' => $name)
-                ),
-                'text/html'
-            )
-        ;
-        $this->get('mailer')->send($message);
-    }
-
 
     public function personalAreaResultSearchLostAction($id){
         $lost_things = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->find($id);
@@ -210,7 +244,7 @@ class SearchController extends Controller
         for($f=0; $f<count($find_things); $f++) {
             if
             (
-                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                 and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                 and $find_things[$f]->getAreaId()    == $lost_things->getAreaId()
                 and $find_things[$f]->getStreetId()  == $lost_things->getStreetId()
@@ -232,7 +266,7 @@ class SearchController extends Controller
             if(
 
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getCityId()    == $lost_things->getAreaId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
@@ -241,7 +275,7 @@ class SearchController extends Controller
                 or
 
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getCityId()    == $lost_things->getStreetId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
@@ -250,7 +284,7 @@ class SearchController extends Controller
                 or
 
                 (
-                        $find_things[$f]->getCountryId() == $lost_things->getCountryId()
+                    $find_things[$f]->getCountryId() == $lost_things->getCountryId()
                     and $find_things[$f]->getCityId()    == $lost_things->getCityId()
                     and $find_things[$f]->getThingId()   == $lost_things->getThingId()
                 )
@@ -274,7 +308,7 @@ class SearchController extends Controller
         for($l=0; $l<count($lost_things); $l++) {
             if
             (
-                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                 and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                 and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
                 and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
@@ -295,21 +329,21 @@ class SearchController extends Controller
         for($l=0; $l<count($lost_things); $l++){
             if(
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getCityId()    == $find_things->getAreaId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
                 or
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getCityId()    == $find_things->getStreetId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
                 or
                 (
-                        $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                     and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                     and $lost_things[$l]->getThingId()   == $find_things->getThingId()
                 )
