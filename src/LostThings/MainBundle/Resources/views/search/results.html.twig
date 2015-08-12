@@ -1,4 +1,4 @@
-{% extends 'LostThingsMainBundle:personal-area:layout.html.twig' %}
+{% extends 'LostThingsMainBundle::layout.html.twig' %}
 
 {% block body %}
     <div id="results_search">
@@ -8,7 +8,7 @@
                     {% if lost_thing.filename is not empty %}
                         <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
                     {% else %}
-                        <img src="{{ asset('images/default.gif') }}">
+                        <img src="{{ asset('images/no_image.png') }}">
                     {% endif %}
                     <p>
                         Потеря: {{ lost_thing.thing }}
@@ -25,11 +25,11 @@
                     <p>
                         Адрес: {{ lost_thing.street }}
                     </p>
-                    <p>
-                        Описание: {{ lost_thing.description }}
-                    </p>
                     <p class="send_user_pm">
                         Потерял: <button class="button_link" value="{{ lost_thing.username }}"> {{ lost_thing.username }} </button> {{ lost_thing.dateLost|date('d-m-Y H:i:s') }}
+                    </p>
+                    <p>
+                        Описание: {{ lost_thing.description }}
                     </p>
                 </div>
             {% endfor %}
@@ -49,7 +49,7 @@
                     {% if find_thing.filename is not empty %}
                         <img src="{{ asset('files/') }}{{ find_thing.filename }}">
                     {% else %}
-                        <img src="{{ asset('images/default.gif') }}">
+                        <img src="{{ asset('images/no_image.png') }}">
                     {% endif %}
                     <p>
                         Находка: {{ find_thing.thing }}
@@ -66,11 +66,11 @@
                     <p>
                         Адрес: {{ find_thing.street }}
                     </p>
-                    <p>
-                        Описание: {{ find_thing.description }}
-                    </p>
                     <p class="send_user_pm">
                         Нашел: <button class="button_link" value="{{ find_thing.username }}">{{ find_thing.username }}</button> {{ find_thing.datefind|date('d-m-Y H:i:s') }}
+                    </p>
+                    <p>
+                        Описание: {{ find_thing.description }}
                     </p>
                     <div class="clear"></div>
                 </div>

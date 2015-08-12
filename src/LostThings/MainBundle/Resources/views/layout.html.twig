@@ -1,9 +1,12 @@
 {% extends '::base.html.twig' %}
 
+
 {% block header %}
     <div id="find_lost_panel">
-        <a href="{{ path('find') }}">I'm find</a>
-        <a href="{{ url('lost') }}">I'm lost</a>
+        <ul>
+            <li><a href="{{ path('find') }}">Я нашел</a></li>
+            <li><a href="{{ url('lost') }}">Я потерял</a></li>
+        </ul>
     </div>
     <div id="log_in">
         {% if app.user %}
@@ -12,11 +15,27 @@
                 {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
             </a>
             |
-            <a href="{{ path('personal_area') }}">Personal Area</a>
+            <a href="{{ path('personal_area') }}">Личный кабинет</a>
         {% else %}
             <a href="{{ url('fos_user_security_login') }}">Log in</a>
         {% endif %}
     </div>
     <div class="clear"></div>
 {% endblock %}
-{% block body %}{% endblock %}
+
+{% block personallayout %}
+    <div id="left_side">
+        <h3>История переписок</h3>
+        <div id="bg_all_correspondence">
+            {{ render(controller('LostThingsMainBundle:PrivateMessage:allSendCorrespondence')) }}
+            {{ render(controller('LostThingsMainBundle:PrivateMessage:allReceivedCorrespondence')) }}
+        </div>
+    </div>
+
+    <div id="right_side">
+        <h3>Личная информация</h3>
+        <div id="personal_info">
+            lsdkjf
+        </div>
+    </div>
+{% endblock %}

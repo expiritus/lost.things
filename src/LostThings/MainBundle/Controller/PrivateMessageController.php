@@ -95,6 +95,14 @@ class PrivateMessageController extends Controller
         ));
     }
 
+    public function refreshCorrespondenceAction($received_user_id){
+        $send_user_id = $this->getUser();
+        $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
+        return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
+            'all_messages' => $all_messages,
+        ));
+    }
+
     public function saveCorrespondenceAction(Request $request){
         $send_user_id = $this->getUser();
         $referer = $request->headers->get('referer');
@@ -117,4 +125,5 @@ class PrivateMessageController extends Controller
             return new RedirectResponse($referer);
         }
     }
+
 }

@@ -15,7 +15,10 @@
         </header>
         <main>
             {% block personallayout %}{% endblock %}
-            {% block body %}{% endblock %}
+            <div id="center">
+                {% block body %}{% endblock %}
+            </div>
+            <div class="clear"></div>
         </main>
     </body>
 </html>
