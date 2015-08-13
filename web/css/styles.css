@@ -209,11 +209,17 @@ main #center .find_things{
 
 
 main #center .lost_things_things,
-main #center .find_things_things{
+main #center .find_things_things,
+main #center #results_search .search_block{
     padding: 20px;
     background-color: rgba(255, 255, 255, .5);
     margin: 0 0 30px 0;
 }
+
+main #center #results_search .search_block{
+    margin: 0;
+}
+
 
 main #center .find_things_things p{
     padding: 3px;
@@ -234,9 +240,14 @@ main #center img, main #results_search img{
     margin: 0 10px 5px 0;
 }
 
+main .correspondence{
+    height: 505px;
+    position: relative;
+}
+
 
 main .correspondence #all_messages{
-    width: 70%;
+    width: 100%;
     height: 350px;
     resize: none;
     overflow: auto;
@@ -244,25 +255,92 @@ main .correspondence #all_messages{
 }
 
 
-main .correspondence .send_message_input, .send_message_input{
-    width: 70%;
-    height: 50px;
+main .correspondence .send_message_input,
+.send_message_input{
+    width: 100%;
+    height: 60px;
+    resize: none;
     font-size: 130%;
     padding: 5px;
+    position: absolute;
+    bottom: 50px;
 }
 
-main .correspondence input[type='text']{
-    width: 70%;
+#send_correspondence{
     font-size: 120%;
+    position: absolute;
+    bottom: 0;
+    right: 30%;
+    width: 250px;
+    padding: 10px;
+    background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);
+}
+
+#send_correspondence:hover{
+    font-size: 120%;
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+    padding: 10px;
+    background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
+}
+
+main .correspondence #all_messages{
+    height: 75%;
+}
+
+main .correspondence #all_messages span{
+    font-size: 90%;
+    color: #4f4f4f;
+}
+
+main .correspondence #all_messages span:last-child{
+    font-size: 110%;
+    color: #025E7C;
+    font-weight: bold;
+}
+
+main .correspondence #all_messages p{
+    font-size: 110%;
 }
 
 main #results_search{
-    width: 60%;
-    padding: 0 20px 20px 20px;
+    width: 100%;
 }
 
-main .search_box{
-    height: 200px;
+main .search_block{
+    float: left;
+    width: 100%;
+    color: #2f2f2f;
+    margin: 0 0 20px 0;
+}
+
+main .search_block p{
+    padding: 2px;
+}
+
+main .search_block span,
+main .search_block span,
+main .search_block p:nth-child(7),
+main .search_block p:nth-child(7){
+    font-weight: bold;
+    color: #025E7C;
+}
+
+#description_search_lost{
+    margin: 5px 0 0 0;
+}
+
+main .search_block p:nth-child(7) span{
+    font-weight: normal;
+    font-style: italic;
+    font-size: 80%;
+    color: #4f4f4f;
+    cursor: default;
+}
+
+main .lost_block_info p{
+    padding-bottom: 6px;
 }
 
 main #center .count_matches_lost span{
@@ -296,7 +374,8 @@ main .lost_block, main .find_block{
     border-bottom: 1px dashed #07A0D2;
 }
 
-main .lost_block_info, main .find_block_info{
+main .lost_block_info,
+main .find_block_info{
     float: left;
     width: 85%;
     color: #2f2f2f;
@@ -360,7 +439,7 @@ main #center .count_matches_find span{
     background-color: #FFD300;
     cursor: pointer;
     padding: 5px;
-    width: 85px;
+    /*width: 100%;*/
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

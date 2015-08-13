@@ -55,7 +55,7 @@ class MessageRepository extends EntityRepository
 
     public function dontReadMessage($user_id){
         return $this->getEntityManager()
-            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :sendUserId AND m.status = 0')
+            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :sendUserId AND m.status = 0 ORDER BY m.createdAt DESC')
             ->setParameter('sendUserId', $user_id)
             ->getResult();
     }

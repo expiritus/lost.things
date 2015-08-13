@@ -1,6 +1,6 @@
 {% for all_message in all_messages %}
     <p>
-        [{{ all_message.createdAt|date('d-m-Y H:i:s') }}] {{ all_message.username }}: {{ all_message.message }}
+        <span>[{{ all_message.createdAt|date('d-m-Y H:i:s') }}]</span> <span>{{ all_message.username }}:</span> {{ all_message.message }}
     </p>
     <br>
 {% endfor %}
