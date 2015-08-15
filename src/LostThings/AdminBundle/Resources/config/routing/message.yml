@@ -1,0 +1,30 @@
+admin_message_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Message:index" }
+
+admin_message__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:Message:show" }
+
+admin_message__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:Message:new" }
+
+admin_message__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:Message:create" }
+    methods:  POST
+
+admin_message__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:Message:edit" }
+
+admin_message__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:Message:update" }
+    methods:  [POST, PUT]
+
+admin_message__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:Message:delete" }
+    methods:  [POST, DELETE]

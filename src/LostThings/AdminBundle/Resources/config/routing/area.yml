@@ -1,0 +1,30 @@
+admin_area_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Area:index" }
+
+admin_area__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:Area:show" }
+
+admin_area__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:Area:new" }
+
+admin_area__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:Area:create" }
+    methods:  POST
+
+admin_area__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:Area:edit" }
+
+admin_area__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:Area:update" }
+    methods:  [POST, PUT]
+
+admin_area__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:Area:delete" }
+    methods:  [POST, DELETE]

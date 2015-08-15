@@ -1,0 +1,30 @@
+admin_country_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Country:index" }
+
+admin_country__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:Country:show" }
+
+admin_country__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:Country:new" }
+
+admin_country__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:Country:create" }
+    methods:  POST
+
+admin_country__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:Country:edit" }
+
+admin_country__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:Country:update" }
+    methods:  [POST, PUT]
+
+admin_country__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:Country:delete" }
+    methods:  [POST, DELETE]

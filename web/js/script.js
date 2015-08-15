@@ -29,13 +29,28 @@ $(document).ready(function(){
 
     //Запрос в базу для открытия поля city
     country.on("change", function(){
-	$("input[name='find_foto']").hide();
+        var empty_choice = $("select[name='country']").val();
+        if(empty_choice == 0){
+            city.hide();
+            $("input[name='area']").hide();
+            street.hide();
+            thing.hide();
+            $("input[name='other_thing']").hide();
+            description.hide();
+            $("input[name='find_foto']").hide();
+            $("input[name='lost_foto']").hide();
+            buttonNextStreet.hide();
+            buttonNextThing.hide();
+            var submitFindForm = $("input[name='submit_find_form']").hide();
+            return;
+        }
+        $("input[name='find_foto']").hide();
         $("input[name='area']").val('').hide();
         $("input[name='street']").val('');
         $("input[name='other_thing']").val('').hide();
         description.hide();
         street.hide();
-        thing.hide()
+        thing.hide();
         var country_id = country.val();
         $.ajax({
             url: "/find/getcity/",
@@ -48,17 +63,32 @@ $(document).ready(function(){
             success: function(data){
                 waitImage.hide();
                 city.empty();
-                city.show().append($("<option value='0'>Choice city</option>"));
+                city.show().append($("<option value='0'>Выберите город</option>"));
                 $.each(data, function(index, value){
                     $(city).append($("<option value='"+value.id+"'>"+value.city+"</option>"));
                 });
             }
         });
+
     });
 
     //Запрос в базу для открытия поля area
     city.on("change", function(){
-	$("input[name='find_foto']").hide();
+        var empty_choice = $("select[name='city']").val();
+        if(empty_choice == 0){
+            $("input[name='area']").hide();
+            street.hide();
+            thing.hide();
+            $("input[name='other_thing']").hide();
+            description.hide();
+            $("input[name='find_foto']").hide();
+            $("input[name='lost_foto']").hide();
+            buttonNextStreet.hide();
+            buttonNextThing.hide();
+            var submitFindForm = $("input[name='submit_find_form']").hide();
+            return;
+        }
+        $("input[name='find_foto']").hide();
         $("input[name='area']").val('');
         $("input[name='street']").val('');
         $("input[name='other_thing']").val('').hide();
@@ -125,14 +155,14 @@ $(document).ready(function(){
             beforeSend: wait(),
             success: function(data){
                 waitImage.hide();
-                thing.show().empty().append($("<option value='-1'>Choice thing</option>"));
+                thing.show().empty().append($("<option value='-1'>Выберито то, что вы ищите</option>"));
                 $.each(data, function(index, value){
                     if(value.baseThing == true){
                         $(thing).append($("<option value='"+value.id+"'>"+value.nameThing+"</option>"));
                     }
                     $(otherThing).append($("<option value='"+value.nameThing+"'>"+value.nameThing+"</option>"));
                 });
-                thing.append($("<option value='0'>Other</option>"));
+                thing.append($("<option value='0'>Другое...</option>"));
             }
         });
     });
@@ -169,6 +199,42 @@ $(document).ready(function(){
 
 
     // ЛИЧНЫЙ КАБИНЕТ ----------------------------------------------------------------------------------------
+    var edit_lost = $('.edit_lost');
+    edit_lost.on('click', function(){
+        var edit_lost_id = $(this).attr('value');
+        var edit_description = $(".edit_description_"+edit_lost_id);
+        $.ajax({
+            url: "/personal-area/edit-lost/"+edit_lost_id,
+            method: "POST",
+            success: function(data){
+                edit_description.html(
+                    "<form action='/personal-area/edit-lost/"+edit_lost_id+"' method='POST'>" +
+                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
+                    "<button class='button_link' type='submit' value='"+edit_lost_id+"'>Сохранить</button>" +
+                    "</form>");
+            }
+        });
+    });
+
+
+    var edit_find = $('.edit_find');
+    edit_find.on('click', function(){
+        var edit_find_id = $(this).attr('value');
+        var edit_description = $(".edit_description_"+edit_find_id);
+        $.ajax({
+            url: "/personal-area/edit-find/"+edit_find_id,
+            method: "POST",
+            success: function(data){
+                edit_description.html(
+                    "<form action='/personal-area/edit-find/"+edit_find_id+"' method='POST'>" +
+                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
+                    "<button class='button_link' type='submit' value='"+edit_find_id+"'>Сохранить</button>" +
+                    "</form>");
+            }
+        });
+    });
+
+
     $('.delete_lost').on('click', function(){
         var lost_id = $(this).attr('value');
         $.ajax({
@@ -176,7 +242,9 @@ $(document).ready(function(){
             method: "DELETE",
             success: function(data){
                 if(data){
-                    $('.lost-'+lost_id).html("");
+                    $('.lost-'+lost_id).html("").css({
+                        'borderBottom': 'none'
+                    });
                     var child_lost = $('.lost_things').children().contents().length;
                     if(child_lost == 1){
                         $('.lost_things h1').html("");
@@ -193,7 +261,9 @@ $(document).ready(function(){
             method: "DELETE",
             success: function(data){
                 if(data){
-                    $('.find-'+find_id).html("");
+                    $('.find-'+find_id).html("").css({
+                        'borderBottom': 'none'
+                    });
                     var child_find = $('.find_things').children().contents().length;
                     if(child_find == 1){
                         $('.find_things h1').html("");
@@ -255,9 +325,8 @@ $(document).ready(function(){
         var user = $(this).attr('value');
         $('.whom').attr('value', user);
         dialog.dialog({
-            title: "Send a message to "+user,
+            title: "Написать сообщение "+user,
             resizable: false,
-            modal: true,
             width: 600,
             height: 400,
             show: { effect: "slideDown", duration: 300},
@@ -281,7 +350,7 @@ $(document).ready(function(){
         dont_read_messages.dialog({
             //title: "Message from "+from_user,
             resizable: false,
-            modal: true,
+            //modal: true,
             width: 600,
             height: 400,
             show: { effect: "slideDown", duration: 300},
@@ -299,6 +368,7 @@ $(document).ready(function(){
                 method: "POST",
                 success: function(data){
                     $(all_messages).html(data);
+                    all_messages.scrollTop(100000);
                 }
             });
         },60000);
@@ -345,4 +415,23 @@ $(document).ready(function(){
     }
 
     //КОНЕЦ ФОРМЫ ВВОДА ЛОГИНА И ПАРОЛЯ
+
+    $('html').keydown(function(eventObject){ //отлавливаем нажатие клавиш
+        if($('#send_correspondence').length >0){
+            if (eventObject.keyCode == 13) { //если нажали Enter, то true
+                $('#send_correspondence').click();
+                return false;
+            }
+        }
+    });
+    $('.send_message_input').focus();
+
+
+
+
+    //Colorbox
+    $(".colorbox").on('click', function(){
+        $(this).colorbox();
+    });
+    //
 });

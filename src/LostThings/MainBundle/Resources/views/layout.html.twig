@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::personal_area.html.twig' %}
 
 
 {% block header %}
@@ -27,15 +27,14 @@
     <div id="left_side">
         <h3>История переписок</h3>
         <div id="bg_all_correspondence">
-            {{ render(controller('LostThingsMainBundle:PrivateMessage:allSendCorrespondence')) }}
-            {{ render(controller('LostThingsMainBundle:PrivateMessage:allReceivedCorrespondence')) }}
+            {{ render(controller('LostThingsMainBundle:PrivateMessage:allCorrespondence')) }}
         </div>
     </div>
 
     <div id="right_side">
         <h3>Личная информация</h3>
         <div id="personal_info">
-            lsdkjf
+
         </div>
     </div>
 {% endblock %}

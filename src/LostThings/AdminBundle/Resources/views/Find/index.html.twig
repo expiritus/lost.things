@@ -1,0 +1,70 @@
+{% extends 'LostThingsAdminBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    <div class="title_table">
+        <h1>Find list</h1>
+
+        <div class="count">
+            <p>Всего найдено: {{ entities.getTotalItemCount }}</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('admin_find__new') }}">
+                <span class="create_new">Create a new entry</span>
+            </a>
+        </li>
+    </ul>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Countryid</th>
+                <th>Cityid</th>
+                <th>Areaid</th>
+                <th>Streetid</th>
+                <th>Thingid</th>
+                <th>Userid</th>
+                <th>Status</th>
+                <th>Datefind</th>
+                <th>Description</th>
+                <th>Filename</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_find__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.countryId }}</td>
+                <td>{{ entity.cityId }}</td>
+                <td>{{ entity.areaId }}</td>
+                <td>{{ entity.streetId }}</td>
+                <td>{{ entity.thingId }}</td>
+                <td>{{ entity.userId }}</td>
+                <td>{{ entity.status }}</td>
+                <td>{% if entity.dateFind %}{{ entity.dateFind|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.description }}</td>
+                <td>{{ entity.fileName }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_find__show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_find__edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#display navigation#}
+    <div class="navigation">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

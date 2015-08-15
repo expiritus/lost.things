@@ -12,6 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class MessageRepository extends EntityRepository
 {
+
+    public function findAll($order = 'ASC')
+    {
+        return $this->findBy(array(), array('createdAt' => $order));
+    }
+
     public function findSend($user){
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user GROUP BY c.receivedUserId')
@@ -22,6 +28,13 @@ class MessageRepository extends EntityRepository
     public function findReceived($user){
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
+            ->setParameter('user', $user)
+            ->getResult();
+    }
+
+    public function findReceivedAndSend($user){
+        return $this->getEntityManager()
+            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user OR c.sendUserId = :user')
             ->setParameter('user', $user)
             ->getResult();
     }
@@ -40,22 +53,16 @@ class MessageRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findMessagesArray($received_user_id, $send_user_id){
-        return $this->getEntityManager()
-            ->createQuery('SELECT r FROM LostThingsAdminBundle:Message r
-                            WHERE r.sendUserId = :sendUserId
-                              AND r.receivedUserId = :receivedUserId
-                                OR r.sendUserId = :receivedUserId
-                                  AND r.receivedUserId = :sendUserId
-                                    ORDER BY r.createdAt')
-            ->setParameter('receivedUserId', $received_user_id)
-            ->setParameter('sendUserId', $send_user_id)
-            ->getArrayResult();
-    }
-
     public function dontReadMessage($user_id){
         return $this->getEntityManager()
-            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :sendUserId AND m.status = 0 ORDER BY m.createdAt DESC')
+            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :userId AND m.status = 0')
+            ->setParameter('userId', $user_id)
+            ->getResult();
+    }
+
+    public function updateStatus($user_id){
+        return $this->getEntityManager()
+            ->createQuery('UPDATE LostThingsAdminBundle:Message m SET m.status = 1 WHERE m.receivedUserId = :sendUserId AND m.status = 0')
             ->setParameter('sendUserId', $user_id)
             ->getResult();
     }

@@ -51,6 +51,12 @@ body{
     font-size: 1em;
 }
 
+*{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 
 header{
     font-weight: bold;
@@ -70,7 +76,7 @@ header{
 #header_opacity{
     padding: 20px;
     background-color: rgba(0, 0, 0, .5);
-    height: 92%;
+    height: 100%;
     position: relative;
     z-index: 2;
 }
@@ -86,7 +92,7 @@ header #find_lost_panel{
 header #find_lost_panel a{
     display: inline-block;
     padding: 10px;
-    width: 100px;
+    width: 120px;
     background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);
     border-radius: 10px;
     text-decoration: none;
@@ -97,7 +103,7 @@ header #find_lost_panel a{
 header #find_lost_panel a:hover{
     display: inline-block;
     padding: 10px;
-    width: 100px;
+    width: 120px;
     background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
     border-radius: 10px;
     text-decoration: none;

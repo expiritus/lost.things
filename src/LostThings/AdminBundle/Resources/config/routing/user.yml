@@ -1,0 +1,30 @@
+admin_user_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:User:index" }
+
+admin_user__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:User:show" }
+
+admin_user__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:User:new" }
+
+admin_user__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:User:create" }
+    methods:  POST
+
+admin_user__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:User:edit" }
+
+admin_user__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:User:update" }
+    methods:  [POST, PUT]
+
+admin_user__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:User:delete" }
+    methods:  [POST, DELETE]

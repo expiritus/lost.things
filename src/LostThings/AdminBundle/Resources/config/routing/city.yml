@@ -1,0 +1,30 @@
+admin_city_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:City:index" }
+
+admin_city__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:City:show" }
+
+admin_city__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:City:new" }
+
+admin_city__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:City:create" }
+    methods:  POST
+
+admin_city__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:City:edit" }
+
+admin_city__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:City:update" }
+    methods:  [POST, PUT]
+
+admin_city__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:City:delete" }
+    methods:  [POST, DELETE]

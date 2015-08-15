@@ -1,0 +1,56 @@
+{% extends 'LostThingsAdminBundle::layout.html.twig' %}
+
+{% block body -%}
+    <div class="title_table">
+        <h1>Города</h1>
+        <div class="count">
+            <p>Всего {{ entities.getTotalItemCount }} городов</p>
+        </div>
+    </div>
+        <ul>
+            <li>
+                <a href="{{ path('admin_city__new') }}">
+                    <span class="create_new">Create a new entry</span>
+                </a>
+            </li>
+        </ul>
+
+    <div class="count">
+        <p>Всего {{ entities.getTotalItemCount }} городов</p>
+    </div>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>City</th>
+                <th>Countryid</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_city__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.city }}</td>
+                <td>{{ entity.countryId }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_city__show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_city__edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <div class="navigation">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+admin_street_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Street:index" }
+
+admin_street__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:Street:show" }
+
+admin_street__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:Street:new" }
+
+admin_street__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:Street:create" }
+    methods:  POST
+
+admin_street__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:Street:edit" }
+
+admin_street__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:Street:update" }
+    methods:  [POST, PUT]
+
+admin_street__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:Street:delete" }
+    methods:  [POST, DELETE]

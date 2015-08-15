@@ -1,3 +1,39 @@
+lost_things_admin_admin_message_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/message.yml"
+    prefix:   /admin/message/
+
+lost_things_admin_admin_user_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/user.yml"
+    prefix:   /admin/user/
+
+lost_things_admin_admin_thing_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/thing.yml"
+    prefix:   /admin/thing/
+
+lost_things_admin_admin_street_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/street.yml"
+    prefix:   /admin/street/
+
+lost_things_admin_admin_area_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/area.yml"
+    prefix:   /admin/area/
+
+lost_things_admin_admin_city_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/city.yml"
+    prefix:   /admin/city/
+
+lost_things_admin_admin_country_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/country.yml"
+    prefix:   /admin/country/
+
+lost_things_admin_admin_find_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/find.yml"
+    prefix:   /admin/find/
+
+lost_things_admin_admin_lost_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/lost.yml"
+    prefix:   /admin/lost/
+
 lost_things_admin_homepage:
     path:     /admin/
-    defaults: { _controller: LostThingsAdminBundle:Default:index }
+    defaults: { _controller: LostThingsAdminBundle:Index:index }

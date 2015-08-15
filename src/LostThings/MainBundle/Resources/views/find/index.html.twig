@@ -1,55 +1,59 @@
 {% extends 'LostThingsMainBundle::layout.html.twig' %}
 
 {% block body %}
-
-    <form action="{{ url('save_find_thing') }}" method="POST" enctype="multipart/form-data">
-        <p>
-            <select name="country">
-                <option value="0">Choice country</option>
-                {% for country in countries %}
-                    <option value="{{ country.id }}">{{ country.country }}</option>
-                {% endfor %}
-            </select>
-        </p>
-        <p>
-            <select name="city"></select>
-        </p>
-        <p>
-            <input type="text" list="areas" name="area" placeholder="Area"  autocomplete="off"/>
-            <datalist id="areas"></datalist>
-        </p>
-        <p>
-            <input type="text" list="streets" name="street" placeholder="Street" autocomplete="off"/>
-            <datalist id="streets"></datalist>
-        </p>
-        <p>
-            <select name="thing"></select>
-        </p>
-        <p>
-            <input type="text" list="other_thing" name="other_thing" placeholder="Other" required="required" autocomplete="off"/>
-            <datalist id="other_thing"></datalist>
-        </p>
-        <p>
-            <input type="button" id="button_next_street" value="Next">
-        </p>
-        <p>
-            <input type="button" id="button_next_thing" value="Next">
-        </p>
-        <p class="wait_data">
-            <img style="width: 30px" src="{{ asset('images/wait.gif') }}">
-        </p>
-        <p>
-            <input type="file" name="find_foto">
-        </p>
-        <p>
-            <textarea class="description" name="description" placeholder="Description:"></textarea>
-        </p>
-        <p>
-            <input type="submit" name="submit_find_form">
-        </p>
-    </form>
-
-    {% if not_logged is defined %}
-        <p>Вам необходимо <a href="/register">зарегистрироваться</a> </p>
-    {% endif %}
+    <div class="input_search_form">
+        <h1>Форма поиска</h1>
+        <div class="form">
+            <form action="{{ url('save_find_thing') }}" method="POST" enctype="multipart/form-data">
+                <p>
+                    <select name="country">
+                        <option value="0">Выберите страну</option>
+                        {% for country in countries %}
+                            <option value="{{ country.id }}">{{ country.country }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+                <p>
+                    <select name="city"></select>
+                </p>
+                <p>
+                    <input type="text" list="areas" name="area" placeholder="Район города или область"  autocomplete="off"/>
+                    <datalist id="areas"></datalist>
+                </p>
+                <p>
+                    <input type="text" list="streets" name="street" placeholder="Улица или населенный пункт" autocomplete="off"/>
+                    <datalist id="streets"></datalist>
+                </p>
+                <p>
+                    <select name="thing"></select>
+                </p>
+                <p>
+                    <input type="text" list="other_thing" name="other_thing" placeholder="Другое" required="required" autocomplete="off"/>
+                    <datalist id="other_thing"></datalist>
+                </p>
+                <p>
+                    <input class="next_button" type="button" id="button_next_street" value="Далее">
+                </p>
+                <p>
+                    <input class="next_button" type="button" id="button_next_thing" value="Далее">
+                </p>
+                <p class="wait_data">
+                    <img style="width: 30px" src="{{ asset('images/wait.gif') }}">
+                </p>
+                <p>
+                    <span class="btn-file"> <input type="file" name="find_foto"></span>
+                </p>
+                <p>
+                    <textarea class="description" name="description" placeholder="Описание:"></textarea>
+                </p>
+                <p>
+                    <input type="submit" name="submit_find_form" value="Отправить">
+                </p>
+            </form>
+        </div>
+    {##}
+        {#{% if not_logged is defined %}#}
+            {#<p>Вам необходимо <a href="/register">зарегистрироваться</a> </p>#}
+        {#{% endif %}#}
+    </div>
 {% endblock %}

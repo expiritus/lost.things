@@ -26,4 +26,11 @@ class FindRepository extends EntityRepository
             ->setParameters(array('ids' => $ids))
             ->getArrayResult();
     }
+
+//    public function findLostFind($user_id){
+//      return $this->getEntityManager()
+//          ->createQuery('SELECT f, l FROM LostThingsAdminBundle:Find f JOIN LostThingsAdminBundle:Lost l WHERE f.userId = :userId AND l.userId = :userId')
+//          ->setParameter('userId', $user_id)
+//          ->getResult();
+//    }
 }

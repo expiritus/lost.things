@@ -192,7 +192,6 @@ main #center{
 main #center h1{
     text-align: center;
     font-size: 200%;
-    /*margin: 0 0 20px 0;*/
     color: #FFFFFF;
     background: linear-gradient(180deg, rgba( 45,151,203, .7) 40%,  rgba(  5,104,152, .5) 61%);
     -webkit-border-radius: 10px 10px 0 0;
@@ -210,7 +209,8 @@ main #center .find_things{
 
 main #center .lost_things_things,
 main #center .find_things_things,
-main #center #results_search .search_block{
+main #center #results_search .search_block,
+main #center .form{
     padding: 20px;
     background-color: rgba(255, 255, 255, .5);
     margin: 0 0 30px 0;
@@ -230,6 +230,110 @@ main #center .find_things img{
     border: 2px ridge #025E7C;
 }
 
+main #center .input_search_form input,
+main #center .input_search_form textarea,
+.edit_textarea{
+    width: 100%;
+    background-color: #FFFFFF;
+    border: thin solid #87ceeb;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    color: #025e7c;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.edit_textarea{
+    font-weight: normal;
+    color: #2f2f2f;
+    width: 100%;
+    height: 200px;
+}
+
+main #center .input_search_form textarea{
+    height: 150px;
+    resize: none;
+}
+
+main #center .input_search_form .next_button,
+main #center .input_search_form input[type='submit']{
+    border: none;
+    width: 15%;
+    background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
+}
+
+main #center .input_search_form input[type='submit']{
+    width: 20%;
+}
+
+main #center .input_search_form .btn-file{
+    position: relative;
+    overflow: hidden;
+}
+
+main #center .input_search_form input[type='file']{
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+main #center .input_search_form .next_button:hover,
+main #center .input_search_form input[type='submit']:hover{
+    background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
+}
+
+main #center .input_search_form select{
+    /* styling */
+    width: 100%;
+    /*background-color: rgba( 45,151,203, .9);*/
+    /*background-color: #FFDB2C;*/
+    background-color: #FFFFFF;
+    border: thin solid #87ceeb;
+    /*border: thin solid rgba( 45,151,203, 1);*/
+    /*border: thin solid rgba(  5,104,152, .5);*/
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    color: #025e7c;
+    /*color: #FFFFFF;*/
+    font-weight: bold;
+
+    /* reset */
+
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, skyblue, skyblue);
+    background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+    background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+    background-repeat: no-repeat;
+    height: 40px;
+
+    margin: 10px 0;
+
+}
 
 
 
@@ -263,25 +367,34 @@ main .correspondence .send_message_input,
     font-size: 130%;
     padding: 5px;
     position: absolute;
-    bottom: 50px;
+    bottom: 60px;
 }
 
 #send_correspondence{
-    font-size: 120%;
+    font-size: 150%;
     position: absolute;
     bottom: 0;
-    right: 30%;
-    width: 250px;
+    right: 0;
+    width: 100%;
     padding: 10px;
     background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);
 }
 
+
 #send_correspondence:hover{
-    font-size: 120%;
+    font-size: 150%;
     position: absolute;
     bottom: 0;
-    width: 250px;
+    width: 100%;
     padding: 10px;
+    background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
+}
+
+.submit_pm{
+    background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);
+}
+
+.submit_pm:hover{
     background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
 }
 
@@ -317,6 +430,13 @@ main .search_block{
 
 main .search_block p{
     padding: 2px;
+}
+
+main .search_block h3{
+    text-align: center;
+    margin: 20px 0;
+    color: #025e7c;
+    font-size: 150%;
 }
 
 main .search_block span,
@@ -359,8 +479,12 @@ main .send_user_pm span{
 
 main .control_block{
     float: right;
-    width: 10%;
+    width: 15%;
     margin: 30px 10px 0 0;
+}
+
+main .control_block .button_link{
+    width: 100px;
 }
 
 main .control_block li{
@@ -377,7 +501,7 @@ main .lost_block, main .find_block{
 main .lost_block_info,
 main .find_block_info{
     float: left;
-    width: 85%;
+    width: 80%;
     color: #2f2f2f;
     margin: 0 0 20px 0;
 }
@@ -407,13 +531,43 @@ main #center .count_matches_find span{
 .answer_input{
     width: 100%;
     height: 50px;
+    background-color: #FFFFFF;
+    border: thin solid #87ceeb;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    color: #025e7c;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    resize: none;
+}
+
+.dont_read_message{
+    font: inherit;
+    color: #025e7c;
+    font-weight: bold;
 }
 
 
 .send_textarea{
-    width: 100%;
+    /*width: 100%;*/
     height: 270px;
-    margin: 0 0 10px 0;
+    /*margin: 0 0 10px 0;*/
+    width: 100%;
+    resize: none;
+    text-decoration: none;
+    background-color: #FFFFFF;
+    border: thin solid #87ceeb;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    color: #025e7c;
+    font-weight: bold;
+    margin: 10px 0;
 }
 
 
@@ -468,6 +622,7 @@ main #center .count_matches_find span{
 .separator{
     height: 20px;
 }
+
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 

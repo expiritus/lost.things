@@ -1,0 +1,26 @@
+{% extends '::admin.html.twig' %}
+
+{% block header %}
+    <div id="search_form">
+        <form action="#" method="get">
+            <p>
+                <input type="search" name="search">
+                <input type="submit" name="search_submit">
+            </p>
+        </form>
+    </div>
+{% endblock %}
+{% block aside %}
+    <ul>
+        <li><a href="{{ path('main') }}">На главную</a></li>
+        <li><a href="/admin/country/">Страны</a></li>
+        <li><a href="/admin/city/">Города</a></li>
+        <li><a href="/admin/area/">Районы</a></li>
+        <li><a href="/admin/street/">Улицы</a></li>
+        <li><a href="/admin/thing/">Объекты</a></li>
+        <li><a href="/admin/message/">Сообщения</a></li>
+        <li><a href="/admin/user/">Пользователи</a></li>
+        <li><a href="/admin/find/">Найдено</a></li>
+        <li><a href="/admin/lost/">Потеряно</a></li>
+    </ul>
+{% endblock %}

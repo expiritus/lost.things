@@ -3,16 +3,16 @@
 {% block body %}
     {% if dont_read_messages is defined %}
         {% for dont_read_message in dont_read_messages %}
-            <div class="dialog dont_read_messages" title="Message from {{ dont_read_message.username }}">
+            <div class="dialog dont_read_messages" title="Входящее сообщение от {{ dont_read_message.username }}">
                 <div class="popup_message">
-                    {{ dont_read_message.message }}
+                    <span class="dont_read_message"> {{ dont_read_message.message }}</span>
                 </div>
                 <div class="answer">
                     <form action="{{ path('private_message') }}" method="POST">
-                        <textarea class="message answer_input" name="message"></textarea>
+                        <textarea class="message answer_input" name="message" spellcheck="false"></textarea>
                         <input type="hidden" name="whom" value="" class="whom">
                         <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
-                        <button name="submit_pm" class="submit_pm button">Ответить</button>
+                        <button name="submit_pm" class="button_link submit_pm">Ответить</button>
                     </form>
                 </div>
             </div>
@@ -27,9 +27,9 @@
                     <div class="lost-{{ all_user_lost.id }} lost_block">
                         <div class="lost_block_info">
                             {% if all_user_lost.filename is not empty %}
-                                <img src="{{ asset('files/') }}{{ all_user_lost.filename }}">
+                                <a class="colorbox" href="{{ asset('files/') }}{{ all_user_lost.filename }}"><img src="{{ asset('files/') }}{{ all_user_lost.filename }}"></a>
                             {% else %}
-                                <img src="{{ asset('images/no_image.png') }}">
+                               <img src="{{ asset('images/no_image.png') }}">
                             {% endif %}
                             <p>
                                 <span>Потеря:</span> {{ all_user_lost.thing }}
@@ -49,13 +49,15 @@
                             <p class="count_matches_lost_{{ all_user_lost.id }} ">
                                 Кол-во совпадений: <a class="count_matches_lost" href="/personal-area/lost/search/{{ all_user_lost.id }}"> <span></span></a>
                             </p>
-                            <p>
+                            <p class="edit_description_{{ all_user_lost.id }}">
                                 <span>Описание:</span> {{ all_user_lost.description }}
                             </p>
                         </div>
                         <div class="control_block">
                             <ul>
+
                                 <li><button class="button_link refresh_lost" value="{{ all_user_lost.id }}">Обновить</button></li>
+                                <li><button class="button_link edit_lost" value="{{ all_user_lost.id }}">Исправить</button></li>
                                 <li><button class="button_link delete_lost" value="{{ all_user_lost.id }}">Удалить</button></li>
                             </ul>
                         </div>
@@ -74,7 +76,7 @@
                     <div class="find-{{ all_user_find.id }} find_block">
                         <div class="find_block_info">
                             {% if all_user_find.filename is not empty %}
-                                <img src="{{ asset('files/') }}{{ all_user_find.filename }}">
+                                <a class="colorbox" href="{{ asset('files/') }}{{ all_user_find.filename }}"><img src="{{ asset('files/') }}{{ all_user_find.filename }}"></a>
                             {% else %}
                                 <img src="{{ asset('images/no_image.png') }}">
                             {% endif %}
@@ -96,13 +98,14 @@
                             <p class="count_matches_find_{{ all_user_find.id }}">
                                 Кол-во совпадений: <a class="count_matches_find" href="/personal-area/find/search/{{ all_user_find.id }}"><span></span></a>
                             </p>
-                            <p>
+                            <p class="edit_description_{{ all_user_find.id }}">
                                 <span>Описание:</span> {{ all_user_find.description }}
                             </p>
                         </div>
                         <div class="control_block">
                             <ul>
                                 <li><button class="button_link refresh_find" value="{{ all_user_find.id }}">Обновить</button></li>
+                                <li><button class="button_link edit_find" value="{{ all_user_find.id }}">Исправить</button></li>
                                 <li><button class="button_link delete_find" value="{{ all_user_find.id }}">Удалить</button></li>
                             </ul>
                         </div>

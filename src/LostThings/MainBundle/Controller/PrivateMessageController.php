@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 class PrivateMessageController extends Controller
 {
 
-    private $received_user_id;
-
     public function messageAction(Request $request){
         $message = htmlspecialchars($request->request->get('message'));
         $message_id = htmlspecialchars($request->request->get('status_message'));
@@ -60,20 +58,32 @@ class PrivateMessageController extends Controller
 
 
 
-    public function allSendCorrespondenceAction(){
+//    public function allSendCorrespondenceAction(){
+//        $user = $this->getUser()->getId();
+//        $all_send_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findSend($user);
+//        return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
+//            'all_send_correspondence' => $all_send_correspondence,
+//        ));
+//    }
+//
+//
+//    public function allReceivedCorrespondenceAction(){
+//        $user = $this->getUser()->getId();
+//        $all_received_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceived($user);
+//        return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
+//            'all_received_correspondence' => $all_received_correspondence,
+//        ));
+//    }
+
+    public function allCorrespondenceAction(){
         $user = $this->getUser()->getId();
         $all_send_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findSend($user);
-        return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
-            'all_send_correspondence' => $all_send_correspondence,
-        ));
-    }
-
-
-    public function allReceivedCorrespondenceAction(){
-        $user = $this->getUser()->getId();
         $all_received_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceived($user);
+//        $all_received_and_send = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceivedAndSend($user);
         return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
             'all_received_correspondence' => $all_received_correspondence,
+            'all_send_correspondence' => $all_send_correspondence,
+//            'all_received_and_send' => $all_received_and_send,
         ));
     }
 
@@ -90,6 +100,7 @@ class PrivateMessageController extends Controller
         $received_user_id = substr($uri, $slash+1);
         $send_user_id = $this->getUser();
         $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
+        $update_status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->updateStatus($send_user_id->getId());
         return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
             'all_messages' => $all_messages,
         ));
@@ -98,6 +109,7 @@ class PrivateMessageController extends Controller
     public function refreshCorrespondenceAction($received_user_id){
         $send_user_id = $this->getUser();
         $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
+        $update_status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->updateStatus($send_user_id->getId());
         return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
             'all_messages' => $all_messages,
         ));

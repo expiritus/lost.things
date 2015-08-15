@@ -1,0 +1,51 @@
+{% extends 'LostThingsAdminBundle::layout.html.twig' %}
+
+{% block body -%}
+    <div class="title_table">
+        <h1>Thing list</h1>
+        <div class="count">
+            <p>Всего {{ entities.getTotalItemCount }} объекта</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="{{ path('admin_thing__new') }}">
+                <span class="create_new">Create a new entry</span>
+            </a>
+        </li>
+    </ul>
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Namething</th>
+                <th>Basething</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_thing__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nameThing }}</td>
+                <td>{{ entity.baseThing }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_thing__show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_thing__edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {#display navigation#}
+    <div class="navigation">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

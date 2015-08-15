@@ -1,0 +1,30 @@
+admin_find_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Find:index" }
+
+admin_find__show:
+    path:     /{id}/show/
+    defaults: { _controller: "LostThingsAdminBundle:Find:show" }
+
+admin_find__new:
+    path:     /new/
+    defaults: { _controller: "LostThingsAdminBundle:Find:new" }
+
+admin_find__create:
+    path:     /create/
+    defaults: { _controller: "LostThingsAdminBundle:Find:create" }
+    methods:  POST
+
+admin_find__edit:
+    path:     /{id}/edit/
+    defaults: { _controller: "LostThingsAdminBundle:Find:edit" }
+
+admin_find__update:
+    path:     /{id}/update/
+    defaults: { _controller: "LostThingsAdminBundle:Find:update" }
+    methods:  [POST, PUT]
+
+admin_find__delete:
+    path:     /{id}/delete/
+    defaults: { _controller: "LostThingsAdminBundle:Find:delete" }
+    methods:  [POST, DELETE]

@@ -17,38 +17,25 @@ use Symfony\Component\HttpFoundation\Request;
 class PersonalAreaController extends Controller
 {
     public function indexAction(Request $request){
-
-        $referer = $request->headers->get('referer');
-        $slash = strrpos($referer, '/');
-        $id = substr($referer, $slash+1);
-        $server_name = $_SERVER['SERVER_NAME'];
-        if($referer == 'http://'.$server_name.'/personal-area/correspondence/'.$id){
-            $status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findBy(array('sendUserId' => $id));
-            $em = $this->getDoctrine()->getManager();
-            for($i=0; $i<count($status_message); $i++){
-                $status_message[$i]->setStatus(1);
-            }
-            $em->flush();
-        }
-
         $user = $this->getUser();
         if ($user) {
             $user_id = $this->getUser()->getId();
             $all_user_finds = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findBy(array('userId' => $user_id));
             $all_user_losts = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findBy(array('userId' => $user_id));
             $messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->dontReadMessage($user_id);
-            $em = $this->getDoctrine()->getManager();
-            for($i=0; $i<count($messages); $i++){
-                $messages[$i]->setStatus(1);
-            }
-            $em->flush();
             if(count($messages) > 0){
+                $em = $this->getDoctrine()->getManager();
+                for($i=0; $i<count($messages); $i++){
+                    $messages[$i]->setStatus(1);
+                }
+                $em->flush();
                 return $this->render('LostThingsMainBundle:personal-area:index.html.twig', array(
                     'all_user_finds' => $all_user_finds,
                     'all_user_losts' => $all_user_losts,
                     'dont_read_messages' => $messages
                 ));
             }
+
             return $this->render('LostThingsMainBundle:personal-area:index.html.twig', array(
                 'all_user_finds' => $all_user_finds,
                 'all_user_losts' => $all_user_losts,
@@ -72,6 +59,38 @@ class PersonalAreaController extends Controller
             die(true);
         }
         die(false);
+    }
+
+    public function editLostAction(Request $request, $id){
+        if($request->isXmlHttpRequest()){
+            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findOneBy(array('id' => $id));
+            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
+                'edit_thing' => $edit_thing,
+            ));
+        }else{
+            $update_description = htmlspecialchars($request->request->get('update_description'));
+            $update_lost = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->find($id);
+            $update_lost->setDescription($update_description);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirect('/personal-area/');
+        }
+    }
+
+    public function editFindAction(Request $request, $id){
+        if($request->isXmlHttpRequest()){
+            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findOneBy(array('id' => $id));
+            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
+                'edit_thing' => $edit_thing,
+            ));
+        }else{
+            $update_description = htmlspecialchars($request->request->get('update_description'));
+            $update_lost = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->find($id);
+            $update_lost->setDescription($update_description);
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            return $this->redirect('/personal-area/');
+        }
     }
 
 

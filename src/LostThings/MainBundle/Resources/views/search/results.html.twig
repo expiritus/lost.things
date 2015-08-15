@@ -7,7 +7,7 @@
             {% for lost_thing in lost_things %}
                 <div class="search_block">
                     {% if lost_thing.filename is not empty %}
-                        <img src="{{ asset('files/') }}{{ lost_thing.filename }}">
+                        <a class="colorbox" href="{{ asset('files/') }}{{ lost_thing.filename }}"> <img src="{{ asset('files/') }}{{ lost_thing.filename }}"></a>
                     {% else %}
                         <img src="{{ asset('images/no_image.png') }}">
                     {% endif %}
@@ -36,19 +36,21 @@
             {% endfor %}
             <div class="dialog" title="">
                 <form action="{{ path('private_message') }}" method="POST">
-                    <textarea class="message send_textarea" name="message"></textarea>
+                    <textarea class="message send_textarea" name="message" spellcheck="false"></textarea>
                     <input type="hidden" name="whom" value="" class="whom">
                     <button name="submit_pm" class="submit_pm button">Отправить</button>
                 </form>
             </div>
             {% if lost_things is empty %}
-                <p>Вашу вещь еще никто не ищет</p>
+                <div class="search_block">
+                    <h3>То, что вы нашли, еще никто не ищет</h3>
+                </div>
             {% endif %}
         {% else %}
             {% for find_thing in find_things %}
                 <div class="search_block">
                     {% if find_thing.filename is not empty %}
-                        <img src="{{ asset('files/') }}{{ find_thing.filename }}">
+                        <a class="colorbox" href="{{ asset('files/') }}{{ find_thing.filename }}"> <img src="{{ asset('files/') }}{{ find_thing.filename }}"></a>
                     {% else %}
                         <img src="{{ asset('images/no_image.png') }}">
                     {% endif %}
@@ -77,13 +79,15 @@
             {% endfor %}
             <div class="dialog" title="">
                 <form action="{{ path('private_message') }}" method="POST">
-                    <textarea class="message send_textarea" name="message"></textarea>
+                    <textarea class="message send_textarea" name="message" spellcheck="false"></textarea>
                     <input type="hidden" name="whom" value="" class="whom">
-                    <button name="submit_pm" class="submit_pm button">Отправить</button>
+                    <button name="submit_pm" class="button_link submit_pm button">Отправить</button>
                 </form>
             </div>
             {% if find_things is empty %}
-                <p>Эту вещь еще никто не нашел</p>
+                <div class="search_block">
+                    <h3>То, что вы ищите, еще никто не нашел</h3>
+                </div>
             {% endif %}
         {% endif %}
         <div class="clear"></div>
