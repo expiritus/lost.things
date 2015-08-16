@@ -24,7 +24,7 @@ class SearchController extends Controller
         for($l=0; $l<count($lost_things); $l++) {
             if
             (
-                $lost_things[$l]->getCountryId() == $find_things->getCountryId()
+                    $lost_things[$l]->getCountryId() == $find_things->getCountryId()
                 and $lost_things[$l]->getCityId()    == $find_things->getCityId()
                 and $lost_things[$l]->getAreaId()    == $find_things->getAreaId()
                 and $lost_things[$l]->getStreetId()  == $find_things->getStreetId()
@@ -34,23 +34,10 @@ class SearchController extends Controller
                 $this->ids_find[] = $lost_things[$l]->getId();
                 $request = Request::createFromGlobals();
                 if($request->getMethod() == 'GET'){
-                    $email_to = $lost_things[$l]->getUsername()->getEmail();
                     $name = $lost_things[$l]->getUsername();
-                    if(count($this->ids_find) > 0){
-                        $message = \Swift_Message::newInstance()
-                            ->setSubject('Hello Email')
-                            ->setFrom('antras2007@gmail.com')
-                            ->setTo($email_to)
-                            ->setBody(
-                                $this->renderView(
-                                // app/Resources/views/Emails/registration.html.twig
-                                    'Emails/matches.html.twig',
-                                    array('name' => $name)
-                                ),
-                                'text/html'
-                            )
-                        ;
-                        $this->get('mailer')->send($message);
+                    $email_to = $lost_things[$l]->getUsername()->getEmail();
+                    if(count($this->ids_find) > 0) {
+                        $this->sendEmail($name, $email_to);
                     }
                 }
             }
@@ -92,20 +79,7 @@ class SearchController extends Controller
                     $email_to = $lost_things[$l]->getUsername()->getEmail();
                     $name = $lost_things[$l]->getUsername();
                     if(count($this->ids_find) > 0){
-                        $message = \Swift_Message::newInstance()
-                            ->setSubject('Hello Email')
-                            ->setFrom('antras2007@gmail.com')
-                            ->setTo($email_to)
-                            ->setBody(
-                                $this->renderView(
-                                // app/Resources/views/Emails/registration.html.twig
-                                    'Emails/matches.html.twig',
-                                    array('name' => $name)
-                                ),
-                                'text/html'
-                            )
-                        ;
-                        $this->get('mailer')->send($message);
+                        $this->sendEmail($name, $email_to);
                     }
                 }
             }
@@ -136,19 +110,7 @@ class SearchController extends Controller
                     $email_to = $find_things[$f]->getUsername()->getEmail();
                     $name = $find_things[$f]->getUsername();
                     if(count($this->ids_lost) > 0){
-                        $message = \Swift_Message::newInstance()
-                            ->setSubject('Matches things')
-                            ->setFrom('antras2007@gmail.com')
-                            ->setTo($email_to)
-                            ->setBody(
-                                $this->renderView(
-                                    'Emails/matches.html.twig',
-                                    array('name' => $name)
-                                ),
-                                'text/html'
-                            )
-                        ;
-                        $this->get('mailer')->send($message);
+                        $this->sendEmail($name, $email_to);
                     }
                 }
             }
@@ -194,19 +156,7 @@ class SearchController extends Controller
                     $email_to = $find_things[$f]->getUsername()->getEmail();
                     $name = $find_things[$f]->getUsername();
                     if(count($this->ids_lost) > 0){
-                        $message = \Swift_Message::newInstance()
-                            ->setSubject('Matches things')
-                            ->setFrom('antras2007@gmail.com')
-                            ->setTo($email_to)
-                            ->setBody(
-                                $this->renderView(
-                                    'Emails/matches.html.twig',
-                                    array('name' => $name)
-                                ),
-                                'text/html'
-                            )
-                        ;
-                        $this->get('mailer')->send($message);
+                        $this->sendEmail($name, $email_to);
                     }
                 }
             }
@@ -235,6 +185,24 @@ class SearchController extends Controller
         $response = new Response(json_encode($count));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+
+    private function sendEmail($name, $email_to){
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
+            ->setFrom('antras2007@gmail.com')
+            ->setTo($email_to)
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                    'Emails/matches.html.twig',
+                    array('name' => $name)
+                ),
+                'text/html'
+            )
+        ;
+        $this->get('mailer')->send($message);
     }
 
 

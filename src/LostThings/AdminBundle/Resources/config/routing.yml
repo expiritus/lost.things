@@ -37,3 +37,7 @@ lost_things_admin_admin_lost_:
 lost_things_admin_homepage:
     path:     /admin/
     defaults: { _controller: LostThingsAdminBundle:Index:index }
+
+search:
+    path: /admin/search/
+    defaults: { _controller: LostThingsAdminBundle:Search:search}

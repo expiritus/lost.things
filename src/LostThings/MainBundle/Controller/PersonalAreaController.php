@@ -8,10 +8,7 @@
 
 namespace LostThings\MainBundle\Controller;
 
-
-use LostThings\AdminBundle\Entity\Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class PersonalAreaController extends Controller
@@ -62,34 +59,40 @@ class PersonalAreaController extends Controller
     }
 
     public function editLostAction(Request $request, $id){
-        if($request->isXmlHttpRequest()){
-            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findOneBy(array('id' => $id));
-            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
-                'edit_thing' => $edit_thing,
-            ));
-        }else{
+        if($request->request->get('save_edit_lost')){
             $update_description = htmlspecialchars($request->request->get('update_description'));
             $update_lost = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->find($id);
             $update_lost->setDescription($update_description);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirect('/personal-area/');
+            return $this->render('LostThingsMainBundle:personal-area:description.html.twig', array(
+                'update_description' => $update_lost,
+            ));
+        }else{
+            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findOneBy(array('id' => $id));
+            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
+                'id' => $id,
+                'edit_thing' => $edit_thing,
+            ));
         }
     }
 
     public function editFindAction(Request $request, $id){
-        if($request->isXmlHttpRequest()){
-            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findOneBy(array('id' => $id));
-            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
-                'edit_thing' => $edit_thing,
-            ));
-        }else{
+        if($request->request->get('save_edit_find')){
             $update_description = htmlspecialchars($request->request->get('update_description'));
-            $update_lost = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->find($id);
-            $update_lost->setDescription($update_description);
+            $update_find = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->find($id);
+            $update_find->setDescription($update_description);
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            return $this->redirect('/personal-area/');
+            return $this->render('LostThingsMainBundle:personal-area:description.html.twig', array(
+                'update_description' => $update_find,
+            ));
+        }else{
+            $edit_thing = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findOneBy(array('id' => $id));
+            return $this->render('LostThingsMainBundle:personal-area:edit.html.twig', array(
+                'id' => $id,
+                'edit_thing' => $edit_thing,
+            ));
         }
     }
 

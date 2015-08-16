@@ -12,6 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class StreetRepository extends EntityRepository
 {
+
+    public function search($search){
+        return $this->getEntityManager()
+            ->createQuery("SELECT s FROM LostThingsAdminBundle:Street s WHERE s.street LIKE :search ")
+            ->setParameter('search', "%$search%")
+            ->getResult();
+    }
+
     public function getStreetById($city_id)
     {
         return $this->getEntityManager()

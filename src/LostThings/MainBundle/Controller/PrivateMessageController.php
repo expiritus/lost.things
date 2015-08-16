@@ -79,11 +79,9 @@ class PrivateMessageController extends Controller
         $user = $this->getUser()->getId();
         $all_send_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findSend($user);
         $all_received_correspondence = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceived($user);
-//        $all_received_and_send = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findReceivedAndSend($user);
         return $this->render('LostThingsMainBundle:private-message:all-correspondence.html.twig', array(
             'all_received_correspondence' => $all_received_correspondence,
             'all_send_correspondence' => $all_send_correspondence,
-//            'all_received_and_send' => $all_received_and_send,
         ));
     }
 
@@ -106,21 +104,9 @@ class PrivateMessageController extends Controller
         ));
     }
 
-    public function refreshCorrespondenceAction($received_user_id){
+    public function refreshCorrespondenceAction(Request $request, $received_user_id){
         $send_user_id = $this->getUser();
-        $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
-        $update_status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->updateStatus($send_user_id->getId());
-        return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
-            'all_messages' => $all_messages,
-        ));
-    }
-
-    public function saveCorrespondenceAction(Request $request){
-        $send_user_id = $this->getUser();
-        $referer = $request->headers->get('referer');
-        $slash = strrpos($referer, '/');
-        $received_user_id = substr($referer, $slash+1);
-        if($request->getMethod() == 'POST'){
+        if($request->request->get('message')){
             $message = htmlspecialchars($request->request->get('message'));
             $received_user = $this->getDoctrine()->getRepository('LostThingsAdminBundle:User')->find($received_user_id);
             $received_user->getId();
@@ -133,9 +119,35 @@ class PrivateMessageController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($correspondence);
             $em->flush();
-            $referer = $request->headers->get('referer');
-            return new RedirectResponse($referer);
         }
+        $all_messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->findMessages($received_user_id, $send_user_id);
+        $update_status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->updateStatus($send_user_id->getId());
+        return $this->render('LostThingsMainBundle:private-message:all-messages.html.twig', array(
+            'all_messages' => $all_messages,
+        ));
     }
+//
+//    public function saveCorrespondenceAction(Request $request){
+//        $send_user_id = $this->getUser();
+//        $referer = $request->headers->get('referer');
+//        $slash = strrpos($referer, '/');
+//        $received_user_id = substr($referer, $slash+1);
+//        if($request->getMethod() == 'POST'){
+//            $message = htmlspecialchars($request->request->get('message'));
+//            $received_user = $this->getDoctrine()->getRepository('LostThingsAdminBundle:User')->find($received_user_id);
+//            $received_user->getId();
+//            $correspondence = new Message();
+//            $correspondence->setCurrentUsername($send_user_id);
+//            $correspondence->setUsername($send_user_id);
+//            $correspondence->setReceivedUsername($received_user);
+//            $correspondence->setMessage($message);
+//            $correspondence->setStatus(0);
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($correspondence);
+//            $em->flush();
+//            $referer = $request->headers->get('referer');
+//            return new RedirectResponse($referer);
+//        }
+//    }
 
 }

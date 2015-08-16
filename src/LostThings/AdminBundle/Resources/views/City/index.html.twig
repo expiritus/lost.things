@@ -22,17 +22,17 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>City</th>
-                <th>Countryid</th>
-                <th>Actions</th>
+                <th>Город</th>
+                <th>Страна</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_city__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.city }}</td>
-                <td>{{ entity.countryId }}</td>
+                <td>{{ entity.country }}</td>
                 <td>
                 <ul>
                     <li>

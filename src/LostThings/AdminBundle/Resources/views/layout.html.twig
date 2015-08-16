@@ -1,11 +1,11 @@
 {% extends '::admin.html.twig' %}
 
 {% block header %}
+    {#{{ render(controller('LostThingsAdminBundle:Search:index')) }}#}
     <div id="search_form">
-        <form action="#" method="get">
+        <form method="GET">
             <p>
-                <input type="search" name="search">
-                <input type="submit" name="search_submit">
+                <input type="text" name="search" id="search_input" placeholder="Поиск">
             </p>
         </form>
     </div>

@@ -19,13 +19,13 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Country</th>
-                <th>Actions</th>
+                <th>Страна</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_country__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.country }}</td>
                 <td>

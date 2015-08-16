@@ -21,6 +21,24 @@ class StreetController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+        $request = Request::createFromGlobals();
+        if($request->query->get('search')){
+            $search = htmlspecialchars($request->query->get('search'));
+            $em = $this->getDoctrine()->getManager();
+
+            $entities = $em->getRepository('LostThingsAdminBundle:Street')->search($search);
+
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $entities,
+                $request->query->getInt('page', 1), 20/*limit per page*/
+            );
+            return $this->render('LostThingsAdminBundle:Street:index.html.twig', array(
+                'entities' => $pagination,
+            ));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('LostThingsAdminBundle:Street')->findAll();

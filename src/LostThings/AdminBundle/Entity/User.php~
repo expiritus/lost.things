@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * User
  *
  * @ORM\Table(name="div_user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LostThings\AdminBundle\Entity\Repository\UserRepository")
  */
 class User extends BaseUser {
 

@@ -12,6 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class AreaRepository extends EntityRepository
 {
+    public function search($search){
+        return $this->getEntityManager()
+            ->createQuery("SELECT a FROM LostThingsAdminBundle:Area a WHERE a.area LIKE :search ")
+            ->setParameter('search', "%$search%")
+            ->getResult();
+    }
+
     public function getAreaById($id){
         return $this->getEntityManager()
             ->createQuery('SELECT a FROM LostThingsAdminBundle:Area a WHERE a.cityId = :id')

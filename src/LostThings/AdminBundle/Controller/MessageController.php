@@ -21,9 +21,27 @@ class MessageController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+        $request = Request::createFromGlobals();
+        if($request->query->get('search')){
+            $search = htmlspecialchars($request->query->get('search'));
+            $em = $this->getDoctrine()->getManager();
+
+            $entities = $em->getRepository('LostThingsAdminBundle:Message')->search($search);
+
+            $paginator  = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $entities,
+                $request->query->getInt('page', 1), 20/*limit per page*/
+            );
+            return $this->render('LostThingsAdminBundle:Message:index.html.twig', array(
+                'entities' => $pagination,
+            ));
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('LostThingsAdminBundle:Message')->findAll();
+        $entities = $em->getRepository('LostThingsAdminBundle:Message')->findAll('DESC');
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $entities,

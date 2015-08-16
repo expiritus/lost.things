@@ -12,6 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class CityRepository extends EntityRepository
 {
+
+    public function search($search){
+        return $this->getEntityManager()
+            ->createQuery("SELECT c FROM LostThingsAdminBundle:City c WHERE c.city LIKE :search OR c.countryId
+                            IN (SELECT k.id FROM LostThingsAdminBundle:Country k WHERE k.country LIKE :search)")
+            ->setParameter('search', "%$search%")
+            ->getResult();
+    }
+
     public function getCityById($id){
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:City c WHERE c.countryId = :id ORDER BY c.city')

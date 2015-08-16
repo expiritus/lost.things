@@ -170,11 +170,8 @@ header #site_name hr, header .about_title hr{
 
 main{
     width: auto;
-    background-color: #fff;
-    margin: -1px 0 0 0;
     position: relative;
     padding: 50px 90px 30px 90px;
-    z-index: 3;
 }
 
 main img{

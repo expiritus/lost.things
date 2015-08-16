@@ -57,6 +57,7 @@ body{
 
 table, th, td{
     border: 1px solid #f4f4f4;
+    table-layout: auto;
 }
 
 table{
@@ -77,6 +78,10 @@ td{
     table-layout: auto;
 }
 
+td{
+    width: auto;
+}
+
 tr:nth-child(even){
     background-color: #f2f2f2;
 }
@@ -86,7 +91,7 @@ td:nth-child(1){
     background-color: #8A1800;
     text-align: center;
     padding: 0;
-    width: 50px;
+    width: 65px;
 }
 
 
@@ -125,8 +130,21 @@ header{
     width: 80%;
 }
 
-#search_form{
+#search_input{
     float: right;
+    width: 300px;
+    background-color: #FFFFFF;
+    border: 1px solid #891800;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.2em;
+    padding: 0.5em 3.5em 0.5em 1em;
+    color: #025e7c;
+    font-weight: bold;
+    margin: 10px 0;
 }
 
 .create_new{
@@ -212,6 +230,23 @@ main{
     margin: 0 0 0 20%;
     width: 80%;
     padding: 20px;
+}
+
+
+main .admin_font td:not(:first-child):not(:last-child){
+    font-size: 120%;
+    padding: 0 20px;
+    text-align: center;
+    color: #043758;
+}
+
+main .admin_font .date{
+    font-size: 80%;
+}
+
+main .admin_font img{
+    width: 70px;
+    padding: 10px 0;
 }
 
 

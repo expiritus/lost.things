@@ -18,14 +18,14 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Namething</th>
-                <th>Basething</th>
-                <th>Actions</th>
+                <th>Объект</th>
+                <th>Базовый объект</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_thing__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nameThing }}</td>
                 <td>{{ entity.baseThing }}</td>

@@ -12,6 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ThingRepository extends EntityRepository
 {
+
+
+    public function search($search){
+        return $this->getEntityManager()
+            ->createQuery("SELECT t FROM LostThingsAdminBundle:Thing t WHERE t.nameThing LIKE :search ")
+            ->setParameter('search', "%$search%")
+            ->getResult();
+    }
+
     public function getBaseThing(){
         return $this->getEntityManager()
             ->createQuery('SELECT t FROM LostThingsAdminBundle:Thing t GROUP BY t.nameThing')

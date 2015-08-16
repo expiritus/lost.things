@@ -19,35 +19,39 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Countryid</th>
-                <th>Cityid</th>
-                <th>Areaid</th>
-                <th>Streetid</th>
-                <th>Thingid</th>
-                <th>Userid</th>
-                <th>Status</th>
-                <th>Description</th>
-                <th>Datelost</th>
-                <th>Filename</th>
-                <th>Datefind</th>
-                <th>Actions</th>
+                <th>Страна</th>
+                <th>Город</th>
+                {#<th>Areaid</th>#}
+                {#<th>Streetid</th>#}
+                <th>Объект</th>
+                <th>Пользователь</th>
+                {#<th>Status</th>#}
+                {#<th>Description</th>#}
+                <th>Дата</th>
+                <th>Изображение</th>
+                {#<th>Datefind</th>#}
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_lost__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.countryId }}</td>
-                <td>{{ entity.cityId }}</td>
-                <td>{{ entity.areaId }}</td>
-                <td>{{ entity.streetId }}</td>
-                <td>{{ entity.thingId }}</td>
-                <td>{{ entity.userId }}</td>
-                <td>{{ entity.status }}</td>
-                <td>{{ entity.description }}</td>
-                <td>{% if entity.dateLost %}{{ entity.dateLost|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.fileName }}</td>
-                <td>{% if entity.dateFind %}{{ entity.dateFind|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.country }}</td>
+                <td>{{ entity.city }}</td>
+                {#<td>{{ entity.areaId }}</td>#}
+                {#<td>{{ entity.streetId }}</td>#}
+                <td>{{ entity.thing }}</td>
+                <td>{{ entity.username }}</td>
+                {#<td>{{ entity.status }}</td>#}
+                {#<td>{{ entity.description }}</td>#}
+                <td><span class="date"> {% if entity.dateLost %}{{ entity.dateLost|date('Y-m-d H:i:s') }}</span>{% endif %}</td>
+                {% if entity.fileName is not empty %}
+                    <td><img src="{{ asset('files/') }}" {{ entity.fileName }}></td>
+                {% else %}
+                    <td><img src="{{ asset('images/no_image.png') }}"></td>
+                {% endif %}
+                {#<td>{% if entity.dateFind %}{{ entity.dateFind|date('Y-m-d H:i:s') }}{% endif %}</td>#}
                 <td>
                 <ul>
                     <li>

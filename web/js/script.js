@@ -208,10 +208,28 @@ $(document).ready(function(){
             method: "POST",
             success: function(data){
                 edit_description.html(
-                    "<form action='/personal-area/edit-lost/"+edit_lost_id+"' method='POST'>" +
                     "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
-                    "<button class='button_link' type='submit' value='"+edit_lost_id+"'>Сохранить</button>" +
-                    "</form>");
+                    "<button class='button_link'  id='save_edit_lost_"+edit_lost_id+"' name='save_edit_lost' type='button' value='"+edit_lost_id+"'>Сохранить</button>"
+                );
+                var save_edit_lost = '#save_edit_lost_'+edit_lost_id;
+                if($(save_edit_lost).length > 0){
+                    $(save_edit_lost).on('click', function(){
+                        var update_description = $('.edit_textarea').val();
+                        $.ajax({
+                            url: "/personal-area/edit-lost/"+edit_lost_id,
+                            method: "POST",
+                            data:{
+                                update_description: update_description,
+                                save_edit_lost: 1,
+                                edit_lost_id: edit_lost_id
+                            },
+                            success: function(data){
+                                edit_description.html('');
+                                $(".edit_description_"+edit_lost_id).html("<span>Описание: </span>"+data);
+                            }
+                        });
+                    });
+                }
             }
         });
     });
@@ -226,13 +244,50 @@ $(document).ready(function(){
             method: "POST",
             success: function(data){
                 edit_description.html(
-                    "<form action='/personal-area/edit-find/"+edit_find_id+"' method='POST'>" +
                     "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
-                    "<button class='button_link' type='submit' value='"+edit_find_id+"'>Сохранить</button>" +
-                    "</form>");
+                    "<button class='button_link'  id='save_edit_find_"+edit_find_id+"' name='save_edit_find' type='button' value='"+edit_find_id+"'>Сохранить</button>"
+                );
+                var save_edit_find = '#save_edit_find_'+edit_find_id;
+                if($(save_edit_find).length > 0){
+                    $(save_edit_find).on('click', function(){
+                        var update_description = $('.edit_textarea').val();
+                        $.ajax({
+                            url: "/personal-area/edit-find/"+edit_find_id,
+                            method: "POST",
+                            data:{
+                                update_description: update_description,
+                                save_edit_find: 1,
+                                edit_lost_id: edit_find_id
+                            },
+                            success: function(data){
+                                edit_description.html('');
+                                $(".edit_description_"+edit_find_id).html("<span>Описание: </span>"+data);
+                            }
+                        });
+                    });
+                }
             }
         });
     });
+
+
+
+    //var edit_find = $('.edit_find');
+    //edit_find.on('click', function(){
+    //    var edit_find_id = $(this).attr('value');
+    //    var edit_description = $(".edit_description_"+edit_find_id);
+    //    $.ajax({
+    //        url: "/personal-area/edit-find/"+edit_find_id,
+    //        method: "POST",
+    //        success: function(data){
+    //            edit_description.html(
+    //                "<form action='/personal-area/edit-find/"+edit_find_id+"' method='POST'>" +
+    //                "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
+    //                "<button class='button_link' type='submit' value='"+edit_find_id+"'>Сохранить</button>" +
+    //                "</form>");
+    //        }
+    //    });
+    //});
 
 
     $('.delete_lost').on('click', function(){
@@ -361,17 +416,37 @@ $(document).ready(function(){
 
     var all_messages = $('#all_messages');
     if(all_messages.length > 0){
-        var received_user_id = $('#send_correspondence').attr('value');
-        setInterval(function(){
-            $.ajax({
-                url: "/personal-area/update-message/"+received_user_id,
-                method: "POST",
-                success: function(data){
-                    $(all_messages).html(data);
-                    all_messages.scrollTop(100000);
-                }
-            });
-        },60000);
+        var send_correspondence = $("#send_correspondence");
+        var received_user_id = send_correspondence.attr('value');
+        send_correspondence.on('click', function(){
+            var send_message_input = $('#send_message_input');
+            var message = send_message_input.val();
+            if(message.length > 0){
+                $.ajax({
+                    url: "/personal-area/update-message/"+received_user_id,
+                    method: "POST",
+                    data:{
+                        message: message
+                    },
+                    success: function(data){
+                        $(all_messages).html(data);
+                        all_messages.scrollTop(100000);
+                    }
+                });
+                $('#send_message_input').val('');
+            }else{
+                setInterval(function(){
+                    $.ajax({
+                        url: "/personal-area/update-message/"+received_user_id,
+                        method: "POST",
+                        success: function(data){
+                            $(all_messages).html(data);
+                            all_messages.scrollTop(100000);
+                        }
+                    });
+                },60000);
+            }
+        });
     }
     all_messages.scrollTop(100000);
 
@@ -386,6 +461,7 @@ $(document).ready(function(){
         else
             seen[txt] = true;
     });
+
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 
 
@@ -425,9 +501,6 @@ $(document).ready(function(){
         }
     });
     $('.send_message_input').focus();
-
-
-
 
     //Colorbox
     $(".colorbox").on('click', function(){

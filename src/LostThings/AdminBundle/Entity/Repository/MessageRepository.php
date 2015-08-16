@@ -13,6 +13,17 @@ use Doctrine\ORM\EntityRepository;
 class MessageRepository extends EntityRepository
 {
 
+
+
+    public function search($search){
+        return $this->getEntityManager()
+            ->createQuery("SELECT m FROM LostThingsAdminBundle:Message m WHERE
+                             m.sendUserId IN
+                              (SELECT u.id FROM LostThingsAdminBundle:User u WHERE u.username LIKE :search)")
+            ->setParameter('search', "%$search%")
+            ->getResult();
+    }
+
     public function findAll($order = 'ASC')
     {
         return $this->findBy(array(), array('createdAt' => $order));

@@ -21,33 +21,37 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Countryid</th>
-                <th>Cityid</th>
-                <th>Areaid</th>
-                <th>Streetid</th>
-                <th>Thingid</th>
-                <th>Userid</th>
-                <th>Status</th>
-                <th>Datefind</th>
-                <th>Description</th>
-                <th>Filename</th>
-                <th>Actions</th>
+                <th>Страна</th>
+                <th>Город</th>
+                {#<th>Район или область</th>#}
+                {#<th>Улица</th>#}
+                <th>Объект</th>
+                <th>Пользователь</th>
+                {#<th>Статус</th>#}
+                <th>Дата</th>
+                {#<th>Описание</th>#}
+                <th>Изображение</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_find__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.countryId }}</td>
-                <td>{{ entity.cityId }}</td>
-                <td>{{ entity.areaId }}</td>
-                <td>{{ entity.streetId }}</td>
-                <td>{{ entity.thingId }}</td>
-                <td>{{ entity.userId }}</td>
-                <td>{{ entity.status }}</td>
-                <td>{% if entity.dateFind %}{{ entity.dateFind|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.description }}</td>
-                <td>{{ entity.fileName }}</td>
+                <td>{{ entity.country }}</td>
+                <td>{{ entity.city }}</td>
+                {#<td>{{ entity.area }}</td>#}
+                {#<td>{{ entity.street }}</td>#}
+                <td>{{ entity.thing }}</td>
+                <td>{{ entity.username }}</td>
+                {#<td>{{ entity.status }}</td>#}
+                <td><span class="date"> {% if entity.dateFind %}{{ entity.dateFind|date('Y-m-d H:i:s') }}</span>{% endif %}</td>
+                {#<td>{{ entity.description|slice(0, 50) }}...</td>#}
+                {% if entity.fileName is not empty %}
+                    <td><img src="{{ asset('files/') }}" {{ entity.fileName }}></td>
+                {% else %}
+                    <td><img src="{{ asset('images/no_image.png') }}"></td>
+                {% endif %}
                 <td>
                 <ul>
                     <li>

@@ -19,20 +19,20 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Username</th>
+                <th>Пользователь</th>
                 <th>Email</th>
-                <th>Last login</th>
-                <th>Locked</th>
-                <th>Actions</th>
+                <th>Дата последнего входа</th>
+                <th>Заблокирован</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_user__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.username }}</td>
                 <td>{{ entity.email }}</td>
-                <td>{{ entity.lastLogin|date }}</td>
+                <td><span class="date">{{ entity.lastLogin|date }}</span></td>
                 <td>{{ entity.locked }}</td>
                 <td>
                 <ul>

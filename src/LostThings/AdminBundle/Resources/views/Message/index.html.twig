@@ -29,12 +29,12 @@
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
+            <tr class="admin_font">
                 <td><a href="{{ path('admin_message__show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.userName }}</td>
                 <td>{{ entity.receivedUserName }}</td>
                 <td>{{ entity.message }}</td>
-                <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td><span class="date">{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}</span>{% endif %}</td>
                 <td>
                     {% if entity.status == 1 %}
                         <p>Да</p>
