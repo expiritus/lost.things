@@ -109,7 +109,3 @@ update_message:
     path: /personal-area/update-message/{received_user_id}
     defaults: { _controller: LostThingsMainBundle:PrivateMessage:refreshCorrespondence }
 
-
-test:
-    path: /test
-    defaults: { _controller: LostThingsMainBundle:Index:test }

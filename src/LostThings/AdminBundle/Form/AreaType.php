@@ -15,9 +15,8 @@ class AreaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('area')
-            ->add('cityId')
-            ->add('city')
+            ->add('area', null, array('label' => ' '))
+            ->add('city', null, array('label' => ' '))
         ;
     }
     

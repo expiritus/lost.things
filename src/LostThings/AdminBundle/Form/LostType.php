@@ -15,23 +15,14 @@ class LostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('countryId')
-            ->add('cityId')
-            ->add('areaId')
-            ->add('streetId')
-            ->add('thingId')
-            ->add('userId')
+            ->add('country', null, array('label' => ' '))
+            ->add('city', null, array('label' => ' '))
+            ->add('area', null, array('label' => ' '))
+            ->add('street', null, array('label' => ' '))
+            ->add('thing', null, array('label' => ' '))
+            ->add('username', null, array('label' => ' '))
+            ->add('description', null, array('label' => ' '))
             ->add('status')
-            ->add('description')
-            ->add('dateLost')
-            ->add('fileName')
-            ->add('dateFind')
-            ->add('country')
-            ->add('city')
-            ->add('area')
-            ->add('street')
-            ->add('thing')
-            ->add('username')
         ;
     }
     

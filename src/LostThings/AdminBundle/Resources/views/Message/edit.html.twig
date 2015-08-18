@@ -1,9 +1,21 @@
 {% extends 'LostThingsAdminBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>Message edit</h1>
+    <h1>Исправить сообщение</h1>
 
-    {{ form(edit_form) }}
+    <p>
+        {{ form_label(edit_form.username) }}
+    </p>
+    <p>
+        {{ form_widget(edit_form.username) }}
+    </p>
+    <p>
+        {{ form_label(edit_form.receivedUsername) }}
+    </p>
+    <p>
+        {{ form_widget(edit_form.receivedUsername) }}
+    </p>
+    {{ form_rest(edit_form) }}
 
         <ul class="record_actions">
     <li>

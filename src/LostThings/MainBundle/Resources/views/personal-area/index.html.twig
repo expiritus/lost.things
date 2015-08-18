@@ -2,22 +2,24 @@
 
 {% block body %}
     {% if dont_read_messages is defined %}
-        {% for dont_read_message in dont_read_messages %}
-            <div class="dialog dont_read_messages" title="Входящее сообщение от {{ dont_read_message.username }}">
-                <div class="popup_message">
-                    <span class="dont_read_message"> {{ dont_read_message.message }}</span>
-                </div>
-                <div class="answer">
-                    <form action="{{ path('private_message') }}" method="POST">
+            <div class="dialog dont_read_messages" title="">
+                <form action="{{ path('private_message') }}" method="POST">
+                    <div class="popup_message">
+                        {% for dont_read_message in dont_read_messages %}
+                            <p class="dont_read_message"><span>[{{ dont_read_message.createdAt|date }}]</span> {{ dont_read_message.message }}</p>
+                            <input type="hidden" name="whom" value="" class="whom">
+                            <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
+                            <input class="from_user" type="hidden" value="{{ dont_read_message.username }}">
+                        {% endfor %}
+                    </div>
+                    <div class="answer">
                         <textarea class="message answer_input" name="message" spellcheck="false"></textarea>
-                        <input type="hidden" name="whom" value="" class="whom">
-                        <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
                         <button name="submit_pm" class="button_link submit_pm">Ответить</button>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
-            <input class="from_user" type="hidden" value="{{ dont_read_message.username }}">
-        {% endfor %}
+
+
     {% endif %}
     <div class="lost_things">
         {% if all_user_losts is not empty %}
@@ -103,7 +105,11 @@
                         </div>
                         <div class="control_block">
                             <ul>
-                                <li><button class="button_link refresh_find" value="{{ all_user_find.id }}">Обновить</button></li>
+                                <li>
+                                    <p class="wait_data" id="update_wait_data">
+                                        <img src="{{ asset('images/wait.gif') }}">
+                                    </p>
+                                    <button class="button_link refresh_find" value="{{ all_user_find.id }}">Обновить</button></li>
                                 <li><button class="button_link edit_find" value="{{ all_user_find.id }}">Исправить</button></li>
                                 <li><button class="button_link delete_find" value="{{ all_user_find.id }}">Удалить</button></li>
                             </ul>

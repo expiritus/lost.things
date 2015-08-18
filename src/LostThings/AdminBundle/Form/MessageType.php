@@ -15,15 +15,10 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sendUserId')
-            ->add('receivedUserId')
-            ->add('message')
-            ->add('createdAt')
+            ->add('username', null, array('label' => 'Отправитель'))
+            ->add('receivedUsername', null, array('label' => 'Получатель'))
+            ->add('message', null, array('label' => ' '))
             ->add('status')
-            ->add('currentUser')
-            ->add('username')
-            ->add('receivedUsername')
-            ->add('currentUsername')
         ;
     }
     

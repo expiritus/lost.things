@@ -169,7 +169,7 @@ class CountryController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Обновить', 'attr' => array('class' => 'button primary_button')));
 
         return $form;
     }
@@ -239,7 +239,7 @@ class CountryController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_country__delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Удалить', 'attr' => array('class' => 'button delete_button')))
             ->getForm()
         ;
     }

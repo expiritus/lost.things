@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class FindRepository extends EntityRepository
 {
+
     public function search($search){
         return $this->getEntityManager()
             ->createQuery("SELECT f FROM LostThingsAdminBundle:Find f WHERE f.thingId IN
@@ -45,11 +46,4 @@ class FindRepository extends EntityRepository
             ->setParameters(array('ids' => $ids))
             ->getArrayResult();
     }
-
-//    public function findLostFind($user_id){
-//      return $this->getEntityManager()
-//          ->createQuery('SELECT f, l FROM LostThingsAdminBundle:Find f JOIN LostThingsAdminBundle:Lost l WHERE f.userId = :userId AND l.userId = :userId')
-//          ->setParameter('userId', $user_id)
-//          ->getResult();
-//    }
 }

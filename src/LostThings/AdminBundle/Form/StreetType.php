@@ -15,9 +15,8 @@ class StreetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('street')
-            ->add('cityId')
-            ->add('city')
+            ->add('street', null, array('label' => ' '))
+            ->add('city', null, array('label' => ' '))
         ;
     }
     

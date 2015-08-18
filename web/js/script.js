@@ -208,7 +208,7 @@ $(document).ready(function(){
             method: "POST",
             success: function(data){
                 edit_description.html(
-                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
+                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description' spellcheck='false'>"+data+"</textarea>" +
                     "<button class='button_link'  id='save_edit_lost_"+edit_lost_id+"' name='save_edit_lost' type='button' value='"+edit_lost_id+"'>Сохранить</button>"
                 );
                 var save_edit_lost = '#save_edit_lost_'+edit_lost_id;
@@ -221,7 +221,7 @@ $(document).ready(function(){
                             data:{
                                 update_description: update_description,
                                 save_edit_lost: 1,
-                                edit_lost_id: edit_lost_id
+                                //edit_lost_id: edit_lost_id
                             },
                             success: function(data){
                                 edit_description.html('');
@@ -244,7 +244,7 @@ $(document).ready(function(){
             method: "POST",
             success: function(data){
                 edit_description.html(
-                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
+                    "<textarea class='edit_textarea' placeholder='Описание' name='update_description' spellcheck='false'>"+data+"</textarea>" +
                     "<button class='button_link'  id='save_edit_find_"+edit_find_id+"' name='save_edit_find' type='button' value='"+edit_find_id+"'>Сохранить</button>"
                 );
                 var save_edit_find = '#save_edit_find_'+edit_find_id;
@@ -256,8 +256,8 @@ $(document).ready(function(){
                             method: "POST",
                             data:{
                                 update_description: update_description,
-                                save_edit_find: 1,
-                                edit_lost_id: edit_find_id
+                                save_edit_find: 1
+                                //edit_lost_id: edit_find_id
                             },
                             success: function(data){
                                 edit_description.html('');
@@ -301,8 +301,8 @@ $(document).ready(function(){
                         'borderBottom': 'none'
                     });
                     var child_lost = $('.lost_things').children().contents().length;
-                    if(child_lost == 1){
-                        $('.lost_things h1').html("");
+                    if(child_lost == 6){
+                        $('.lost_things').html("");
                     }
                 }
             }
@@ -320,8 +320,9 @@ $(document).ready(function(){
                         'borderBottom': 'none'
                     });
                     var child_find = $('.find_things').children().contents().length;
-                    if(child_find == 1){
-                        $('.find_things h1').html("");
+                    console.info($('.find_things').children());
+                    if(child_find == 6){
+                        $('.find_things').html("");
                     }
                 }
             }
@@ -403,8 +404,9 @@ $(document).ready(function(){
         dont_read_messages.dialog({ autoOpen: false });
         $('.whom').attr('value', from_user);
         dont_read_messages.dialog({
-            //title: "Message from "+from_user,
+            title: "Сообщение от "+from_user,
             resizable: false,
+            scrollable: false,
             //modal: true,
             width: 600,
             height: 400,
@@ -496,6 +498,12 @@ $(document).ready(function(){
         if($('#send_correspondence').length >0){
             if (eventObject.keyCode == 13) { //если нажали Enter, то true
                 $('#send_correspondence').click();
+                return false;
+            }
+        }
+        if($('.submit_pm').length > 0){
+            if (eventObject.keyCode == 13) { //если нажали Enter, то true
+                $('.submit_pm').click();
                 return false;
             }
         }

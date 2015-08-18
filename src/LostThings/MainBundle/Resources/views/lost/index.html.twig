@@ -37,7 +37,9 @@
                 <p>
                     <input class="next_button" type="button" id="button_next_thing" value="Далее">
                 </p>
-                <p class="wait_data"><img style="width: 30px" src="{{ asset('images/wait.gif') }}"></p>
+                <p class="wait_data" id="lost_wait_data">
+                    <img src="{{ asset('images/wait.gif') }}">
+                </p>
                 <p>
                     <textarea name="description" placeholder="Описание:"></textarea>
                 </p>

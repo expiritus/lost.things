@@ -18,14 +18,12 @@ class PersonalAreaController extends Controller
         if ($user) {
             $user_id = $this->getUser()->getId();
             $all_user_finds = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Find')->findBy(array('userId' => $user_id));
+//
             $all_user_losts = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Lost')->findBy(array('userId' => $user_id));
             $messages = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->dontReadMessage($user_id);
+
             if(count($messages) > 0){
-                $em = $this->getDoctrine()->getManager();
-                for($i=0; $i<count($messages); $i++){
-                    $messages[$i]->setStatus(1);
-                }
-                $em->flush();
+                $update_status_message = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Message')->updateStatus($user_id);
                 return $this->render('LostThingsMainBundle:personal-area:index.html.twig', array(
                     'all_user_finds' => $all_user_finds,
                     'all_user_losts' => $all_user_losts,

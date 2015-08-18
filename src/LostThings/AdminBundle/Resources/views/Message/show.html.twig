@@ -10,29 +10,26 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Senduserid</th>
-                <td>{{ entity.sendUserId }}</td>
+                <th>Отправитель</th>
+                <td>{{ entity.username }}</td>
             </tr>
             <tr>
-                <th>Receiveduserid</th>
-                <td>{{ entity.receivedUserId }}</td>
+                <th>Получатель</th>
+                <td>{{ entity.receivedUsername }}</td>
             </tr>
             <tr>
-                <th>Message</th>
+                <th>Сообщение</th>
                 <td>{{ entity.message }}</td>
             </tr>
             <tr>
-                <th>Createdat</th>
+                <th>Дата</th>
                 <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
             </tr>
             <tr>
-                <th>Status</th>
+                <th>Статус</th>
                 <td>{{ entity.status }}</td>
             </tr>
-            <tr>
-                <th>Currentuser</th>
-                <td>{{ entity.currentUser }}</td>
-            </tr>
+
         </tbody>
     </table>
 

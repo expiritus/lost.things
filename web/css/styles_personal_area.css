@@ -111,6 +111,7 @@ header #log_in{
 }
 
 main{
+    height: 100%;
     padding: 20px;
 }
 
@@ -119,13 +120,14 @@ main #left_side{
     height: 100%;
     float: left;
     width: 20%;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
+
 }
 
 main #left_side #bg_all_correspondence,
 main #right_side #personal_info{
-    height: 450px;
+    min-height: 70%;
     background-color: rgba(255, 255, 255, .5);
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
 }
 
 main #left_side h3{
@@ -166,7 +168,7 @@ main #left_side a:hover{
 
 
 main #right_side{
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
+    height: 100%;
     float: right;
     width: 20%;
 }
@@ -226,7 +228,8 @@ main #center .find_things_things p{
 }
 
 main #center .lost_things img,
-main #center .find_things img{
+main #center .find_things img,
+#results_search img{
     border: 2px ridge #025E7C;
 }
 
@@ -290,26 +293,17 @@ main #center .input_search_form input[type='submit']:hover{
 }
 
 main #center .input_search_form select{
-    /* styling */
     width: 100%;
-    /*background-color: rgba( 45,151,203, .9);*/
-    /*background-color: #FFDB2C;*/
     background-color: #FFFFFF;
     border: thin solid #87ceeb;
-    /*border: thin solid rgba( 45,151,203, 1);*/
-    /*border: thin solid rgba(  5,104,152, .5);*/
     border-radius: 4px;
     display: inline-block;
     font: inherit;
     line-height: 1.5em;
     padding: 0.5em 3.5em 0.5em 1em;
     color: #025e7c;
-    /*color: #FFFFFF;*/
     font-weight: bold;
-
-    /* reset */
-
-    margin: 0;
+    /*margin: 0;*/
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -337,7 +331,9 @@ main #center .input_search_form select{
 
 
 
-main #center img, main #results_search img{
+main .find_block_info img,
+main .lost_block_info img,
+main #results_search img{
     width: 205px;
     height: 145px;
     float: left;
@@ -525,7 +521,9 @@ main #center .count_matches_find span{
 }
 
 .popup_message{
-    height: 70%;
+    height: 200px;
+    overflow: auto;
+    margin: 0 0 20px 0;
 }
 
 .answer_input{
@@ -548,6 +546,12 @@ main #center .count_matches_find span{
     font: inherit;
     color: #025e7c;
     font-weight: bold;
+}
+
+.dont_read_message span{
+    font-size: 80%;
+    font-weight: normal;
+    color: grey;
 }
 
 
@@ -621,6 +625,11 @@ main #center .count_matches_find span{
 
 .separator{
     height: 20px;
+}
+
+.wait_data img{
+    width: 30px;
+    height: 30px;
 }
 
 

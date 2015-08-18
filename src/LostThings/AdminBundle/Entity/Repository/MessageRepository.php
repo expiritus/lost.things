@@ -31,7 +31,9 @@ class MessageRepository extends EntityRepository
 
     public function findSend($user){
         return $this->getEntityManager()
-            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user GROUP BY c.receivedUserId')
+            ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user ')
+//            ->setFirstResult(0)
+            ->setMaxResults(1)
             ->setParameter('user', $user)
             ->getResult();
     }
@@ -39,6 +41,8 @@ class MessageRepository extends EntityRepository
     public function findReceived($user){
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
+//            ->setFirstResult(0)
+            ->setMaxResults(1)
             ->setParameter('user', $user)
             ->getResult();
     }
