@@ -220,8 +220,7 @@ $(document).ready(function(){
                             method: "POST",
                             data:{
                                 update_description: update_description,
-                                save_edit_lost: 1,
-                                //edit_lost_id: edit_lost_id
+                                save_edit_lost: 1
                             },
                             success: function(data){
                                 edit_description.html('');
@@ -269,25 +268,6 @@ $(document).ready(function(){
             }
         });
     });
-
-
-
-    //var edit_find = $('.edit_find');
-    //edit_find.on('click', function(){
-    //    var edit_find_id = $(this).attr('value');
-    //    var edit_description = $(".edit_description_"+edit_find_id);
-    //    $.ajax({
-    //        url: "/personal-area/edit-find/"+edit_find_id,
-    //        method: "POST",
-    //        success: function(data){
-    //            edit_description.html(
-    //                "<form action='/personal-area/edit-find/"+edit_find_id+"' method='POST'>" +
-    //                "<textarea class='edit_textarea' placeholder='Описание' name='update_description'>"+data+"</textarea>" +
-    //                "<button class='button_link' type='submit' value='"+edit_find_id+"'>Сохранить</button>" +
-    //                "</form>");
-    //        }
-    //    });
-    //});
 
 
     $('.delete_lost').on('click', function(){
@@ -393,7 +373,7 @@ $(document).ready(function(){
         button.on('click', function(){
             var message = $('.message').val();
             if(message.length > 0){
-                button.attr('type', 'submit');
+                $(this).attr('type', 'submit');
             }
         });
     });
@@ -401,31 +381,62 @@ $(document).ready(function(){
     var dont_read_messages = $('.dont_read_messages');
     if(dont_read_messages){
         var from_user = $('.from_user').attr('value');
+        var answer_input = $('.answer_input').val();
         dont_read_messages.dialog({ autoOpen: false });
         $('.whom').attr('value', from_user);
         dont_read_messages.dialog({
-            title: "Сообщение от "+from_user,
+            //title: "Сообщение от "+from_user,
             resizable: false,
             scrollable: false,
             //modal: true,
             width: 600,
-            height: 400,
+            height: 500,
             show: { effect: "slideDown", duration: 300},
-            hide: { effect: "slideUp", duration: 300}
+            hide: { effect: "slideUp", duration: 300},
+            beforeClose: function(event, ui){
+                var id_message = $(this).find('.id_message').attr('value');
+                $.ajax({
+                    url: "/private-message/",
+                    method: "POST",
+                    data: {
+                        id_message: id_message
+                    }
+                });
+            }
         });
         dont_read_messages.dialog('open');
+        var button = $('.submit_pm');
+        button.attr('type', 'button');
+        button.on('click', function(){
+            var message_id = $(this).attr('value');
+            var message = $('.message').val();
+            var answer_input = $('.answer_message_'+message_id).val();
+            if((message && message.length > 0) || answer_input && answer_input.length > 0){
+                $(this).attr('type', 'submit');
+            }
+        });
     }
 
     var all_messages = $('#all_messages');
     if(all_messages.length > 0){
+        setInterval(function(){
+            $.ajax({
+                url: "/personal-area/update-message/"+received_user,
+                method: "POST",
+                success: function(data){
+                    $(all_messages).html(data);
+                    all_messages.scrollTop(100000);
+                }
+            });
+        },60000);
         var send_correspondence = $("#send_correspondence");
-        var received_user_id = send_correspondence.attr('value');
+        var received_user = send_correspondence.attr('value');
         send_correspondence.on('click', function(){
             var send_message_input = $('#send_message_input');
             var message = send_message_input.val();
             if(message.length > 0){
                 $.ajax({
-                    url: "/personal-area/update-message/"+received_user_id,
+                    url: "/personal-area/update-message/"+received_user,
                     method: "POST",
                     data:{
                         message: message
@@ -436,18 +447,8 @@ $(document).ready(function(){
                     }
                 });
                 $('#send_message_input').val('');
-            }else{
-                setInterval(function(){
-                    $.ajax({
-                        url: "/personal-area/update-message/"+received_user_id,
-                        method: "POST",
-                        success: function(data){
-                            $(all_messages).html(data);
-                            all_messages.scrollTop(100000);
-                        }
-                    });
-                },60000);
             }
+
         });
     }
     all_messages.scrollTop(100000);
@@ -456,19 +457,20 @@ $(document).ready(function(){
     var el = all_correspondence.children();
     var val = all_correspondence.children().text();
     var seen = {};
-    $('.all_correspondence li').each(function() {
-        var txt = $(this).text();
-        if (seen[txt])
-            $(this).remove();
-        else
-            seen[txt] = true;
-    });
+    //$('.all_correspondence li').each(function() {
+    //    var txt = $(this).text();
+    //    if (seen[txt])
+    //        $(this).remove();
+    //    else
+    //        seen[txt] = true;
+    //});
 
     //КОНЕЦ ОБРАБОТКИ ЛИЧНОГО СООБЩЕНИЯ
 
 
 
     //ФОРМА ВВОДА ЛОГИНА И ПАРОЛЯ
+
     var login_form = $('#login_form');
     var register_form = $('#register_form');
     var resetting_form = $('#resetting_form');
@@ -483,30 +485,102 @@ $(document).ready(function(){
         || contact_form.length > 0
     ){
         var flag = $('a[href^="#"], a[href^="."]');
+        var flash_notice =  $('.flash-notice').hide();
         if($(window).scrollTop != 0) {
             var scroll_el = flag.attr('href');
             if (scroll_el.length != 0) {
                 $('html, body').animate({scrollTop: $(scroll_el).offset().top}, 800);
             }
+
+            //Контакт форма
+            $("#send_contact_submit").on('click', function () {
+                var contact_name = $("input[name='contact_name']").val();
+                var contact_email = $("input[name='contact_email']").val();
+                var contact_message = $("textarea[name='contact_message']").val();
+                $.ajax({
+                    url: "/contact/",
+                    method: "POST",
+                    data:{
+                        contact_name: contact_name,
+                        contact_email: contact_email,
+                        contact_message: contact_message
+                    },
+                    dataType: "json",
+                    beforeSend: wait(),
+                    success: function(data){
+                        waitImage.hide();
+                        if(data.name == false){
+                            $("input[name='contact_name']").css({
+                                'border': '1px solid red'
+                            })
+                        }else{
+                            $("input[name='contact_name']").css({
+                                'border': 'none'
+                            }).css({
+                                'border-top':  '1px solid #e2e2e2'
+                            });
+                        }
+
+                        if(data.email == false){
+                            $("input[name='contact_email']").css({
+                                'border': '1px solid red'
+                            })
+                        }else{
+                            $("input[name='contact_email']").css({
+                                'border': 'none'
+                            }).css({
+                                'border-top':  '1px solid #e2e2e2'
+                            });
+                        }
+
+                        if(data.message == false){
+                            $("textarea[name='contact_message']").css({
+                                'border': '1px solid red'
+                            })
+                        }else{
+                            $("textarea[name='contact_message']").css({
+                                'border': 'none'
+                            }).css({
+                                'border-top':  '1px solid #e2e2e2',
+                                'border-bottom': '1px solid #e2e2e2'
+                            });
+                        }
+
+                        if(data.name == true && data.email == true && data.message == true){
+                            $("input[name='contact_name']").val('');
+                            $("input[name='contact_email']").val('');
+                            $("textarea[name='contact_message']").val('');
+                        }
+
+                        if(data.flash){
+                            flash_notice.show('slow').html('').append(data.flash);
+                            setInterval(function(){
+                                $('.flash-notice').hide('slow');
+                            }, 5000);
+                        }
+                    }
+                });
+            });
             return false; // выключаем стандартное действие
         }
+        //Конец контакт формы
     }
 
     //КОНЕЦ ФОРМЫ ВВОДА ЛОГИНА И ПАРОЛЯ
 
     $('html').keydown(function(eventObject){ //отлавливаем нажатие клавиш
-        if($('#send_correspondence').length >0){
+        if($('#send_correspondence').length > 0){
             if (eventObject.keyCode == 13) { //если нажали Enter, то true
                 $('#send_correspondence').click();
                 return false;
             }
         }
-        if($('.submit_pm').length > 0){
-            if (eventObject.keyCode == 13) { //если нажали Enter, то true
-                $('.submit_pm').click();
-                return false;
-            }
-        }
+        //if($('.submit_pm').length > 0){
+        //    if (eventObject.keyCode == 13) { //если нажали Enter, то true
+        //        $('.submit_pm').click();
+        //        return false;
+        //    }
+        //}
     });
     $('.send_message_input').focus();
 

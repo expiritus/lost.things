@@ -43,6 +43,11 @@ class Area
      */
     protected $city;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Street", mappedBy="area")
+     */
+    protected $streets;
+
 
 
     /**

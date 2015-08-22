@@ -205,7 +205,7 @@ class LostController extends Controller{
          * Иначе выбираем из базы записи и перебираем все идентичные запросу записи и записываем в массив и возвращаем их в автокомплит через js и html5
          * Далее проверяем есть ли в массиве id идентичное id из запроса и возвращаем ключ
          *
-         * Записываем в таблицу street id города
+         * Записываем в таблицу street, id города
          */
         if(!empty($street_request)){
             $lost_street = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Street')->findBy(array('street' => $street_request));
@@ -214,6 +214,12 @@ class LostController extends Controller{
                 $city_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
                 $city_parent->getId();
                 $street->setCity($city_parent);
+
+                if(isset($area_id)){
+                    $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
+                    $area_parent->getId();
+                    $street->setArea($area_parent);
+                }
 
                 $street->setStreet($street_request);
 
@@ -234,7 +240,10 @@ class LostController extends Controller{
                     $street = new Street();
                     $city_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
                     $city_parent->getId();
+                    $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
+                    $area_parent->getId();
                     $street->setCity($city_parent);
+                    $street->setArea($area_parent);
                     $street->setStreet($street_request);
 
                     $em = $this->getDoctrine()->getManager();
@@ -341,7 +350,7 @@ class LostController extends Controller{
         $id = $lost->getId();
 
         return $this->redirect('/lost/search/'.$id);
-        return $this->redirect('/lost/search/'.$id);
+//        return $this->redirect('/lost/search/'.$id);
     }
 
 }

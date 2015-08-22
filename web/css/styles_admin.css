@@ -173,7 +173,8 @@ textarea{
 #lostthings_adminbundle_street_submit,
 #lostthings_adminbundle_message_submit,
 #lostthings_adminbundle_find_submit,
-#lostthings_adminbundle_lost_submit{
+#lostthings_adminbundle_lost_submit,
+#lostthings_adminbundle_contact_submit{
     float: left;
     margin: 0 20px 50px 0;
 }

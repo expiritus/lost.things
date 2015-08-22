@@ -35,13 +35,19 @@
             <h3>
                 Хотите связаться со мной? Заполните форму ниже, чтобы отправить мне сообщение
             </h3>
-            <form action="#" method="POST">
+
+
+            <div class="flash-notice"></div>
+            <form action="{{ path('contact') }}" method="POST">
                 <input type="text" name="contact_name" placeholder="Имя:">
                 <input type="email" name="contact_email" placeholder="Email:">
                 <textarea name="contact_message" placeholder="Сообщение:" spellcheck="false"></textarea>
-                <input type="submit" name="send_contact_submit" value="Отправить">
+                <input type="button" name="send_contact_submit" id="send_contact_submit" value="Отправить">
                 <div class="clear"></div>
             </form>
+            <p class="wait_data" id="contact_wait_data">
+                <img src="{{ asset('images/wait.gif') }}">
+            </p>
         </div>
     </div>
 {% endblock %}

@@ -1,3 +1,7 @@
+lost_things_admin_admin_contact_:
+    resource: "@LostThingsAdminBundle/Resources/config/routing/contact.yml"
+    prefix:   /admin/contact/
+
 lost_things_admin_admin_message_:
     resource: "@LostThingsAdminBundle/Resources/config/routing/message.yml"
     prefix:   /admin/message/

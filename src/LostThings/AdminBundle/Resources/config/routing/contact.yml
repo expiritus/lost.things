@@ -1,0 +1,30 @@
+admin_contact_:
+    path:     /
+    defaults: { _controller: "LostThingsAdminBundle:Contact:index" }
+
+admin_contact__show:
+    path:     /{id}/show
+    defaults: { _controller: "LostThingsAdminBundle:Contact:show" }
+
+admin_contact__new:
+    path:     /new
+    defaults: { _controller: "LostThingsAdminBundle:Contact:new" }
+
+admin_contact__create:
+    path:     /create
+    defaults: { _controller: "LostThingsAdminBundle:Contact:create" }
+    methods:  POST
+
+admin_contact__edit:
+    path:     /{id}/edit
+    defaults: { _controller: "LostThingsAdminBundle:Contact:edit" }
+
+admin_contact__update:
+    path:     /{id}/update
+    defaults: { _controller: "LostThingsAdminBundle:Contact:update" }
+    methods:  [POST, PUT]
+
+admin_contact__delete:
+    path:     /{id}/delete
+    defaults: { _controller: "LostThingsAdminBundle:Contact:delete" }
+    methods:  [POST, DELETE]

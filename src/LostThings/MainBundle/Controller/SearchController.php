@@ -188,7 +188,7 @@ class SearchController extends Controller
     }
 
 
-    private function sendEmail($name, $email_to){
+     function sendEmail($name, $email_to){
         $message = \Swift_Message::newInstance()
             ->setSubject('Hello Email')
             ->setFrom('antras2007@gmail.com')

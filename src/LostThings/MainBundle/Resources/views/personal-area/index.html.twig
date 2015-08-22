@@ -2,23 +2,23 @@
 
 {% block body %}
     {% if dont_read_messages is defined %}
-            <div class="dialog dont_read_messages" title="">
+        {% for dont_read_message in dont_read_messages %}
+            <div class="dialog dont_read_messages" title="Сообщение от {{ dont_read_message.username }}">
                 <form action="{{ path('private_message') }}" method="POST">
                     <div class="popup_message">
-                        {% for dont_read_message in dont_read_messages %}
-                            <p class="dont_read_message"><span>[{{ dont_read_message.createdAt|date }}]</span> {{ dont_read_message.message }}</p>
-                            <input type="hidden" name="whom" value="" class="whom">
-                            <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
-                            <input class="from_user" type="hidden" value="{{ dont_read_message.username }}">
-                        {% endfor %}
+                        <p class="dont_read_message"><span>[{{ dont_read_message.createdAt|date }}]</span> {{ dont_read_message.message }}</p>
+                        <input type="hidden" name="whom" value="" class="whom">
+                        <input type="hidden" name="status_message" value="{{ dont_read_message.id }}" class="status_message">
+                        <input class="from_user" type="hidden" value="{{ dont_read_message.username }}">
+                        <input type="hidden" class="id_message" value="{{ dont_read_message.id }}">
                     </div>
-                    <div class="answer">
-                        <textarea class="message answer_input" name="message" spellcheck="false"></textarea>
-                        <button name="submit_pm" class="button_link submit_pm">Ответить</button>
+                    <div class="answer_"{{ dont_read_message.id }}>
+                        <textarea class="message answer_input answer_message_{{ dont_read_message.id }}" name="message" spellcheck="false"></textarea>
+                        <button type="submit" name="submit_pm" class="button_link submit_pm" value="{{ dont_read_message.id }}">Ответить</button>
                     </div>
                 </form>
             </div>
-
+        {% endfor %}
 
     {% endif %}
     <div class="lost_things">
@@ -31,7 +31,7 @@
                             {% if all_user_lost.filename is not empty %}
                                 <a class="colorbox" href="{{ asset('files/') }}{{ all_user_lost.filename }}"><img src="{{ asset('files/') }}{{ all_user_lost.filename }}"></a>
                             {% else %}
-                               <img src="{{ asset('images/no_image.png') }}">
+                                <img src="{{ asset('images/no_image.png') }}">
                             {% endif %}
                             <p>
                                 <span>Потеря:</span> {{ all_user_lost.thing }}

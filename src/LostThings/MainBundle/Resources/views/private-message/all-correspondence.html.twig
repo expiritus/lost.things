@@ -1,16 +1,9 @@
 <ul class="all_correspondence">
-    {% if all_send_correspondence is defined %}
-        {% for all in all_send_correspondence %}
-            <li>
-                <a href="/personal-area/correspondence/{{all.receivedUserId }}">{{ all.receivedUserName }}</a>
-            </li>
-        {% endfor %}
-    {% endif %}
-    {% if all_received_correspondence is defined %}
-        {% for all in all_received_correspondence %}
-            <li>
-                <a href="/personal-area/correspondence/{{  all.sendUserId }}">{{ all.username }}</a>
-            </li>
+    {% if unique_user_correspondence is defined %}
+        {% for key, value in unique_user_correspondence %}
+                <li>
+                    <a href="/personal-area/correspondence/{{ value }}">{{ value }}</a>
+                </li>
         {% endfor %}
     {% endif %}
 </ul>

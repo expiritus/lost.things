@@ -249,7 +249,7 @@ main #contact_form textarea{
     margin: 0 0 20px 0;
 }
 
-main #contact_form input[type="submit"],
+main #contact_form input[type="button"],
 #login_form input[type="submit"],
 #login_form a,
 #register_form input[type="submit"],
@@ -265,11 +265,11 @@ main #contact_form input[type="submit"],
     cursor: pointer;
 }
 
-main #contact_form input[type="submit"]{
+main #contact_form input[type="button"]{
     float: left;
 }
 
-main #contact_form input[type="submit"]:hover,
+main #contact_form input[type="button"]:hover,
 #login_form input[type="submit"]:hover,
 #login_form a:hover,
 #register_form input[type="submit"]:hover,
@@ -304,6 +304,18 @@ main #contact_form input[type="submit"]:hover,
     margin: 0 0 20px 0;
 }
 
+.flash-notice{
+    padding: 20px;
+    width: 100%;
+    /*background: linear-gradient(180deg, #51C200 40%, #3E9700 65%);*/
+    background: linear-gradient(180deg, #61E900 40%, #51C200 65%);
+    border-radius: 10px;
+    font-size: 150%;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, .6);
+    margin: 0 0 30px 0;
+    color: #FFFFFF;
+}
+
 #register_and_reset_password{
     float: right;
 }
@@ -322,6 +334,24 @@ footer{
 
 #remember_me_checkbox{
     display: none;
+}
+
+
+.wait_data img{
+    width: 30px;
+    height: 30px;
+}
+
+/*.wait_data_test img{*/
+    /*width: 30px;*/
+    /*height: 30px;*/
+/*}*/
+
+#contact_wait_data{
+    float: left;
+    position: relative;
+    left: 150px;
+    top: -40px;
 }
 
 

@@ -32,10 +32,24 @@ class Street
     /**
      * @var integer
      *
+     * @ORM\Column(name="area_id", type="integer", nullable=true)
+     */
+    private $areaId;
+
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="city_id", type="integer", nullable=true)
      */
     private $cityId;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Area", inversedBy="streets")
+     * @ORM\JoinColumn(name="area_id", referencedColumnName="id")
+     */
+    protected $area;
 
 
     /**
@@ -212,5 +226,51 @@ class Street
     public function getLosts()
     {
         return $this->losts;
+    }
+
+    /**
+     * Set areaId
+     *
+     * @param integer $areaId
+     * @return Street
+     */
+    public function setAreaId($areaId)
+    {
+        $this->areaId = $areaId;
+
+        return $this;
+    }
+
+    /**
+     * Get areaId
+     *
+     * @return integer 
+     */
+    public function getAreaId()
+    {
+        return $this->areaId;
+    }
+
+    /**
+     * Set area
+     *
+     * @param \LostThings\AdminBundle\Entity\Area $area
+     * @return Street
+     */
+    public function setArea(\LostThings\AdminBundle\Entity\Area $area = null)
+    {
+        $this->area = $area;
+
+        return $this;
+    }
+
+    /**
+     * Get area
+     *
+     * @return \LostThings\AdminBundle\Entity\Area 
+     */
+    public function getArea()
+    {
+        return $this->area;
     }
 }

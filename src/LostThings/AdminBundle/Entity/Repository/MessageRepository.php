@@ -33,7 +33,7 @@ class MessageRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.sendUserId = :user ')
 //            ->setFirstResult(0)
-            ->setMaxResults(1)
+//            ->setMaxResults(1)
             ->setParameter('user', $user)
             ->getResult();
     }
@@ -42,7 +42,7 @@ class MessageRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery('SELECT c FROM LostThingsAdminBundle:Message c WHERE c.receivedUserId = :user')
 //            ->setFirstResult(0)
-            ->setMaxResults(1)
+//            ->setMaxResults(1)
             ->setParameter('user', $user)
             ->getResult();
     }
@@ -55,22 +55,23 @@ class MessageRepository extends EntityRepository
     }
 
 
-    public function findMessages($received_user_id, $send_user_id){
+    public function findMessages($received_user, $send_user_id){
         return $this->getEntityManager()
             ->createQuery('SELECT r FROM LostThingsAdminBundle:Message r
                             WHERE r.sendUserId = :sendUserId
-                              AND r.receivedUserId = :receivedUserId
-                                OR r.sendUserId = :receivedUserId
+                              AND r.receivedUserId = (SELECT u1.id FROM LostThingsAdminBundle:User u1 WHERE u1.username = :receivedUser)
+                                OR r.sendUserId = (SELECT u2.id FROM LostThingsAdminBundle:User u2 WHERE u2.username = :receivedUser)
                                   AND r.receivedUserId = :sendUserId
                                     ORDER BY r.createdAt')
-            ->setParameter('receivedUserId', $received_user_id)
+            ->setParameter('receivedUser', $received_user)
             ->setParameter('sendUserId', $send_user_id)
             ->getResult();
     }
 
+
     public function dontReadMessage($user_id){
         return $this->getEntityManager()
-            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :userId AND m.status = 0')
+            ->createQuery('SELECT m FROM LostThingsAdminBundle:Message m WHERE m.receivedUserId = :userId AND m.status = 0 ORDER by m.createdAt DESC')
             ->setParameter('userId', $user_id)
             ->getResult();
     }

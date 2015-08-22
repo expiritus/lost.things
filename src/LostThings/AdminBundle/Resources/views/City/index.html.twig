@@ -2,7 +2,7 @@
 
 {% block body -%}
     <div class="title_table">
-        <h1>Список города</h1>
+        <h1>Список городов</h1>
         <div class="count">
             <p>Всего {{ entities.getTotalItemCount }} городов</p>
         </div>
@@ -14,10 +14,6 @@
                 </a>
             </li>
         </ul>
-
-    {#<div class="count">#}
-        {#<p>Всего {{ entities.getTotalItemCount }} городов</p>#}
-    {#</div>#}
     <table class="records_list">
         <thead>
             <tr>
@@ -47,9 +43,6 @@
         {% endfor %}
         </tbody>
     </table>
-
-
-
     <div class="navigation">
         {{ knp_pagination_render(entities) }}
     </div>

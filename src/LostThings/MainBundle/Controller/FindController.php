@@ -216,6 +216,12 @@ class FindController extends Controller
                 $city_parent->getId();
                 $street->setCity($city_parent);
 
+                if(isset($area_id)){
+                    $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
+                    $area_parent->getId();
+                    $street->setArea($area_parent);
+                }
+
                 $street->setStreet($street_request);
 
                 $em = $this->getDoctrine()->getManager();
@@ -235,7 +241,10 @@ class FindController extends Controller
                     $street = new Street();
                     $city_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:City')->find($city_id);
                     $city_parent->getId();
+                    $area_parent = $this->getDoctrine()->getRepository('LostThingsAdminBundle:Area')->find($area_id);
+                    $area_parent->getId();
                     $street->setCity($city_parent);
+                    $street->setArea($area_parent);
                     $street->setStreet($street_request);
 
                     $em = $this->getDoctrine()->getManager();
